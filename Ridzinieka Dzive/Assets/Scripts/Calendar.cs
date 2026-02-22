@@ -1,16 +1,25 @@
 using UnityEngine;
 
-public class Calendar : MonoBehaviour
+public class Calendar : MonoBehaviour, IClickable2D
 {   [SerializeField] GameObject calendar;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private IClickable2D _clickable2DImplementation;
+
+    private void Awake()
     {
-        calendar.SetActive(false);
+        if (calendar != null)
+            calendar.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnClicked(RaycastHit2D hit)
     {
-        
+        if (calendar == null) return;
+
+        // Toggle on click (or use SetActive(true) if you never want to close it)
+        calendar.SetActive(!calendar.activeSelf);
+    }
+    
+    public void CloseCalendar()
+    {
+        calendar.SetActive(false);
     }
 }
