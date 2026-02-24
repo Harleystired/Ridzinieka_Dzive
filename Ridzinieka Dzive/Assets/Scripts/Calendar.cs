@@ -1,9 +1,11 @@
 using UnityEngine;
 
 public class Calendar : MonoBehaviour, IClickable2D
-{   [SerializeField] GameObject calendar;
-    private IClickable2D _clickable2DImplementation;
-
+{   
+    [SerializeField] GameObject calendar;
+    
+    
+    public static bool IsCalendarOpen { get; private set; }
     private void Awake()
     {
         if (calendar != null)
@@ -14,12 +16,20 @@ public class Calendar : MonoBehaviour, IClickable2D
     {
         if (calendar == null) return;
 
-        // Toggle on click (or use SetActive(true) if you never want to close it)
-        calendar.SetActive(!calendar.activeSelf);
+        bool newState = !calendar.activeSelf;
+        calendar.SetActive(newState);
+
+        if (newState) UIModal.Open();
+        else UIModal.Close();
     }
     
     public void CloseCalendar()
     {
+        if (calendar == null) return;
+        if (!calendar.activeSelf) return;
+
         calendar.SetActive(false);
+
+        UIModal.Close();
     }
 }

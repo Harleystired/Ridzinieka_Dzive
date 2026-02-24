@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
@@ -16,10 +17,22 @@ public class InputHandler : MonoBehaviour
     {
         UpdateHover();
     }
+    
+    private bool ShouldBlockWorldInput()
+    {
+        if (UIModal.IsAnyOpen)
+            return true;
+
+        if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
+            return true;
+
+        return false;
+    }
 
     private void UpdateHover()
     {
         if (mainCam == null || Mouse.current == null) return;
+        if (ShouldBlockWorldInput()) return;
 
         var ray = mainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         var hit = Physics2D.GetRayIntersection(ray);
@@ -43,6 +56,7 @@ public class InputHandler : MonoBehaviour
     public void OnClick(InputAction.CallbackContext context)
     {
         if (!context.started) return;
+        if (ShouldBlockWorldInput()) return;
 
         var ray = mainCam.ScreenPointToRay(Mouse.current.position.ReadValue());
         var hit = Physics2D.GetRayIntersection(ray);
