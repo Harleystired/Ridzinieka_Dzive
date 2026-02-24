@@ -15,5 +15,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] calendarDay;
     
+    public bool oldBike = false;
+    public bool newBike = false;
+    public bool oldCar = false;
+    public bool newCar = false;
+    
 }
 

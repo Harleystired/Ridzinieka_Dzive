@@ -2,9 +2,13 @@ using UnityEngine;
 
 public class Door : MonoBehaviour, IClickable2D
 {   [SerializeField] GameObject doorMenu;
+    [SerializeField] GameObject outsideMenu;
     private IClickable2D _clickable2DImplementation;
     [SerializeField] CameraMovement cameraMovement;
     [SerializeField] GameObject roomArrow;
+    
+    [SerializeField] float outsideLockSecondsAfterOpen = 0.35f;
+    private float _outsideAllowedAtUnscaledTime;
     
     public bool work = false;
     public bool shop = false;
@@ -14,8 +18,13 @@ public class Door : MonoBehaviour, IClickable2D
         if (doorMenu != null)
             doorMenu.SetActive(false);
         
+        if (outsideMenu != null)
+            outsideMenu.SetActive(false);
+        
         if (cameraMovement == null && Camera.main != null)
             cameraMovement = Camera.main.GetComponent<CameraMovement>();
+        
+        _outsideAllowedAtUnscaledTime = 0f;
     }
 
     public void OnClicked(RaycastHit2D hit)
@@ -25,8 +34,15 @@ public class Door : MonoBehaviour, IClickable2D
         bool newState = !doorMenu.activeSelf;
         doorMenu.SetActive(newState);
 
-        if (newState) UIModal.Open();
-        else UIModal.Close();
+        if (newState)
+        {
+            UIModal.Open();
+            _outsideAllowedAtUnscaledTime = Time.unscaledTime + outsideLockSecondsAfterOpen;
+        }
+        else
+        {
+            UIModal.Close();
+        }
     }
     
     public void CloseDoor()
@@ -40,6 +56,9 @@ public class Door : MonoBehaviour, IClickable2D
     
     public void Outside()
     {
+        if (Time.unscaledTime < _outsideAllowedAtUnscaledTime)
+            return;
+        
         if (doorMenu == null) return;
         if (!doorMenu.activeSelf) return;
 
@@ -50,5 +69,7 @@ public class Door : MonoBehaviour, IClickable2D
             cameraMovement.Outside();
         else
             Debug.LogWarning("Door.Outside(): No CameraMovement reference assigned/found.");
+        
+        outsideMenu.SetActive(true);
     }
 }
