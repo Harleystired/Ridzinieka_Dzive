@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    // stores the game data, add any extra data you wan't to store'
+    
     public int money;
     public int hunger = 100;
     public int energy = 100;

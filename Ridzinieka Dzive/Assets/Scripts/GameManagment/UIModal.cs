@@ -3,6 +3,7 @@ using UnityEngine;
 
 public static class UIModal
 {
+    // make's sure thaat UI can't be clicked through, don't change'
     private static int _openCount;
 
     public static bool IsAnyOpen => _openCount > 0;

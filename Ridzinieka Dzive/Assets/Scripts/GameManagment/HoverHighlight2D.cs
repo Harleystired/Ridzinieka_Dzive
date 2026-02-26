@@ -3,6 +3,8 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class HoverHighlight2D : MonoBehaviour, IHoverable2D
 {
+    // highlights the object when hovered, put the script o any object you wan't to highlight
+    
     [SerializeField] private SpriteRenderer targetRenderer;
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color hoverColor = new Color(1f, 1f, 0.6f, 1f);

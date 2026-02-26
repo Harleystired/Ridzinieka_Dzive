@@ -1,60 +1,54 @@
 using UnityEngine;
 
 public class Door : MonoBehaviour, IClickable2D
-{   [SerializeField] GameObject doorMenu;
-    [SerializeField] GameObject outsideMenu;
-    private IClickable2D _clickable2DImplementation;
-    [SerializeField] CameraMovement cameraMovement;
-    [SerializeField] GameObject roomArrow;
+{   [SerializeField] GameObject doorMenu; //assigns the UI element
+    [SerializeField] GameObject outsideMenu; //assigns the UI element
+    [SerializeField] CameraMovement cameraMovement; // assign the camera movement script
+    [SerializeField] GameObject roomArrow; // assign the arrow (so they can be removed)
     
+    // makes it so the UI buttons can't be autoclicked upon Ui opening
     [SerializeField] float outsideLockSecondsAfterOpen = 0.35f;
     private float _outsideAllowedAtUnscaledTime;
     
+    //WIP
     public bool work = false;
     public bool shop = false;
 
     private void Awake()
     {
         if (doorMenu != null)
-            doorMenu.SetActive(false);
+            doorMenu.SetActive(false); //hides the UI element
         
         if (outsideMenu != null)
-            outsideMenu.SetActive(false);
+            outsideMenu.SetActive(false); //hides the UI element
         
         if (cameraMovement == null && Camera.main != null)
-            cameraMovement = Camera.main.GetComponent<CameraMovement>();
+            cameraMovement = Camera.main.GetComponent<CameraMovement>(); //assigns the camera movement script
         
         _outsideAllowedAtUnscaledTime = 0f;
     }
 
-    public void OnClicked(RaycastHit2D hit)
+    public void OnClicked(RaycastHit2D hit) //opens the door upon clicking
     {
         if (doorMenu == null) return;
 
         bool newState = !doorMenu.activeSelf;
         doorMenu.SetActive(newState);
 
-        if (newState)
-        {
-            UIModal.Open();
-            _outsideAllowedAtUnscaledTime = Time.unscaledTime + outsideLockSecondsAfterOpen;
-        }
-        else
-        {
-            UIModal.Close();
-        }
+        if (newState) UIModal.Open(); // makes it so other object can't be clicked through UI
+        else UIModal.Close();
     }
     
-    public void CloseDoor()
+    public void CloseDoor() //closes the door
     {
         if (doorMenu == null) return;
         if (!doorMenu.activeSelf) return;
 
         doorMenu.SetActive(false);
-        UIModal.Close();
+        UIModal.Close(); // allows other objects to be clicked, if this is not done, NOTHING will be clickable
     }
     
-    public void Outside()
+    public void Outside() //opens the outside menu
     {
         if (Time.unscaledTime < _outsideAllowedAtUnscaledTime)
             return;
@@ -65,7 +59,7 @@ public class Door : MonoBehaviour, IClickable2D
         doorMenu.SetActive(false);
         roomArrow.SetActive(false);
         
-        if (cameraMovement != null)
+        if (cameraMovement != null) // moves the camera to the outside
             cameraMovement.Outside();
         else
             Debug.LogWarning("Door.Outside(): No CameraMovement reference assigned/found.");

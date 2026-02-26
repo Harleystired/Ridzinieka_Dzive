@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    // moves the camera around the room with the use of buttons, add any extra places and set camera position
     private void Awake()
     {
-        transform.position = new Vector3(0, 0, -10);
+        transform.position = new Vector3(0, 0, -10); //sets the camera position at the start of game
     }
 
     public void Kitchen()
@@ -28,6 +29,7 @@ public class CameraMovement : MonoBehaviour
         Debug.Log("Camera position now: " + transform.position);
     }
     
+    // all job locations will be added here
     public void Work1()
     {
         Debug.Log("Close() clicked on: " + gameObject.name);

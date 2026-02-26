@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class InputHandler : MonoBehaviour
 {
+    // handles the input, add any extra input you wan't to handle'
+    
     private Camera mainCam;
     private IHoverable2D currentHoverable;
     
