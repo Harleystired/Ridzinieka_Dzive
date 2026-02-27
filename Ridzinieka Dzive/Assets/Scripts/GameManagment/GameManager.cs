@@ -72,5 +72,12 @@ public class GameManager : MonoBehaviour
         currentDayIndex++;
         OnDayChanged?.Invoke(currentDayIndex);
     }
+
+    public bool SpendMoney(int amount)
+    {
+        if (money < amount) return false;
+        money -= amount;
+        return true;
+    }
 }
 
