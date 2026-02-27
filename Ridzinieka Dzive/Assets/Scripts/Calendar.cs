@@ -8,6 +8,8 @@ public class Calendar : MonoBehaviour, IClickable2D
     
     [Range(0f, 1f)]
     [SerializeField] private float previousDayAlpha = 0.5f;
+    [SerializeField] private GameObject timeOfDayUI;
+
     
     private void Awake() //hides the calendar
     {
@@ -64,6 +66,9 @@ public class Calendar : MonoBehaviour, IClickable2D
 
         bool newState = !calendar.activeSelf;
         calendar.SetActive(newState);
+        
+        if (timeOfDayUI != null) 
+            timeOfDayUI.SetActive(!newState);
 
         if (newState) UIModal.Open(); // makes it so other object can't be clicked through UI
         else UIModal.Close();
@@ -76,6 +81,8 @@ public class Calendar : MonoBehaviour, IClickable2D
 
         calendar.SetActive(false);
 
+        if (timeOfDayUI != null) 
+            timeOfDayUI.SetActive(true);
         UIModal.Close(); // allows other objects to be clicked, if this is not done, NOTHING will be clickable
     }
 }

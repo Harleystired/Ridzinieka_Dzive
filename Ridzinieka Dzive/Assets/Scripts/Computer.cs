@@ -3,7 +3,7 @@ using UnityEngine;
 public class Computer : MonoBehaviour, IClickable2D
 {
     [SerializeField] GameObject computer; //assigns the UI element
-    
+    [SerializeField] private GameObject TimeOfDayUI;
     private void Awake() //hides the computer
     {
         if (computer != null)
@@ -17,6 +17,9 @@ public class Computer : MonoBehaviour, IClickable2D
         bool newState = !computer.activeSelf;
         computer.SetActive(newState);
 
+        if (TimeOfDayUI != null)
+            TimeOfDayUI.SetActive(!newState);
+        
         if (newState) UIModal.Open(); // makes it so other object can't be clicked through UI
         else UIModal.Close();
     }
@@ -27,6 +30,8 @@ public class Computer : MonoBehaviour, IClickable2D
         if (!computer.activeSelf) return;
 
         computer.SetActive(false);
+        if (TimeOfDayUI != null)
+            TimeOfDayUI.SetActive(true);
 
         UIModal.Close(); // allows other objects to be clicked, if this is not done, NOTHING will be clickable
     }
