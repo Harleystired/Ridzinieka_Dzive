@@ -8,6 +8,10 @@ public class ShopItem : MonoBehaviour, IPointerClickHandler
     public int quantity = 0;
 
     public UIShopItem ui; // atsauce uz UI skriptu
+    private void Start()
+    {
+        ShopManager.Instance.allItems.Add(this);
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {

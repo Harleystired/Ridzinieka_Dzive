@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int stress = 0;
     public int health = 100;
     
+    
     public bool oldBike = false;
     public bool newBike = false;
     public bool oldCar = false;
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     public float day;
     public float evening;
     public float night;
+    public event Action<int> OnMoneyChanged;
     public enum TimeOfDay
     {
         Morning = 0,
@@ -72,12 +74,21 @@ public class GameManager : MonoBehaviour
         currentDayIndex++;
         OnDayChanged?.Invoke(currentDayIndex);
     }
+    public void AddMoney(int amount)
+    {
+        money += amount;
+        OnMoneyChanged?.Invoke(money);
+    }
 
     public bool SpendMoney(int amount)
     {
-        if (money < amount) return false;
+        if (money < amount)
+            return false;
+
         money -= amount;
+        OnMoneyChanged?.Invoke(money);
         return true;
     }
+
 }
 

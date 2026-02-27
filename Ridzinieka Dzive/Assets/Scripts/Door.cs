@@ -5,6 +5,8 @@ public class Door : MonoBehaviour, IClickable2D
     [SerializeField] GameObject outsideMenu; //assigns the UI element
     [SerializeField] CameraMovement cameraMovement; // assign the camera movement script
     [SerializeField] GameObject roomArrow; // assign the arrow (so they can be removed)
+    [SerializeField] private GameObject shopPanel;
+
     
     // makes it so the UI buttons can't be autoclicked upon Ui opening
     [SerializeField] float outsideLockSecondsAfterOpen = 0.35f;
@@ -66,4 +68,19 @@ public class Door : MonoBehaviour, IClickable2D
         
         outsideMenu.SetActive(true);
     }
+    public void OpenShop()
+    {
+        if (shopPanel == null) return;
+
+        shopPanel.SetActive(true);
+        UIModal.Open(); 
+    }
+    public void CloseShop()
+    {
+        if (shopPanel == null) return;
+        ShopManager.Instance.ClearCart();
+        shopPanel.SetActive(false);
+        UIModal.Close();
+    }
+
 }
