@@ -13,6 +13,7 @@ public class Door : MonoBehaviour, IClickable2D
     private float _outsideAllowedAtUnscaledTime;
     
     //WIP
+    public bool home = true;
     public bool work = false;
     public bool shop = false;
 
@@ -68,6 +69,19 @@ public class Door : MonoBehaviour, IClickable2D
         
         outsideMenu.SetActive(true);
     }
+
+    public void workOffice()
+    {
+        if (cameraMovement != null) // moves the camera to the office
+            cameraMovement.workOffice();
+    }
+
+    public void Shop()
+    {
+        if (cameraMovement != null) // moves the camera to the shop
+            cameraMovement.Shop();
+    }
+
     public void OpenShop()
     {
         if (shopPanel == null) return;
