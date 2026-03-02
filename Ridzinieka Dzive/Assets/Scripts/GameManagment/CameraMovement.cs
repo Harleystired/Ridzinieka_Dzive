@@ -28,11 +28,20 @@ public class CameraMovement : MonoBehaviour
         transform.position = new Vector3(-25, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
     }
-    
+
+    public void Shop()
+    {
+        Debug.Log("Shop() clicked on: " + gameObject.name);
+        transform.position = new Vector3(-50, 0, -10);
+        Debug.Log("Camera position now: " + transform.position);
+    }
+
     // all job locations will be added here
-    public void Work1()
+    public void workOffice()
     {
         Debug.Log("Close() clicked on: " + gameObject.name);
+        transform.position = new Vector3(-75, 0, -10);
+        Debug.Log("Camera position now: " + transform.position);
     }
     
 }
