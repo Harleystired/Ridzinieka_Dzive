@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class JobPanelController : MonoBehaviour
 {
@@ -11,6 +12,13 @@ public class JobPanelController : MonoBehaviour
         public string description;
         public string salary;
         public string hours;
+
+        // Stat impacts
+        public int hungerChange;
+        public int energyChange;
+        public int stressChange;
+        public int healthChange;
+        public int moneyEarned;
     }
 
     public JobData[] jobs;
@@ -25,7 +33,6 @@ public class JobPanelController : MonoBehaviour
     public Button rightArrow;
 
     public TextMeshProUGUI dayText;
-    public TextMeshProUGUI balanceText;
 
     public TextMeshProUGUI budgetText;
     public TextMeshProUGUI stressText;
@@ -49,7 +56,7 @@ public class JobPanelController : MonoBehaviour
     private void UpdateHeader()
     {
         dayText.text = "Day " + (gameManager.CurrentDayIndex + 1);
-        balanceText.text = "€" + gameManager.money;
+        
     }
 
     private void UpdateStats()
@@ -91,8 +98,27 @@ public class JobPanelController : MonoBehaviour
 
     public void ChooseJob()
     {
-        Debug.Log("Chosen job: " + jobs[currentJobIndex].title);
-        // Te vēlāk varēsi pievienot statiem ietekmi
-        // UIManager.Instance.Show("NextPanel");
+        var job = jobs[currentJobIndex];
+
+        // Apply stat changes
+        gameManager.hunger += job.hungerChange;
+        gameManager.energy += job.energyChange;
+        gameManager.stress += job.stressChange;
+        gameManager.health += job.healthChange;
+        gameManager.money += job.moneyEarned;
+
+        Debug.Log("Chosen job: " + job.title);
+
+        var statsUI = FindFirstObjectByType<StatsUI>();
+        if (statsUI != null)
+            statsUI.UpdateStats();
+        StartCoroutine(ClosePanelDelayed());
     }
+
+    private System.Collections.IEnumerator ClosePanelDelayed()
+    {
+        yield return new WaitForSeconds(0.05f);
+        gameObject.SetActive(false);
+    }
+    
 }
