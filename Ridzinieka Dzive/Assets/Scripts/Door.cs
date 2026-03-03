@@ -6,7 +6,6 @@ public class Door : MonoBehaviour, IClickable2D
     [SerializeField] GameObject outsideMenu; //assigns the UI element
     [SerializeField] CameraMovement cameraMovement; // assign the camera movement script
     [SerializeField] GameObject roomArrow; // assign the arrow (so they can be removed)
-    [SerializeField] private GameObject shopPanel;
 
     [SerializeField] private OutsideUI outsideController; // NEW: the script that now owns the Outside() logic
     [SerializeField] private GameManager gameManager;
@@ -83,21 +82,6 @@ public class Door : MonoBehaviour, IClickable2D
         gameManager.SetPendingDestination(GameManager.Destination.Shop);
 
         Outside();
-    }
-
-    public void OpenShop()
-    {
-        if (shopPanel == null) return;
-
-        shopPanel.SetActive(true);
-        UIModal.Open(); 
-    }
-    public void CloseShop()
-    {
-        if (shopPanel == null) return;
-        ShopManager.Instance.ClearCart();
-        shopPanel.SetActive(false);
-        UIModal.Close();
     }
 
 }
