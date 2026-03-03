@@ -108,6 +108,9 @@ public class JobPanelController : MonoBehaviour
         gameManager.money += job.moneyEarned;
 
         Debug.Log("Chosen job: " + job.title);
+        
+        if (gameManager != null)
+            gameManager.SetSelectedJobFromIndex(currentJobIndex);
 
         var statsUI = FindFirstObjectByType<StatsUI>();
         if (statsUI != null)

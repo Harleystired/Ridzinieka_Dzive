@@ -44,4 +44,18 @@ public class CameraMovement : MonoBehaviour
         Debug.Log("Camera position now: " + transform.position);
     }
     
+    public void workCashier()
+    {
+        Debug.Log("Close() clicked on: " + gameObject.name);
+        transform.position = new Vector3(-100, 0, -10);
+        Debug.Log("Camera position now: " + transform.position);
+    }
+    
+    public void workTaxi()
+    {
+        Debug.Log("Close() clicked on: " + gameObject.name);
+        transform.position = new Vector3(-130, 0, -10);
+        Debug.Log("Camera position now: " + transform.position);
+    }
+    
 }
