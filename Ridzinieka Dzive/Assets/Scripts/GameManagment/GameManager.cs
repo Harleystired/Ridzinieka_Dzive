@@ -27,8 +27,9 @@ public class GameManager : MonoBehaviour
     public enum Destination
     {
         None = 0,
-        Work = 1,
-        Shop = 2
+        Home = 1,
+        Work = 2,
+        Shop = 3
     }
     public enum TransportMode
     {
@@ -121,47 +122,41 @@ public class GameManager : MonoBehaviour
     {
         SetLocation(Location.Outside);
     }
+    
+    public void BeginTravelTo(Destination destination)
+    {
+        if (destination == Destination.None) return;
+
+        SetPendingDestination(destination);
+        EnterOutside();
+    }
     public void ConfirmTravel(TransportMode transportMode)
     {
         if (pendingDestination == Destination.None)
         {
-            Debug.LogWarning("GameManager.ConfirmTravel(): No pending destination selected (Work/Shop).");
+            Debug.LogWarning("GameManager.ConfirmTravel(): No pending destination selected.");
             return;
         }
 
-        // Optional: validate transport availability using your owned items flags
-        if (!IsTransportAvailable(transportMode))
+        Location targetLocation;
+        switch (pendingDestination)
         {
-            Debug.LogWarning($"GameManager.ConfirmTravel(): Transport not available: {transportMode}");
-            return;
+            case Destination.Home:
+                targetLocation = Location.Home;
+                break;
+            case Destination.Work:
+                targetLocation = Location.Work;
+                break;
+            case Destination.Shop:
+                targetLocation = Location.Shop;
+                break;
+            default:
+                Debug.LogWarning($"GameManager.ConfirmTravel(): Unsupported destination: {pendingDestination}");
+                return;
         }
-
-        Location targetLocation = pendingDestination == Destination.Work ? Location.Work : Location.Shop;
 
         ClearPendingDestination();
         SetLocation(targetLocation);
-    }
-    private bool IsTransportAvailable(TransportMode mode)
-    {
-        switch (mode)
-        {
-            case TransportMode.Walk:
-                return true;
-            case TransportMode.PublicTrans:
-                return false;
-            case TransportMode.Taxi:
-                return false;
-            case TransportMode.OldBike:
-                return oldBike;
-            case TransportMode.NewBike:
-                return newBike;
-            case TransportMode.OldCar:
-                return oldCar;
-            case TransportMode.NewCar:
-                return newCar;
-            default:
-                return false;
-        }
     }
     
     private void SetLocation(Location newLocation)

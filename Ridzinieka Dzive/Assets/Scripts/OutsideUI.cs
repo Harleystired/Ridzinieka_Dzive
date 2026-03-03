@@ -5,7 +5,6 @@ public class OutsideUI : MonoBehaviour
     [SerializeField] private GameObject doorMenu;     // the door UI to close
     [SerializeField] private GameObject outsideMenu;  // the outside UI to open
     [SerializeField] private CameraMovement cameraMovement;
-    [SerializeField] private GameObject roomArrow;
     [SerializeField] private GameManager gameManager;
     
     // makes it so the UI buttons can't be autoclicked upon Ui opening
@@ -23,29 +22,71 @@ public class OutsideUI : MonoBehaviour
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
     }
+    private void OnEnable()
+    {
+        if (gameManager == null)
+            gameManager = FindFirstObjectByType<GameManager>();
 
+        if (gameManager != null)
+            gameManager.OnLocationChanged += HandleLocationChanged;
+
+        if (gameManager != null)
+            HandleLocationChanged(gameManager.CurrentLocation);
+    }
+
+    private void OnDisable()
+    {
+        if (gameManager != null)
+            gameManager.OnLocationChanged -= HandleLocationChanged;
+
+        CloseOutsideMenu();
+    }
+
+    private void HandleLocationChanged(GameManager.Location location)
+    {
+        // If we're not outside anymore, make sure the outside UI is closed and modal released.
+        if (location != GameManager.Location.Outside)
+            CloseOutsideMenu();
+    }
+    
     // Call this from Door.cs (or directly from a UI Button if you want later)
     public void Outside()
     {
         if (Time.unscaledTime < _outsideAllowedAtUnscaledTime)
-            return;
+        return;
 
-        if (doorMenu == null) return;
-        if (!doorMenu.activeSelf) return;
+        // If called while door menu is open, close it (optional)
+        if (doorMenu != null && doorMenu.activeSelf)
+            doorMenu.SetActive(false);
 
-        doorMenu.SetActive(false);
-
-        if (roomArrow != null)
-            roomArrow.SetActive(false);
-
-        if (cameraMovement != null) // moves the camera to the outside
+        if (cameraMovement != null)
             cameraMovement.Outside();
-        else
-            Debug.LogWarning("Outside.Outside(): No CameraMovement reference assigned/found.");
 
-        if (outsideMenu != null)
-            outsideMenu.SetActive(true);
+        SetOutsideMenuActive(true);
     }
+   
+    public void ShowOutsideMenu()
+    {
+        SetOutsideMenuActive(true);
+    }
+    
+    public void CloseOutsideMenu()
+    {
+        SetOutsideMenuActive(false);
+    }
+    
+    private void SetOutsideMenuActive(bool active)
+    {
+        if (outsideMenu == null) return;
+
+        bool wasActive = outsideMenu.activeSelf;
+        if (wasActive == active) return;
+
+        outsideMenu.SetActive(active);
+
+        if (active) UIModal.Open();
+        else UIModal.Close();
+    } 
     
     public void ChooseWalk() => ChooseTransport(GameManager.TransportMode.Walk);
     public void ChoosePublicTrans() => ChooseTransport(GameManager.TransportMode.PublicTrans);
@@ -58,10 +99,7 @@ public class OutsideUI : MonoBehaviour
         if (gameManager == null) return;
 
         gameManager.ConfirmTravel(mode);
-
-        // You can close/hide the outside menu here after travel is confirmed
-        // (or drive this from OnLocationChanged later if you prefer)
-        if (outsideMenu != null)
-            outsideMenu.SetActive(false);
+        
+        CloseOutsideMenu();
     }
 }

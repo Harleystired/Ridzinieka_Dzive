@@ -54,7 +54,11 @@ public class Door : MonoBehaviour, IClickable2D
     
     public void Outside()
     {
-        doorMenu.SetActive(false);
+        if (doorMenu != null && doorMenu.activeSelf)
+        {
+            doorMenu.SetActive(false);
+            UIModal.Close();
+        }
 
         if (outsideController == null)
         {
@@ -65,7 +69,8 @@ public class Door : MonoBehaviour, IClickable2D
         if (gameManager != null)
             gameManager.EnterOutside();
 
-        outsideController.Outside();
+        // Door menu is already closed, so use the generic opener.
+        outsideController.ShowOutsideMenu();
     }
 
     public void GoToWork()

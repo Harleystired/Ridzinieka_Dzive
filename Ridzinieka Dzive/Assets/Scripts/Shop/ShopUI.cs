@@ -13,11 +13,16 @@ public class ShopUI : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private OutsideUI outsideUIController;
 
     void Awake()
     {
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+        
+        if (outsideUIController == null)
+            outsideUIController = FindFirstObjectByType<OutsideUI>();
+
        
         if (shopUI != null) shopUI.SetActive(false);
         if (shopPanel != null) shopPanel.SetActive(false);
@@ -34,10 +39,21 @@ public class ShopUI : MonoBehaviour
     private void OnDisable()
     {
         if (gameManager != null)
-            gameManager.OnLocationChanged += HandleLocationChanged;
+            gameManager.OnLocationChanged -= HandleLocationChanged;
 
-        if (gameManager != null)
-            HandleLocationChanged(gameManager.CurrentLocation);
+        if (shopUI != null) shopUI.SetActive(false);
+        if (shopPanel != null) shopPanel.SetActive(false);
+    }
+    
+    public void ReturnHome()
+    {
+        CloseShop();
+
+        if (gameManager == null) return;
+
+        gameManager.BeginTravelTo(GameManager.Destination.Home);
+        if (outsideUIController != null)
+            outsideUIController.ShowOutsideMenu();
     }
     
     private void HandleLocationChanged(GameManager.Location location)
@@ -54,9 +70,9 @@ public class ShopUI : MonoBehaviour
             return;
         }
 
-        // Arriving at the shop: outside UI should be hidden
-        if (outsideUI != null)
-            outsideUI.SetActive(false);
+        // IMPORTANT: don't SetActive(false) on the outside menu directly (it leaks UIModal)
+        if (outsideUIController != null)
+            outsideUIController.CloseOutsideMenu();
     }
     // Hook this to the Shop UI button's OnClick()
     public void OpenShop()

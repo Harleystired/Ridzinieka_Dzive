@@ -12,13 +12,25 @@ public class WorkUI : MonoBehaviour
 
     [Header("Refs")]
     [SerializeField] private GameManager gameManager;
+    [SerializeField] private OutsideUI outsideUIController;
 
     private void Awake()
     {
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+        
+        if (outsideUIController == null)
+            outsideUIController = FindFirstObjectByType<OutsideUI>();
 
         SetAllJobUIsActive(false);
+    }
+    public void ReturnHome()
+    {
+        if (gameManager == null) return;
+
+        gameManager.BeginTravelTo(GameManager.Destination.Home);
+        if (outsideUIController != null)
+            outsideUIController.ShowOutsideMenu();
     }
 
     private void OnEnable()
@@ -43,13 +55,13 @@ public class WorkUI : MonoBehaviour
         {
             ShowSelectedJobUI();
 
-            if (outsideUI != null)
-                outsideUI.SetActive(false);
+            // IMPORTANT: don't SetActive(false) on the outside menu directly (it leaks UIModal)
+            if (outsideUIController != null)
+                outsideUIController.CloseOutsideMenu();
 
             return;
         }
 
-        // Not at work -> hide all work UIs
         SetAllJobUIsActive(false);
     }
 
