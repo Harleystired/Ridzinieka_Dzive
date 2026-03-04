@@ -231,6 +231,17 @@ public class GameManager : MonoBehaviour
         if (hunger > 0) hunger = 0;
         if (hunger < -100) hunger = -100;
     }
+    public void AddStress(int amount)
+    {
+        stress += amount;
+
+        if (stress < 0)
+            stress = 0;
+
+        if (stress > 100)
+            stress = 100;
+    }
+
 
 }
 

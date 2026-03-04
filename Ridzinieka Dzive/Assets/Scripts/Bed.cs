@@ -26,16 +26,31 @@ public class Bed : MonoBehaviour, IClickable2D
         else UIModal.Close();
     }
 
-    public void Sleep() //advances the day
+    public void Sleep()
     {
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) return;
-
-        gameManager.AdvanceDay();
-        gameManager.SetTimeOfDay(GameManager.TimeOfDay.Morning);
         
+        gameManager.AddHunger(-35);
+
+        // Stress vienmēr uz 0
+        gameManager.stress = 0;
+
+        // Pāriet uz nākamo dienu
+        gameManager.AdvanceDay();
+
+        // No rīta
+        gameManager.SetTimeOfDay(GameManager.TimeOfDay.Morning);
+
+        // Atjauno UI, ja ir StatsUI
+        var statsUI = FindFirstObjectByType<StatsUI>();
+        if (statsUI != null)
+            statsUI.UpdateStats();
+
+        // Aizver gultas UI
         CloseBed();
     }
+
 
     public void Nap() // advances time of day
     {
@@ -48,6 +63,11 @@ public class Bed : MonoBehaviour, IClickable2D
 
         if (before == GameManager.TimeOfDay.Night && gameManager.CurrentTime == GameManager.TimeOfDay.Morning)
             gameManager.AdvanceDay();
+        gameManager.AddHunger(-20);
+        gameManager.AddStress(-20);
+        var statsUI = FindFirstObjectByType<StatsUI>();
+        if (statsUI != null) 
+            statsUI.UpdateStats();
     }
 
     public void CloseBed() //closes the bed
