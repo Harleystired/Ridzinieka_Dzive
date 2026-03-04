@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,11 +10,21 @@ public class TimeOfDayUI : MonoBehaviour
     [SerializeField] private Sprite daySprite;
     [SerializeField] private Sprite eveningSprite;
     [SerializeField] private Sprite nightSprite;
+    [SerializeField] private TMP_Text dayText;
+
 
     private void Start()
     {
         UpdateIcon(gameManager.CurrentTime);
         gameManager.OnTimeOfDayChanged += UpdateIcon;
+        gameManager.OnDayChanged += UpdateDayText;
+        UpdateDayText(gameManager.CurrentDayIndex);
+        
+    }
+
+    private void UpdateDayText(int dayIndex)
+    {
+        dayText.text = "Day " + (dayIndex + 1);
     }
 
     private void UpdateIcon(GameManager.TimeOfDay time)
@@ -38,5 +49,6 @@ public class TimeOfDayUI : MonoBehaviour
     private void OnDestroy()
     {
         gameManager.OnTimeOfDayChanged -= UpdateIcon;
+        gameManager.OnDayChanged -= UpdateDayText;
     }
 }

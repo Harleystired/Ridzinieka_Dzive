@@ -37,7 +37,8 @@ public class Calendar : MonoBehaviour, IClickable2D
         if (gameManager == null) return;
         if (gameManager.calendarDay == null) return;
 
-        int current = Mathf.Clamp(gameManager.CurrentDayIndex, 0, gameManager.calendarDay.Length - 1);
+        int current = Mathf.Clamp(gameManager.CurrentDayIndex + 1, 0, gameManager.calendarDay.Length - 1);
+
 
         for (int i = 0; i < gameManager.calendarDay.Length; i++)
         {
