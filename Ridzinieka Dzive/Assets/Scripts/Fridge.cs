@@ -21,6 +21,17 @@ public class Fridge : MonoBehaviour, IClickable2D
         else UIModal.Close();
     }
 
+    public void OpenFridgeFromButton()
+    {
+        if (fridge == null) return;
+        fridge.SetActive(true); UIModal.Open();
+    }
+
+    public void CloseFridgeFromButton()
+    {
+        if (fridge == null) return;
+        fridge.SetActive(false); UIModal.Close();
+    }
     public void Eat()
     {
     }

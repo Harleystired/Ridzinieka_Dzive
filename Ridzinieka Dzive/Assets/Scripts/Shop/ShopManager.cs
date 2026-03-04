@@ -62,6 +62,23 @@ public class ShopManager : MonoBehaviour
         }
 
         Debug.Log("Pirkums veiksmīgs!");
+
+        // Pievieno preces inventāram
+        foreach (var item in allItems)
+        {
+            if (item.quantity > 0)
+            {
+                for (int i = 0; i < item.quantity; i++)
+                {
+                    gameManager.ownedItems.Add(item.itemName);
+                }
+            }
+        }
+
         ClearCart();
+
+        var statsUI = FindFirstObjectByType<StatsUI>();
+        if (statsUI != null)
+            statsUI.UpdateStats();
     }
 }

@@ -1,9 +1,11 @@
 using System;
 using UnityEngine;
+using System.Collections.Generic;
+
 
 public class GameManager : MonoBehaviour
 {
-    // stores the game data, add any extra data you wan't to store'
+    // stores the game data, add any extra data you want to store
     
     public int money;
     public int hunger = 100;
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
     public bool newBike = false;
     public bool oldCar = false;
     public bool newCar = false;
+
+    public List<string> ownedItems = new List<string>();
     
     public enum Location
     {
@@ -219,6 +223,13 @@ public class GameManager : MonoBehaviour
         money -= amount;
         OnMoneyChanged?.Invoke(money);
         return true;
+    }
+
+    public void AddHunger(int amount)
+    {
+        hunger += amount;
+        if (hunger > 0) hunger = 0;
+        if (hunger < -100) hunger = -100;
     }
 
 }
