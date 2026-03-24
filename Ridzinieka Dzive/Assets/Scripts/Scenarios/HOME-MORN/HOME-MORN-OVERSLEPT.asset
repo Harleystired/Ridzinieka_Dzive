@@ -15,6 +15,7 @@ MonoBehaviour:
   scenarioId: HOME_MORNING_OVERSLEPT
   weight: 100
   minDaysBetweenShows: 3
+  isMandatory: 1
   prompt: "Tu pamodies un redzi ka esi aizgul\u0113jies."
   allowedLocations: 00000000
   allowedTimes: 00000000
