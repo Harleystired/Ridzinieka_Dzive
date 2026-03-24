@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: HOME-MORN-OVERSLEPT
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
   scenarioId: HOME_MORNING_OVERSLEPT
-  weight: 1
+  weight: 100
   minDaysBetweenShows: 3
   prompt: "Tu pamodies un redzi ka esi aizgul\u0113jies."
   allowedLocations: 00000000

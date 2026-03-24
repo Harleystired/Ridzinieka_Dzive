@@ -5,10 +5,17 @@ public class Bed : MonoBehaviour, IClickable2D
     [SerializeField] GameObject bed; //assigns the UI element
     [SerializeField] private GameManager gameManager;
     
+    [Header("Scenario Blocking")]
+    [SerializeField] private ScenarioManager scenarioManager;
+    [SerializeField] private SimpleTooltip tooltip;
+    
     private void Awake() //hides the bed
     {
         if (bed != null)
             bed.SetActive(false);
+
+        if (scenarioManager == null)
+            scenarioManager = FindFirstObjectByType<ScenarioManager>();
     }
     private void Start()
     {
@@ -28,9 +35,16 @@ public class Bed : MonoBehaviour, IClickable2D
 
     public void Sleep()
     {
+        if (scenarioManager != null && scenarioManager.IsHomeBlocked(out string reason))
+        {
+            if (tooltip != null) tooltip.Show(reason);
+            else Debug.Log(reason);
+            return;
+        }
+
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) return;
-        
+
         gameManager.AddHunger(-35);
 
         // Stress vienmēr uz 0
@@ -54,6 +68,13 @@ public class Bed : MonoBehaviour, IClickable2D
 
     public void Nap() // advances time of day
     {
+        if (scenarioManager != null && scenarioManager.IsHomeBlocked(out string reason))
+        {
+            if (tooltip != null) tooltip.Show(reason);
+            else Debug.Log(reason);
+            return;
+        }
+
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) return;
 
@@ -63,10 +84,12 @@ public class Bed : MonoBehaviour, IClickable2D
 
         if (before == GameManager.TimeOfDay.Night && gameManager.CurrentTime == GameManager.TimeOfDay.Morning)
             gameManager.AdvanceDay();
+
         gameManager.AddHunger(-20);
         gameManager.AddStress(-20);
+
         var statsUI = FindFirstObjectByType<StatsUI>();
-        if (statsUI != null) 
+        if (statsUI != null)
             statsUI.UpdateStats();
     }
 
@@ -77,6 +100,6 @@ public class Bed : MonoBehaviour, IClickable2D
 
         bed.SetActive(false);
 
-        UIModal.Close(); // allows other objects to be clicked, if this is not done, NOTHING will be clickable
+        UIModal.Close(); // allows other objects to be clicked
     }
 }

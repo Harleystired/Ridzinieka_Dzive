@@ -19,16 +19,53 @@ public class ScenarioManager : MonoBehaviour
     [Header("Trigger Chances")]
     [Range(0f, 1f)] [SerializeField] private float outsideChance = 0.35f;
     [Range(0f, 1f)] [SerializeField] private float shopChance = 0.25f;
+    
+    [Header("Debug")]
+    [SerializeField] private bool debugLogs = true;
 
     private readonly Queue<ScenarioDefinition> _queue = new();
     private bool _isShowing;
+    private bool _isComputerOpen;
+    
+    private ScenarioDefinition _currentScenario;
 
     // scenarioId -> last day index shown
     private readonly Dictionary<string, int> _lastShownDayById = new();
-    
+
     private IScenarioPanel ComputerPanel => computerPanelBehaviour as IScenarioPanel;
     private IScenarioPanel PhonePanel => phonePanelBehaviour as IScenarioPanel;
 
+    public bool HasPendingScenarios => _isShowing || _queue.Count > 0;
+
+    public bool HasPendingMandatoryHomeScenario
+    {
+        get
+        {
+            if (gameManager == null) return false;
+            if (gameManager.CurrentLocation != GameManager.Location.Home) return false;
+
+            if (_currentScenario != null && _isShowing && _currentScenario.isMandatory) return true;
+
+            foreach (var s in _queue)
+            {
+                if (s != null && s.isMandatory) return true;
+            }
+
+            return false;
+        }
+    }
+
+    public bool IsHomeBlocked(out string reason)
+    {
+        if (HasPendingMandatoryHomeScenario)
+        {
+            reason = "Pagaidi! Tev atnāca ziņa datorā!";
+            return true;
+        }
+
+        reason = null;
+        return false;
+    }
     private void Awake()
     {
         if (gameManager == null)
@@ -41,6 +78,9 @@ public class ScenarioManager : MonoBehaviour
 
         gameManager.OnLocationChanged += HandleLocationChanged;
         gameManager.OnTimeOfDayChanged += HandleTimeChanged;
+
+        // Kick off an attempt immediately for testing / scene load cases
+        TryEnqueueFromContext(gameManager.CurrentLocation);
     }
     
      private void OnDisable()
@@ -50,20 +90,35 @@ public class ScenarioManager : MonoBehaviour
         gameManager.OnLocationChanged -= HandleLocationChanged;
         gameManager.OnTimeOfDayChanged -= HandleTimeChanged;
     }
+     
+    public void NotifyComputerOpened()
+    {
+        _isComputerOpen = true;
+
+        if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Home)
+            ShowNext();
+    }
+
+    public void NotifyComputerClosed()
+    {
+        _isComputerOpen = false;
+    }
 
     private void HandleLocationChanged(GameManager.Location location)
     {
-        // Trigger attempt on location change (with your rules)
         TryEnqueueFromContext(location);
-    }
 
+        // If we arrive home and the computer is open, show queued scenarios.
+        if (location == GameManager.Location.Home && _isComputerOpen)
+            ShowNext();
+    }
     private void HandleTimeChanged(GameManager.TimeOfDay _)
     {
-        // Optional: you can also trigger on time change.
-        // If you find it too frequent, remove this.
         TryEnqueueFromContext(gameManager.CurrentLocation);
-    }
 
+        if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Home && _isComputerOpen)
+            ShowNext();
+    }
     private void TryEnqueueFromContext(GameManager.Location location)
     {
         if (_queue.Count >= maxQueued) return;
@@ -71,17 +126,18 @@ public class ScenarioManager : MonoBehaviour
         float chance = GetChanceForLocation(location);
         if (chance <= 0f) return;
 
-        // Home/Work = always (chance=1). Outside/Shop = sometimes.
         if (chance < 1f && UnityEngine.Random.value > chance)
             return;
 
-        // Enqueue only ONE scenario per trigger (prevents constant 3)
         var picked = PickRandomEligibleWithCooldown();
         if (picked == null) return;
 
         _queue.Enqueue(picked);
 
-        if (!_isShowing)
+        // IMPORTANT:
+        // - Outside/Work/Shop: show immediately (phone UI).
+        // - Home: do NOT show until computer is opened.
+        if (!_isShowing && location != GameManager.Location.Home)
             ShowNext();
     }
 
@@ -170,18 +226,14 @@ public class ScenarioManager : MonoBehaviour
 
     private void ShowNext()
     {
+       
         if (_isShowing) return;
         if (_queue.Count == 0) return;
+        if (gameManager == null) return;
 
-        var scenario = _queue.Dequeue();
-        if (scenario == null) { ShowNext(); return; }
-
-        // Re-check conditions (context might have changed)
-        if (!scenario.CanRun(gameManager, gameManager.CurrentTime) || IsOnCooldown(scenario))
-        {
-            ShowNext();
+        // Home gating: only show when computer is open
+        if (gameManager.CurrentLocation == GameManager.Location.Home && !_isComputerOpen)
             return;
-        }
 
         var panel = ResolvePanelForCurrentContext();
         if (panel == null)
@@ -190,6 +242,16 @@ public class ScenarioManager : MonoBehaviour
             return;
         }
 
+        var scenario = _queue.Dequeue();
+        if (scenario == null) { ShowNext(); return; }
+
+        if (!scenario.CanRun(gameManager, gameManager.CurrentTime) || IsOnCooldown(scenario))
+        {
+            ShowNext();
+            return;
+        }
+
+        _currentScenario = scenario;
         _isShowing = true;
 
         panel.Show(
@@ -202,13 +264,14 @@ public class ScenarioManager : MonoBehaviour
                 ApplyChoice(scenario, choiceIndex);
                 MarkShownToday(scenario);
 
+                _currentScenario = null;
                 panel.Hide();
                 _isShowing = false;
 
-                // Show next queued scenario if any
                 ShowNext();
             });
     }
+    
 
     private void MarkShownToday(ScenarioDefinition s)
     {

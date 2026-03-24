@@ -10,6 +10,10 @@ public class Door : MonoBehaviour, IClickable2D
     [SerializeField] private OutsideUI outsideController; // NEW: the script that now owns the Outside() logic
     [SerializeField] private GameManager gameManager;
     
+    [Header("Scenario Blocking")]
+    [SerializeField] private ScenarioManager scenarioManager;
+    [SerializeField] private SimpleTooltip tooltip;
+    
     // makes it so the UI buttons can't be autoclicked upon Ui opening
     [SerializeField] float outsideLockSecondsAfterOpen = 0.35f;
     private float _outsideAllowedAtUnscaledTime;
@@ -28,6 +32,9 @@ public class Door : MonoBehaviour, IClickable2D
         
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+        
+        if (scenarioManager == null)
+            scenarioManager = FindFirstObjectByType<ScenarioManager>();
         
         _outsideAllowedAtUnscaledTime = 0f;
     }
@@ -54,6 +61,13 @@ public class Door : MonoBehaviour, IClickable2D
     
     public void Outside()
     {
+        if (scenarioManager != null && scenarioManager.IsHomeBlocked(out string reason))
+        {
+            if (tooltip != null) tooltip.Show(reason);
+            else Debug.Log(reason);
+            return;
+        }
+
         if (doorMenu != null && doorMenu.activeSelf)
         {
             doorMenu.SetActive(false);
@@ -69,7 +83,6 @@ public class Door : MonoBehaviour, IClickable2D
         if (gameManager != null)
             gameManager.EnterOutside();
 
-        // Door menu is already closed, so use the generic opener.
         outsideController.ShowOutsideMenu();
     }
 

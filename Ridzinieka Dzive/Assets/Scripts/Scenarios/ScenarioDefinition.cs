@@ -15,6 +15,10 @@ public class ScenarioDefinition : ScriptableObject
     [Tooltip("Minimum number of in-game days between this scenario showing again.")]
     [Min(0)] public int minDaysBetweenShows = 3;
     
+    [Header("Rules")]
+    [Tooltip("If true: player must resolve this scenario before leaving home / advancing time/day.")]
+    public bool isMandatory = true;
+    
     [Header("Content")]
     [TextArea(2, 6)] public string prompt;
 
