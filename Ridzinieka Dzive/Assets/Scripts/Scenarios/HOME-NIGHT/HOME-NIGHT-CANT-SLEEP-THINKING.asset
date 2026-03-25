@@ -10,28 +10,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-MORN-OVERSLEPT
+  m_Name: HOME-NIGHT-CANT-SLEEP-THINKING
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_MORNING_OVERSLEPT
-  weight: 5
-  minDaysBetweenShows: 4
+  scenarioId: HOME_NIGHT_CANT_SLEEP_THINKING
+  weight: 6
+  minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tu pamodies un redzi ka esi aizgul\u0113jies."
+  prompt: "Tu nevari aizmigt, jo dom\u0101 par kaut ko svar\u012Bgu r\u012Btam."
   allowedLocations: 00000000
-  allowedTimes: 00000000
+  allowedTimes: 03000000
   statRequirements: []
   choices:
-  - buttonText: "Lec no gultas \u0101r\u0101 un skrieni \u0101r\u0101 no m\u0101jas"
+  - buttonText: "M\u0113\u0123ini ignor\u0113t un gul\u0113t"
     effects:
-    - stat: 1
-      amount: -10
-  - buttonText: "Neko dar\u012Bt, celies un sataisies k\u0101 parasti"
-    effects:
-    - stat: 3
-      amount: 5
-  - buttonText: "Jau nogul\u0113ju, nav j\u0113ga iet uz darbu"
-    effects:
+    - stat: 2
+      amount: 10
     - stat: 3
       amount: 10
-    - stat: 0
-      amount: -20
+  - buttonText: Celies un sagatavojies jau tagad
+    effects:
+    - stat: 2
+      amount: -10
+    - stat: 3
+      amount: -10
+  - buttonText: "Skaties telefonu, lai nov\u0113rstu domas"
+    effects:
+    - stat: 2
+      amount: -5
+    - stat: 3
+      amount: 5

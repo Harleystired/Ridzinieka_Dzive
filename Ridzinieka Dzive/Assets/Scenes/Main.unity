@@ -22645,6 +22645,30 @@ MonoBehaviour:
   phonePanelBehaviour: {fileID: 2092016678}
   allScenarios:
   - {fileID: 11400000, guid: 0c8ff28e2d505e340b1fa69fe3fefbdc, type: 2}
+  - {fileID: 11400000, guid: 2598dab319aa0c04f8326ac752f4c3d1, type: 2}
+  - {fileID: 11400000, guid: a1d11ea8f01f6e342a1a718578d0b615, type: 2}
+  - {fileID: 11400000, guid: d902e097f1c39c346b231640a850252c, type: 2}
+  - {fileID: 11400000, guid: 103153662fb824946b719bf27a7689a4, type: 2}
+  - {fileID: 11400000, guid: 5af0eaae30d57994ea02c38a3d9e252e, type: 2}
+  - {fileID: 11400000, guid: 0660ab273999e7948b9cb75a0550eded, type: 2}
+  - {fileID: 11400000, guid: 3d767b3b2f3840746b4e530543a4e347, type: 2}
+  - {fileID: 11400000, guid: ad9239d7e2a743945b7e8317d167a424, type: 2}
+  - {fileID: 11400000, guid: e43c21591603ff8498205c51eebd07fa, type: 2}
+  - {fileID: 11400000, guid: 693ce74b033c02649b9b9207697b4663, type: 2}
+  - {fileID: 11400000, guid: 40943641f556da44d942edf2626aeebc, type: 2}
+  - {fileID: 11400000, guid: 2a7ff4dd64714b14fbb1b1590e351dca, type: 2}
+  - {fileID: 11400000, guid: b16dba83b67a85f4fa9385c0ed5d9ee1, type: 2}
+  - {fileID: 11400000, guid: 660768a98a4d57a48911f6601e49f9bb, type: 2}
+  - {fileID: 11400000, guid: 14e371cc8fea53e4d8b7c3b93ae70332, type: 2}
+  - {fileID: 11400000, guid: d82c2b9c66dbcae4b990b4c57574e34d, type: 2}
+  - {fileID: 11400000, guid: fdfa3476387462e4cad7c6f7326edced, type: 2}
+  - {fileID: 11400000, guid: 03b70c27a5e2cf749adeacc2ef75a2b1, type: 2}
+  - {fileID: 11400000, guid: 8ae21c58751270b4bba89bad343f8c5f, type: 2}
+  - {fileID: 11400000, guid: 19ad209ac910a114daae39746efff218, type: 2}
+  - {fileID: 11400000, guid: ea524d99860240245ad649bd6852b56a, type: 2}
+  - {fileID: 11400000, guid: 9f2b89f50c6744d42a24f01cf483dabf, type: 2}
+  - {fileID: 11400000, guid: 4806721bb3bfae04f8732d6549bfdbf3, type: 2}
+  - {fileID: 0}
   maxQueued: 3
   outsideChance: 0.35
   shopChance: 0.1

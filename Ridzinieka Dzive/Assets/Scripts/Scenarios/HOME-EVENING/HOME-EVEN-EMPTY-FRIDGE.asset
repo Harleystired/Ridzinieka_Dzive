@@ -10,28 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-MORN-OVERSLEPT
+  m_Name: HOME-EVEN-EMPTY-FRIDGE
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_MORNING_OVERSLEPT
+  scenarioId: HOME_EVEN_EMPTY_FRIDGE
   weight: 5
-  minDaysBetweenShows: 4
+  minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tu pamodies un redzi ka esi aizgul\u0113jies."
+  prompt: "Vakari\u0146\u0101m ir tuk\u0161i plaukti."
   allowedLocations: 00000000
-  allowedTimes: 00000000
+  allowedTimes: 02000000
   statRequirements: []
   choices:
-  - buttonText: "Lec no gultas \u0101r\u0101 un skrieni \u0101r\u0101 no m\u0101jas"
+  - buttonText: "Pagatavo kaut ko vienk\u0101r\u0161u"
+    effects:
+    - stat: 2
+      amount: -10
+    - stat: 4
+      amount: 5
+    - stat: 3
+      amount: -5
+    - stat: 1
+      amount: -15
+  - buttonText: "Pas\u016Bt\u012Bt \u0113dienu"
     effects:
     - stat: 1
-      amount: -10
-  - buttonText: "Neko dar\u012Bt, celies un sataisies k\u0101 parasti"
-    effects:
-    - stat: 3
-      amount: 5
-  - buttonText: "Jau nogul\u0113ju, nav j\u0113ga iet uz darbu"
-    effects:
-    - stat: 3
-      amount: 10
+      amount: -30
     - stat: 0
       amount: -20
+  - buttonText: "Izlaid vakari\u0146as"
+    effects:
+    - stat: 1
+      amount: 30
+    - stat: 3
+      amount: 5
