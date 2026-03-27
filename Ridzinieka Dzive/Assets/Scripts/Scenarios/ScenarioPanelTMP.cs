@@ -40,11 +40,16 @@ public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
 
         button1.onClick.RemoveAllListeners();
         button2.onClick.RemoveAllListeners();
-        button3.onClick.RemoveAllListeners();
 
         button1.onClick.AddListener(() => Pick(0));
         button2.onClick.AddListener(() => Pick(1));
-        button3.onClick.AddListener(() => Pick(2));
+
+        bool showThird = !string.IsNullOrWhiteSpace(choice3);
+        if (button3 != null)
+            button3.gameObject.SetActive(showThird);
+
+        if (showThird)
+            button3.onClick.AddListener(() => Pick(2));
 
         root.SetActive(true);
     }

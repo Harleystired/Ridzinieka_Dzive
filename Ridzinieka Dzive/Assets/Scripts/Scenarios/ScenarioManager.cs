@@ -10,6 +10,10 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private MonoBehaviour computerPanelBehaviour; // must implement IScenarioPanel
     [SerializeField] private MonoBehaviour phonePanelBehaviour;    // must implement IScenarioPanel
 
+    [Header("Phone Gating")]
+    [SerializeField] private PhoneUI phoneUI; // assign in Inspector (recommended)
+
+    
     [Header("Scenario Pool")]
     [SerializeField] private List<ScenarioDefinition> allScenarios = new();
 
@@ -26,6 +30,7 @@ public class ScenarioManager : MonoBehaviour
     private readonly Queue<ScenarioDefinition> _queue = new();
     private bool _isShowing;
     private bool _isComputerOpen;
+    private bool _isPhoneOpen;
     
     private ScenarioDefinition _currentScenario;
 
@@ -70,6 +75,9 @@ public class ScenarioManager : MonoBehaviour
     {
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+        
+        if (phoneUI == null)
+            phoneUI = FindFirstObjectByType<PhoneUI>();
     }
     
     private void OnEnable()
@@ -78,6 +86,13 @@ public class ScenarioManager : MonoBehaviour
 
         gameManager.OnLocationChanged += HandleLocationChanged;
         gameManager.OnTimeOfDayChanged += HandleTimeChanged;
+        
+        if (phoneUI != null)
+        {
+            _isPhoneOpen = phoneUI.IsOpen;
+            phoneUI.Opened += NotifyPhoneOpened;
+            phoneUI.Closed += NotifyPhoneClosed;
+        }
 
         // Kick off an attempt immediately for testing / scene load cases
         TryEnqueueFromContext(gameManager.CurrentLocation);
@@ -89,7 +104,14 @@ public class ScenarioManager : MonoBehaviour
 
         gameManager.OnLocationChanged -= HandleLocationChanged;
         gameManager.OnTimeOfDayChanged -= HandleTimeChanged;
+        
+        if (phoneUI != null)
+        {
+            phoneUI.Opened -= NotifyPhoneOpened;
+            phoneUI.Closed -= NotifyPhoneClosed;
+        }
     }
+     
      
     public void NotifyComputerOpened()
     {
@@ -102,6 +124,20 @@ public class ScenarioManager : MonoBehaviour
     public void NotifyComputerClosed()
     {
         _isComputerOpen = false;
+    }
+    
+    private void NotifyPhoneOpened()
+    {
+        _isPhoneOpen = true;
+
+        // If we're not at home, phone scenarios are allowed once phone is fully open.
+        if (gameManager != null && gameManager.CurrentLocation != GameManager.Location.Home)
+            ShowNext();
+    }
+
+    private void NotifyPhoneClosed()
+    {
+        _isPhoneOpen = false;
     }
 
     private void HandleLocationChanged(GameManager.Location location)
@@ -137,7 +173,7 @@ public class ScenarioManager : MonoBehaviour
         // IMPORTANT:
         // - Outside/Work/Shop: show immediately (phone UI).
         // - Home: do NOT show until computer is opened.
-        if (!_isShowing && location != GameManager.Location.Home)
+        if (!_isShowing && location != GameManager.Location.Home && _isPhoneOpen)
             ShowNext();
     }
 
@@ -235,6 +271,10 @@ public class ScenarioManager : MonoBehaviour
         if (gameManager.CurrentLocation == GameManager.Location.Home && !_isComputerOpen)
             return;
 
+        // Phone gating: only show when phone is fully open
+        if (gameManager.CurrentLocation != GameManager.Location.Home && !_isPhoneOpen)
+            return;
+
         var panel = ResolvePanelForCurrentContext();
         if (panel == null)
         {
@@ -254,11 +294,15 @@ public class ScenarioManager : MonoBehaviour
         _currentScenario = scenario;
         _isShowing = true;
 
+        string c1 = scenario.choices[0].buttonText;
+        string c2 = scenario.choices[1].buttonText;
+        string c3 = scenario.choices.Length >= 3 ? scenario.choices[2].buttonText : null;
+
         panel.Show(
             scenario.prompt,
-            scenario.choices[0].buttonText,
-            scenario.choices[1].buttonText,
-            scenario.choices[2].buttonText,
+            c1,
+            c2,
+            c3,
             choiceIndex =>
             {
                 ApplyChoice(scenario, choiceIndex);
@@ -271,6 +315,20 @@ public class ScenarioManager : MonoBehaviour
                 ShowNext();
             });
     }
+
+    private void ApplyChoice(ScenarioDefinition scenario, int choiceIndex)
+    {
+        if (scenario == null) return;
+        if (scenario.choices == null) return;
+        if (choiceIndex < 0 || choiceIndex >= scenario.choices.Length) return;
+
+        var effects = scenario.choices[choiceIndex].effects;
+        if (effects == null) return;
+
+        for (int i = 0; i < effects.Count; i++)
+            effects[i].Apply(gameManager);
+    }
+
     
 
     private void MarkShownToday(ScenarioDefinition s)
@@ -288,17 +346,5 @@ public class ScenarioManager : MonoBehaviour
             return ComputerPanel;
 
         return PhonePanel;
-    }
-
-    private void ApplyChoice(ScenarioDefinition scenario, int choiceIndex)
-    {
-        if (scenario == null) return;
-        if (choiceIndex < 0 || choiceIndex > 2) return;
-
-        var effects = scenario.choices[choiceIndex].effects;
-        if (effects == null) return;
-
-        for (int i = 0; i < effects.Count; i++)
-            effects[i].Apply(gameManager);
     }
 }

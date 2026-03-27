@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +16,11 @@ public class PhoneUI : MonoBehaviour
     [SerializeField] private bool startOpened = false;
 
     private bool _isOpen;
+
+    public bool IsOpen => _isOpen;
+
+    public event Action Opened;
+    public event Action Closed;
 
     private void Awake()
     {
@@ -54,6 +60,9 @@ public class PhoneUI : MonoBehaviour
 
     private void SetOpen(bool open, bool instant)
     {
+        if (_isOpen == open && !instant)
+            return;
+
         _isOpen = open;
 
         if (smallPhoneRoot != null)
@@ -62,7 +71,10 @@ public class PhoneUI : MonoBehaviour
         if (bigPhoneRoot != null)
             bigPhoneRoot.SetActive(open);
 
-        // If you want animations later, this is the place to trigger them.
-        // 'instant' can be used to skip animation when initializing.
+        if (instant)
+            return;
+
+        if (open) Opened?.Invoke();
+        else Closed?.Invoke();
     }
 }

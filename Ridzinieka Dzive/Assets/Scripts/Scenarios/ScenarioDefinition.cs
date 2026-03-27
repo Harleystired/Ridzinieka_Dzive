@@ -27,8 +27,8 @@ public class ScenarioDefinition : ScriptableObject
     public List<GameManager.TimeOfDay> allowedTimes = new();
     public List<StatRequirement> statRequirements = new();
 
-    [Header("Choices (exactly 3)")]
-    public Choice[] choices = new Choice[3];
+    [Header("Choices (2 to 3)")]
+    public Choice[] choices = Array.Empty<Choice>();
 
     public bool CanRun(GameManager gm, GameManager.TimeOfDay currentTimeOfDay)
     {
@@ -40,7 +40,13 @@ public class ScenarioDefinition : ScriptableObject
         if (allowedTimes.Count > 0 && !allowedTimes.Contains(gm.CurrentTime))
             return false;
 
-        if (choices == null || choices.Length != 3)
+        if (choices == null || choices.Length < 2 || choices.Length > 3)
+            return false;
+
+        if (string.IsNullOrWhiteSpace(choices[0].buttonText)) return false;
+        if (string.IsNullOrWhiteSpace(choices[1].buttonText)) return false;
+
+        if (choices.Length == 3 && string.IsNullOrWhiteSpace(choices[2].buttonText))
             return false;
 
         for (int i = 0; i < statRequirements.Count; i++)
