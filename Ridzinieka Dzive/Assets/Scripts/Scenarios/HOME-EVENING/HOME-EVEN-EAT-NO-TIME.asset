@@ -20,6 +20,7 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 02000000
   statRequirements: []
+  allowedJobs: 
   choices:
   - buttonText: "Pagatavo vesel\u012Bgas vakari\u0146as"
     effects:

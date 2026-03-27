@@ -27,6 +27,9 @@ public class ScenarioDefinition : ScriptableObject
     public List<GameManager.TimeOfDay> allowedTimes = new();
     public List<StatRequirement> statRequirements = new();
 
+    [Tooltip("If empty: scenario can run for any job. If not empty: requires the player's selected job to be listed.")]
+    public List<GameManager.JobType> allowedJobs = new();
+
     [Header("Choices (2 to 3)")]
     public Choice[] choices = Array.Empty<Choice>();
 
@@ -38,6 +41,9 @@ public class ScenarioDefinition : ScriptableObject
             return false;
 
         if (allowedTimes.Count > 0 && !allowedTimes.Contains(gm.CurrentTime))
+            return false;
+
+        if (allowedJobs.Count > 0 && !allowedJobs.Contains(gm.SelectedJob))
             return false;
 
         if (choices == null || choices.Length < 2 || choices.Length > 3)
