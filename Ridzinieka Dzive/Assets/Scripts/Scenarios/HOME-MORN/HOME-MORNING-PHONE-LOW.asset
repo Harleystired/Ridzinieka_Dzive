@@ -21,10 +21,10 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 00000000
   statRequirements: []
+  allowedJobs: 
   choices:
   - buttonText: "\u0145em l\u012Bdzi l\u0101d\u0113t\u0101ju un uzl\u0101d\u0113
-      kad esi darb\u0101 - can't buy bus ticket, % of lossing money cuz of a work
-      call?"
+      kad esi darb\u0101"
     effects:
     - stat: 3
       amount: 5

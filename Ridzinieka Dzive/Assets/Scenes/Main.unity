@@ -17956,6 +17956,7 @@ MonoBehaviour:
   oldCarBreakChance: 0.1
   ownedItems: []
   currentLocation: 0
+  lastNonOutsideLocation: 0
   pendingDestination: 0
   morning: 0
   day: 0
@@ -24928,6 +24929,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ea524d99860240245ad649bd6852b56a, type: 2}
   - {fileID: 11400000, guid: 9f2b89f50c6744d42a24f01cf483dabf, type: 2}
   - {fileID: 11400000, guid: 4806721bb3bfae04f8732d6549bfdbf3, type: 2}
+  - {fileID: 11400000, guid: d1fb4451e5c379a4b91f1c6f17fff82e, type: 2}
+  - {fileID: 11400000, guid: 4ceae459ade0d8c438ee51b3ccdb5877, type: 2}
+  - {fileID: 11400000, guid: 1c914f325bbc7764c8a4d4110ed8f98f, type: 2}
+  - {fileID: 11400000, guid: bcf97f5d36f7e5642b624c942f60edfc, type: 2}
+  - {fileID: 11400000, guid: c018196ac0af1a341b676efbb3396fd8, type: 2}
+  - {fileID: 11400000, guid: 73d07f1be25b07e469dfc5968e65dbe9, type: 2}
+  - {fileID: 11400000, guid: 8f700dd80c665c24f834abd561d524f6, type: 2}
+  - {fileID: 11400000, guid: 5baa056e1cda6954697b4985437ee5f9, type: 2}
+  - {fileID: 11400000, guid: e23b68ccf4442a949876856f6c651a91, type: 2}
+  - {fileID: 11400000, guid: a189fbd74fa3f1644a2e7e311c9420d0, type: 2}
+  - {fileID: 11400000, guid: 1748659f783e3354d91b2e7bd7f5b6cb, type: 2}
+  - {fileID: 11400000, guid: ee916d058c7f0a54795270e06d4559e7, type: 2}
+  - {fileID: 11400000, guid: 8afa1aabb8cae0241922aa860ba923b3, type: 2}
+  - {fileID: 11400000, guid: fd29c7126ed72c1409d1b721930f121d, type: 2}
+  - {fileID: 11400000, guid: 366c949d2b0a2d54a85dafb8e8076600, type: 2}
+  - {fileID: 11400000, guid: 3a296e82179c4ea4788571e7cc1c2f57, type: 2}
+  - {fileID: 11400000, guid: 048dfad1344bd8b41a533e378fb5166f, type: 2}
+  - {fileID: 11400000, guid: 6be8474cc250d394d911a6ccca360178, type: 2}
   - {fileID: 0}
   maxQueued: 3
   outsideChance: 0.35
@@ -27697,9 +27716,11 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 272623645}
   - {fileID: 957029081}
   - {fileID: 1560715911}
+  - {fileID: 931605746}
+  - {fileID: 489810693}
+  - {fileID: 272623645}
   - {fileID: 1477470418}
   - {fileID: 217595070}
   - {fileID: 1603617758}
@@ -27707,12 +27728,10 @@ RectTransform:
   - {fileID: 1013227931}
   - {fileID: 446213664}
   - {fileID: 1633007155}
-  - {fileID: 940062260}
-  - {fileID: 1887456568}
-  - {fileID: 489810693}
-  - {fileID: 931605746}
   - {fileID: 1729493201}
   - {fileID: 195762147}
+  - {fileID: 1887456568}
+  - {fileID: 940062260}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

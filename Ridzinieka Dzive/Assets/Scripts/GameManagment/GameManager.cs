@@ -82,6 +82,9 @@ public class GameManager : MonoBehaviour
     [Header("Player Location")]
     [SerializeField] private Location currentLocation = Location.Home;
 
+    // NEW: remembers where the player was before going Outside (so we can decide time changes)
+    [SerializeField] private Location lastNonOutsideLocation = Location.Home;
+
     [SerializeField] private Destination pendingDestination = Destination.None;
 
     public Location CurrentLocation => currentLocation;
@@ -92,6 +95,10 @@ public class GameManager : MonoBehaviour
 
     public void EnterOutside()
     {
+        // NEW: capture the location we're leaving (Home/Work/Shop) before switching to Outside
+        if (currentLocation != Location.Outside)
+            lastNonOutsideLocation = currentLocation;
+
         SetLocation(Location.Outside);
     }
 
@@ -143,8 +150,34 @@ public class GameManager : MonoBehaviour
                 return;
         }
 
+        // NEW: adjust time-of-day based on travel
+        ApplyTimeOfDayForTravel(lastNonOutsideLocation, targetLocation);
+
         ClearPendingDestination();
         SetLocation(targetLocation);
+
+        lastNonOutsideLocation = targetLocation;
+    }
+
+    private void ApplyTimeOfDayForTravel(Location from, Location to)
+    {
+        // Rule: going to Work advances Morning -> Day (Home->Work and Shop->Work)
+        if (to == Location.Work && currentTimeOfDay == TimeOfDay.Morning)
+        {
+            SetTimeOfDay(TimeOfDay.Day);
+            return;
+        }
+
+        // Rule: leaving Work advances Day -> Evening (Work->Home and Work->Shop)
+        if (from == Location.Work &&
+            (to == Location.Home || to == Location.Shop) &&
+            currentTimeOfDay == TimeOfDay.Day)
+        {
+            SetTimeOfDay(TimeOfDay.Evening);
+            return;
+        }
+
+        // Otherwise (Home<->Shop travel etc): no change
     }
 
     private void TryBreakUsedTransport(TransportMode transportMode)
