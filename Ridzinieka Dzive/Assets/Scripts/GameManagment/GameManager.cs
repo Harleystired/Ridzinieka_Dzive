@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 
-
 public class GameManager : MonoBehaviour
 {
    // ---------------------------------------------------------------------
@@ -22,6 +21,27 @@ public class GameManager : MonoBehaviour
     public bool newBike = false;
     public bool oldCar = false;
     public bool newCar = false;
+
+    // NEW: prices + break chances
+    [Header("Transport Shop Settings")]
+    [SerializeField] private int oldBikePrice = 50;
+    [SerializeField] private int newBikePrice = 200;
+    [SerializeField] private int oldCarPrice = 500;
+    [SerializeField] private int newCarPrice = 2000;
+
+    [Tooltip("Chance (0..1) that a USED bike breaks when used for travel.")]
+    [Range(0f, 1f)][SerializeField] private float oldBikeBreakChance = 0.15f;
+
+    [Tooltip("Chance (0..1) that a USED car breaks when used for travel.")]
+    [Range(0f, 1f)][SerializeField] private float oldCarBreakChance = 0.10f;
+
+    public bool HasAnyBike => oldBike || newBike;
+    public bool HasAnyCar => oldCar || newCar;
+
+    public int OldBikePrice => oldBikePrice;
+    public int NewBikePrice => newBikePrice;
+    public int OldCarPrice => oldCarPrice;
+    public int NewCarPrice => newCarPrice;
 
     [Header("Inventory")]
     public List<string> ownedItems = new List<string>();
@@ -85,12 +105,26 @@ public class GameManager : MonoBehaviour
 
     public void ConfirmTravel(TransportMode transportMode)
     {
-        // transportMode currently not used, but kept for future logic
         if (pendingDestination == Destination.None)
         {
             Debug.LogWarning("GameManager.ConfirmTravel(): No pending destination selected.");
             return;
         }
+
+        // NEW: block using vehicles you don't own (safety)
+        if ((transportMode == TransportMode.OldBike && !oldBike) ||
+            (transportMode == TransportMode.NewBike && !newBike) ||
+            (transportMode == TransportMode.OldCar && !oldCar) ||
+            (transportMode == TransportMode.NewCar && !newCar))
+        {
+            Debug.LogWarning($"GameManager.ConfirmTravel(): Tried to use unowned transport: {transportMode}");
+            return;
+        }
+
+        ApplyTransportStatEffects(transportMode);
+
+        // NEW: used vehicles can break when used
+        TryBreakUsedTransport(transportMode);
 
         Location targetLocation;
         switch (pendingDestination)
@@ -111,6 +145,111 @@ public class GameManager : MonoBehaviour
 
         ClearPendingDestination();
         SetLocation(targetLocation);
+    }
+
+    private void TryBreakUsedTransport(TransportMode transportMode)
+    {
+        switch (transportMode)
+        {
+            case TransportMode.OldBike:
+                if (oldBike && UnityEngine.Random.value < oldBikeBreakChance)
+                {
+                    oldBike = false;
+                    Debug.Log("Used bike broke!");
+                }
+                break;
+
+            case TransportMode.OldCar:
+                if (oldCar && UnityEngine.Random.value < oldCarBreakChance)
+                {
+                    oldCar = false;
+                    Debug.Log("Used car broke!");
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    private void ApplyTransportStatEffects(TransportMode transportMode)
+    {
+        switch (transportMode)
+        {
+            case TransportMode.Walk:
+                RemoveEnergy(5);
+                AddHealth(5);
+                break;
+
+            case TransportMode.PublicTrans:
+                // Example effects - edit to whatever you want:
+                // Public transport might reduce stress a bit but costs a little energy.
+                SpendMoney(2);
+                RemoveStress(3);
+                break;
+
+            case TransportMode.Taxi:
+                // Example effects - edit to whatever you want:
+                // Taxi could reduce stress (comfort) but costs money.
+                SpendMoney(10);
+                RemoveStress(5);
+                break;
+
+            case TransportMode.OldBike:
+                AddHealth(10);
+                RemoveStress(10);
+                break;
+                
+            case TransportMode.NewBike:
+                AddHealth(10);
+                RemoveStress(10);
+                break;
+            
+            case TransportMode.OldCar:
+                RemoveStress(10);
+                break;
+            
+            case TransportMode.NewCar:
+                RemoveStress(10);
+                break;
+                
+            default:
+                // No stat changes for bikes/cars (or unknown modes)
+                break;
+        }
+    }
+
+    // NEW: purchase methods
+    public bool TryBuyOldBike()
+    {
+        if (oldBike) return true;
+        if (!SpendMoney(oldBikePrice)) return false;
+        oldBike = true;
+        return true;
+    }
+
+    public bool TryBuyNewBike()
+    {
+        if (newBike) return true;
+        if (!SpendMoney(newBikePrice)) return false;
+        newBike = true;
+        return true;
+    }
+
+    public bool TryBuyOldCar()
+    {
+        if (oldCar) return true;
+        if (!SpendMoney(oldCarPrice)) return false;
+        oldCar = true;
+        return true;
+    }
+
+    public bool TryBuyNewCar()
+    {
+        if (newCar) return true;
+        if (!SpendMoney(newCarPrice)) return false;
+        newCar = true;
+        return true;
     }
 
     public void SetPendingDestination(Destination destination)
@@ -137,10 +276,6 @@ public class GameManager : MonoBehaviour
         currentLocation = newLocation;
         OnLocationChanged?.Invoke(currentLocation);
     }
-
-    // ---------------------------------------------------------------------
-    // Time of Day
-    // ---------------------------------------------------------------------
 
     // --- Time of Day ---
     public float morning;
@@ -262,17 +397,17 @@ public class GameManager : MonoBehaviour
     public void AddHunger(int amount)
     {
         hunger += amount;
-        if (hunger > 0) 
+        if (hunger > 0)
             hunger = 0;
-        
-        if (hunger < -100) 
+
+        if (hunger < -100)
             hunger = -100;
     }
 
     public void RemoveHunger(int amount)
     {
         hunger -= amount;
-        if (hunger < 0) 
+        if (hunger < 0)
             hunger = 0;
     }
 
@@ -286,29 +421,29 @@ public class GameManager : MonoBehaviour
         if (stress > 100)
             stress = 100;
     }
-    
+
     public void RemoveStress(int amount)
     {
         stress -= amount;
         if (stress < 0)
             stress = 0;
     }
-    
+
     public void AddHealth(int amount)
     {
         health += amount;
-        
+
         if (health < 0)
             health = 0;
-        
+
         if (health > 100)
             health = 100;
     }
-    
+
     public void RemoveHealth(int amount)
     {
         health -= amount;
-        
+
         if (health < 0)
             health = 0;
     }
@@ -318,11 +453,11 @@ public class GameManager : MonoBehaviour
         energy += amount;
         if (energy < 0)
             energy = 0;
-       
+
         if (energy > 100)
             energy = 100;
     }
-    
+
     public void RemoveEnergy(int amount)
     {
         energy -= amount;
@@ -330,4 +465,3 @@ public class GameManager : MonoBehaviour
             energy = 0;
     }
 }
-

@@ -6,11 +6,12 @@ public class OutsideUI : MonoBehaviour
     [SerializeField] private GameObject outsideMenu;  // the outside UI to open
     [SerializeField] private CameraMovement cameraMovement;
     [SerializeField] private GameManager gameManager;
-    
-    // makes it so the UI buttons can't be autoclicked upon Ui opening
+
+    // NEW: popup reference
+    [SerializeField] private TransportPurchasePopup transportPopup;
+
     [SerializeField] private float outsideLockSecondsAfterOpen = 0.35f;
     private float _outsideAllowedAtUnscaledTime;
-    
 
     private void Awake()
     {
@@ -18,10 +19,14 @@ public class OutsideUI : MonoBehaviour
 
         if (cameraMovement == null && Camera.main != null)
             cameraMovement = Camera.main.GetComponent<CameraMovement>();
-        
+
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+
+        if (transportPopup == null)
+            transportPopup = FindFirstObjectByType<TransportPurchasePopup>();
     }
+
     private void OnEnable()
     {
         if (gameManager == null)
@@ -91,15 +96,26 @@ public class OutsideUI : MonoBehaviour
     public void ChooseWalk() => ChooseTransport(GameManager.TransportMode.Walk);
     public void ChoosePublicTrans() => ChooseTransport(GameManager.TransportMode.PublicTrans);
     public void ChooseTaxi() => ChooseTransport(GameManager.TransportMode.Taxi);
-    public void ChooseOldBike() => ChooseTransport(GameManager.TransportMode.OldBike);
-    public void ChooseOldCar() => ChooseTransport(GameManager.TransportMode.OldCar);
+
+    // NEW: these are the ones you wire to your Bike/Car buttons
+    public void ChooseBike()
+    {
+        if (transportPopup == null) return;
+        transportPopup.OpenBike();
+    }
+
+    public void ChooseCar()
+    {
+        if (transportPopup == null) return;
+        transportPopup.OpenCar();
+    }
 
     private void ChooseTransport(GameManager.TransportMode mode)
     {
         if (gameManager == null) return;
 
         gameManager.ConfirmTravel(mode);
-        
+
         CloseOutsideMenu();
     }
 }
