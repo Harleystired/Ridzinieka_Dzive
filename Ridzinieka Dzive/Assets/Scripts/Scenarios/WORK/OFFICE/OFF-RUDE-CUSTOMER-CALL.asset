@@ -10,35 +10,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-EVEN-TIRED
+  m_Name: OFF-RUDE-CUSTOMER-CALL
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_EVEN_TIRED
-  weight: 10
+  scenarioId: OFF_RUDE_CUSTOMER_CALL
+  weight: 7
   minDaysBetweenShows: 2
   isMandatory: 1
-  prompt: "Tu esi noguris p\u0113c dienas."
-  allowedLocations: 00000000
-  allowedTimes: 02000000
+  prompt: "Tev piezvana nelaipns klients, kur\u0161 kliedz rupj\u012Bbas un neklaus\u0101s
+    ko tu centies pateikt."
+  allowedLocations: 02000000
+  allowedTimes: 
   statRequirements: []
-  allowedJobs: 
+  allowedJobs: 02000000
   choices:
-  - buttonText: "Ej gul\u0113t agr\u0101k"
+  - buttonText: "Nospied klausuli, nav j\u0113gas ar t\u0101du cilv\u0113ku run\u0101t"
     effects:
-    - stat: 2
-      amount: 25
     - stat: 3
       amount: -5
-  - buttonText: Skaties TV vai telefonu
+  - buttonText: "Pieciet un centies vienalga vi\u0146am pal\u012Bdz\u0113t"
     effects:
-    - stat: 0
-      amount: -10
+    - stat: 3
+      amount: 5
     - stat: 2
-      amount: -10
-  - buttonText: "Dari v\u0113l darbus"
+      amount: -5
+  - buttonText: "Pied\u0101v\u0101 klientam run\u0101t ar priek\u0161nieku"
     effects:
-    - stat: 0
-      amount: 15
-    - stat: 2
-      amount: -20
     - stat: 3
       amount: 10

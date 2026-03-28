@@ -10,29 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-EVEN-WORK-TO-DO
+  m_Name: CASH-LONGER-WORK
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_EVEN_WORK_TO_DO
+  scenarioId: CASH_LONGER_WORK
   weight: 6
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tev ir v\u0113l nepabeigti darbi no dienas."
-  allowedLocations: 00000000
-  allowedTimes: 02000000
+  prompt: "Tev j\u0101str\u0101d\u0101 ilg\u0101k nek\u0101 pl\u0101nots."
+  allowedLocations: 02000000
+  allowedTimes: 
   statRequirements: []
-  allowedJobs: 
+  allowedJobs: 00000000
   choices:
-  - buttonText: Pabeidz darbus
-    effects:
-    - stat: 2
-      amount: -10
-    - stat: 3
-      amount: -10
-  - buttonText: "Atliec uz r\u012Btu"
+  - buttonText: "Paliec un str\u0101d\u0101"
     effects:
     - stat: 3
       amount: 10
-  - buttonText: "Ignor\u0113"
+    - stat: 0
+      amount: 10
+    - stat: 2
+      amount: -10
+  - buttonText: "Atsaki un ej m\u0101j\u0101s"
     effects:
     - stat: 3
       amount: 15
+  - buttonText: "Paliec uz pusi no \u0161\u012B laika"
+    effects:
+    - stat: 0
+      amount: 5
+    - stat: 2
+      amount: -5
+    - stat: 3
+      amount: 5

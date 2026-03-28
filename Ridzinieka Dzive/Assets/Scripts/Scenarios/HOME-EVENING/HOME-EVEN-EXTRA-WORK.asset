@@ -20,13 +20,14 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 02000000
   statRequirements: []
+  allowedJobs: 
   choices:
   - buttonText: "Piekr\u012Bti"
     effects:
     - stat: 0
-      amount: 75
+      amount: 50
     - stat: 2
-      amount: -40
+      amount: -15
     - stat: 3
       amount: 10
   - buttonText: Atsaki

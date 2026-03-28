@@ -20,6 +20,7 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 02000000
   statRequirements: []
+  allowedJobs: 
   choices:
   - buttonText: "Pagatavo kaut ko vienk\u0101r\u0161u"
     effects:
@@ -30,7 +31,7 @@ MonoBehaviour:
     - stat: 3
       amount: -5
     - stat: 1
-      amount: -15
+      amount: -20
   - buttonText: "Pas\u016Bt\u012Bt \u0113dienu"
     effects:
     - stat: 1
@@ -42,4 +43,4 @@ MonoBehaviour:
     - stat: 1
       amount: 30
     - stat: 3
-      amount: 5
+      amount: 10

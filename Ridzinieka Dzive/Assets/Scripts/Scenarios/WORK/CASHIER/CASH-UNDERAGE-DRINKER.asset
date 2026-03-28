@@ -10,35 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-EVEN-TIRED
+  m_Name: CASH-UNDERAGE-DRINKER
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_EVEN_TIRED
-  weight: 10
-  minDaysBetweenShows: 2
+  scenarioId: CASH_UNDERAGE_DRINKER
+  weight: 3
+  minDaysBetweenShows: 5
   isMandatory: 1
-  prompt: "Tu esi noguris p\u0113c dienas."
-  allowedLocations: 00000000
-  allowedTimes: 02000000
+  prompt: "Pie kases pien\u0101k nepilngad\u012Bgs jaunietis un m\u0113\u0123ina
+    nopirkt alkoholu. Vi\u0146\u0161 izskat\u0101s p\u0101rliecin\u0101ts un saka,
+    ka ir pilngad\u012Bgs."
+  allowedLocations: 02000000
+  allowedTimes: 
   statRequirements: []
-  allowedJobs: 
+  allowedJobs: 00000000
   choices:
-  - buttonText: "Ej gul\u0113t agr\u0101k"
+  - buttonText: Pieprasi dokumentus
     effects:
     - stat: 2
-      amount: 25
-    - stat: 3
       amount: -5
-  - buttonText: Skaties TV vai telefonu
-    effects:
-    - stat: 0
-      amount: -10
-    - stat: 2
-      amount: -10
-  - buttonText: "Dari v\u0113l darbus"
-    effects:
-    - stat: 0
-      amount: 15
-    - stat: 2
-      amount: -20
     - stat: 3
       amount: 10
+  - buttonText: "P\u0101rdod alkoholu"
+    effects:
+    - stat: 3
+      amount: -5
+  - buttonText: "Sauc vad\u012Bt\u0101ju, lai pal\u012Bdz"
+    effects:
+    - stat: 3
+      amount: -10
+    - stat: 2
+      amount: -10

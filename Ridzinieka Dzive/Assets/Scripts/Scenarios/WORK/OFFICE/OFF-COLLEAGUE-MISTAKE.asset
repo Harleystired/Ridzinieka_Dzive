@@ -10,25 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-EVEN-WORK-TO-DO
+  m_Name: OFF-COLLEAGUE-MISTAKE
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_EVEN_WORK_TO_DO
+  scenarioId: OFF_COLLEAGUE_MISTAKE
   weight: 6
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tev ir v\u0113l nepabeigti darbi no dienas."
-  allowedLocations: 00000000
-  allowedTimes: 02000000
+  prompt: "Kol\u0113\u0123is pie\u013Cauj k\u013C\u016Bdu, kas ietekm\u0113 ar\u012B
+    tevi."
+  allowedLocations: 02000000
+  allowedTimes: 
   statRequirements: []
-  allowedJobs: 
+  allowedJobs: 02000000
   choices:
-  - buttonText: Pabeidz darbus
+  - buttonText: "Pal\u012Bdzi izlabot"
     effects:
-    - stat: 2
-      amount: -10
     - stat: 3
-      amount: -10
-  - buttonText: "Atliec uz r\u012Btu"
+      amount: 5
+    - stat: 2
+      amount: -15
+  - buttonText: "Zi\u0146o priek\u0161niekam"
     effects:
     - stat: 3
       amount: 10

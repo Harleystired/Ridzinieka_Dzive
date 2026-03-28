@@ -10,29 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-EVEN-WORK-TO-DO
+  m_Name: CASH-CUPON
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_EVEN_WORK_TO_DO
+  scenarioId: CASH-CUPON
   weight: 6
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tev ir v\u0113l nepabeigti darbi no dienas."
-  allowedLocations: 00000000
-  allowedTimes: 02000000
+  prompt: "Klients m\u0113\u0123ina izmantot kuponu, kas iesp\u0113jams ir neder\u012Bgs."
+  allowedLocations: 02000000
+  allowedTimes: 
   statRequirements: []
-  allowedJobs: 
+  allowedJobs: 00000000
   choices:
-  - buttonText: Pabeidz darbus
-    effects:
-    - stat: 2
-      amount: -10
-    - stat: 3
-      amount: -10
-  - buttonText: "Atliec uz r\u012Btu"
+  - buttonText: "Pie\u0146em kuponu un to nep\u0101rbaudi"
     effects:
     - stat: 3
       amount: 10
-  - buttonText: "Ignor\u0113"
+    - stat: 2
+      amount: -5
+  - buttonText: Aizliedz klientam izmantot kuponu
     effects:
     - stat: 3
-      amount: 15
+      amount: 5
+  - buttonText: "P\u0101rbaudi kuponu sist\u0113m\u0101"
+    effects:
+    - stat: 2
+      amount: -15
+    - stat: 3
+      amount: -5

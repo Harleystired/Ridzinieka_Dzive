@@ -10,29 +10,31 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-EVEN-WORK-TO-DO
+  m_Name: CASH-HARD-TASK
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_EVEN_WORK_TO_DO
-  weight: 6
+  scenarioId: CASH_HARD_TASK
+  weight: 5
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tev ir v\u0113l nepabeigti darbi no dienas."
-  allowedLocations: 00000000
-  allowedTimes: 02000000
+  prompt: "Tev j\u0101str\u0101d\u0101 ar sare\u017E\u0123\u012Btu uzdevumu."
+  allowedLocations: 02000000
+  allowedTimes: 
   statRequirements: []
-  allowedJobs: 
+  allowedJobs: 00000000
   choices:
-  - buttonText: Pabeidz darbus
+  - buttonText: "Mei\u0123ini izpild\u012Bt pats"
+    effects:
+    - stat: 2
+      amount: -15
+    - stat: 3
+      amount: 10
+  - buttonText: "L\u016Bdz pal\u012Bdz\u012Bbu kol\u0113\u0123iem"
     effects:
     - stat: 2
       amount: -10
     - stat: 3
-      amount: -10
-  - buttonText: "Atliec uz r\u012Btu"
+      amount: 5
+  - buttonText: Uzdevumu nepildi
     effects:
     - stat: 3
-      amount: 10
-  - buttonText: "Ignor\u0113"
-    effects:
-    - stat: 3
-      amount: 15
+      amount: 20

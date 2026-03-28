@@ -10,29 +10,27 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-EVEN-WORK-TO-DO
+  m_Name: TAXI-DESTINATION-CHANGE
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_EVEN_WORK_TO_DO
+  scenarioId: TAXI_DESTINATION_CHANGE
   weight: 6
-  minDaysBetweenShows: 3
+  minDaysBetweenShows: 2
   isMandatory: 1
-  prompt: "Tev ir v\u0113l nepabeigti darbi no dienas."
-  allowedLocations: 00000000
-  allowedTimes: 02000000
+  prompt: "Klients maina galam\u0113r\u0137i brauciena laik\u0101."
+  allowedLocations: 02000000
+  allowedTimes: 
   statRequirements: []
-  allowedJobs: 
+  allowedJobs: 01000000
   choices:
-  - buttonText: Pabeidz darbus
+  - buttonText: "Piekr\u012Bti un nog\u0101d\u0101 galam\u0113r\u0137i"
     effects:
+    - stat: 0
+      amount: 25
+    - stat: 3
+      amount: 5
     - stat: 2
       amount: -10
-    - stat: 3
-      amount: -10
-  - buttonText: "Atliec uz r\u012Btu"
+  - buttonText: "Atsaki un aizveid uz iepriek\u0161\u0113jo galam\u0113r\u0137i"
     effects:
     - stat: 3
-      amount: 10
-  - buttonText: "Ignor\u0113"
-    effects:
-    - stat: 3
-      amount: 15
+      amount: -15

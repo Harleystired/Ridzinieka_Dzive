@@ -25,13 +25,13 @@ MonoBehaviour:
   - buttonText: "Pagatavo vesel\u012Bgas vakari\u0146as"
     effects:
     - stat: 2
-      amount: -15
+      amount: -10
     - stat: 4
       amount: 10
     - stat: 3
       amount: -5
     - stat: 1
-      amount: -35
+      amount: -30
   - buttonText: "\u0112d mazu porciju"
     effects:
     - stat: 2
