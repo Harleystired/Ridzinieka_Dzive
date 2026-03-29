@@ -26,7 +26,7 @@ public class ScenarioManager : MonoBehaviour
     [Header("Trigger Chances")]
     [Range(0f, 1f)] [SerializeField] private float outsideChance = 0.35f;
     [Range(0f, 1f)] [SerializeField] private float shopChance = 0.25f;
-    
+
     [Header("Debug")]
     [SerializeField] private bool debugLogs = true;
 
@@ -34,8 +34,12 @@ public class ScenarioManager : MonoBehaviour
     private bool _isShowing;
     private bool _isComputerOpen;
     private bool _isPhoneOpen;
-    
+
     private ScenarioDefinition _currentScenario;
+
+    // NEW: “forced scenario” pipeline (used by OutsideUI flow)
+    private ScenarioDefinition _forcedScenario;
+    private Action _forcedOnComplete;
 
     // scenarioId -> last day index shown
     private readonly Dictionary<string, int> _lastShownDayById = new();
@@ -43,7 +47,7 @@ public class ScenarioManager : MonoBehaviour
     private IScenarioPanel ComputerPanel => computerPanelBehaviour as IScenarioPanel;
     private IScenarioPanel PhonePanel => phonePanelBehaviour as IScenarioPanel;
 
-    public bool HasPendingScenarios => _isShowing || _queue.Count > 0;
+    public bool HasPendingScenarios => _isShowing || _queue.Count > 0 || _forcedScenario != null;
 
     public bool HasPendingMandatoryHomeScenario
     {
@@ -141,6 +145,9 @@ public class ScenarioManager : MonoBehaviour
         _isPhoneOpen = true;
 
         UpdateAttentionIcons();
+
+        // NEW: if we were waiting to show a forced phone scenario, do it now
+        TryShowForcedScenario();
 
         // If we're not at home, phone scenarios are allowed once phone is fully open.
         if (gameManager != null && gameManager.CurrentLocation != GameManager.Location.Home)
@@ -283,6 +290,10 @@ public class ScenarioManager : MonoBehaviour
 
     private void ShowNext()
     {
+        // NEW: forced scenario has priority (used for Outside flows)
+        if (TryShowForcedScenario())
+            return;
+
         if (_isShowing) return;
         if (_queue.Count == 0) return;
         if (gameManager == null) return;
@@ -347,6 +358,251 @@ public class ScenarioManager : MonoBehaviour
             });
     }
 
+    // NEW: called by OutsideUI - step 1 (normal Outside scenario before transport menu)
+    public void RequestPreTransportOutsideScenario(Action onComplete)
+    {
+        if (gameManager == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        // If we are not outside (yet), don't force anything.
+        if (gameManager.CurrentLocation != GameManager.Location.Outside)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        // Pick an “Outside” scenario that is NOT transport-specific (allowedTransportModes empty).
+        var scenario = PickRandomEligibleOutsideNonTransportScenario();
+        if (scenario == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        ForcePhoneScenario(scenario, onComplete);
+    }
+
+    // NEW: called by OutsideUI - step 2 (transport-specific scenario after choosing transport)
+    public void RequestTransportScenario(GameManager.TransportMode mode, Action onComplete)
+    {
+        if (gameManager == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        // Must be outside for this flow
+        if (gameManager.CurrentLocation != GameManager.Location.Outside)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        var scenario = PickRandomEligibleTransportScenario(mode);
+        if (scenario == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        ForcePhoneScenario(scenario, onComplete);
+    }
+
+    private void ForcePhoneScenario(ScenarioDefinition scenario, Action onComplete)
+    {
+        if (scenario == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        // Only one forced scenario at a time; replace any pending forced scenario
+        _forcedScenario = scenario;
+        _forcedOnComplete = onComplete;
+
+        UpdateAttentionIcons();
+        TryShowForcedScenario();
+    }
+
+    private bool TryShowForcedScenario()
+    {
+        if (_isShowing) return false;
+        if (_forcedScenario == null) return false;
+        if (gameManager == null) return false;
+
+        // Forced scenarios are always shown on phone in this design
+        if (!_isPhoneOpen)
+        {
+            UpdateAttentionIcons();
+            return true; // we consumed the “attempt” (we are waiting on phone)
+        }
+
+        var panel = PhonePanel;
+        if (panel == null)
+        {
+            Debug.LogWarning("ScenarioManager: Phone panel missing, cannot show forced scenario.");
+            return true;
+        }
+
+        var scenario = _forcedScenario;
+        var onComplete = _forcedOnComplete;
+
+        _forcedScenario = null;
+        _forcedOnComplete = null;
+
+        if (!scenario.CanRun(gameManager, gameManager.CurrentTime) || IsOnCooldown(scenario))
+        {
+            onComplete?.Invoke();
+            UpdateAttentionIcons();
+            return true;
+        }
+
+        _currentScenario = scenario;
+        _isShowing = true;
+
+        UpdateAttentionIcons();
+
+        string c1 = scenario.choices[0].buttonText;
+        string c2 = scenario.choices[1].buttonText;
+        string c3 = scenario.choices.Length >= 3 ? scenario.choices[2].buttonText : null;
+
+        panel.Show(
+            scenario.prompt,
+            c1,
+            c2,
+            c3,
+            choiceIndex =>
+            {
+                ApplyChoice(scenario, choiceIndex);
+                MarkShownToday(scenario);
+
+                _currentScenario = null;
+                panel.Hide();
+                _isShowing = false;
+
+                UpdateAttentionIcons();
+
+                onComplete?.Invoke();
+
+                // After the forced scenario finishes, continue normal queue if any
+                ShowNext();
+            });
+
+        return true;
+    }
+
+    private ScenarioDefinition PickRandomEligibleOutsideNonTransportScenario()
+    {
+        List<ScenarioDefinition> candidates = null;
+        float totalWeight = 0f;
+
+        for (int i = 0; i < allScenarios.Count; i++)
+        {
+            var s = allScenarios[i];
+            if (s == null) continue;
+
+            // Must be outside-eligible by normal rules
+            if (!s.CanRun(gameManager, gameManager.CurrentTime)) continue;
+            if (IsOnCooldown(s)) continue;
+
+            // Filter out transport-specific scenarios
+            if (s.allowedTransportModes != null && s.allowedTransportModes.Count > 0) continue;
+
+            float w = Mathf.Max(0f, s.weight);
+            if (w <= 0f) continue;
+
+            candidates ??= new List<ScenarioDefinition>();
+            candidates.Add(s);
+            totalWeight += w;
+        }
+
+        if (candidates == null || candidates.Count == 0 || totalWeight <= 0f)
+            return null;
+
+        float roll = UnityEngine.Random.Range(0f, totalWeight);
+        float acc = 0f;
+
+        for (int i = 0; i < candidates.Count; i++)
+        {
+            acc += Mathf.Max(0f, candidates[i].weight);
+            if (roll <= acc)
+                return candidates[i];
+        }
+
+        return candidates[candidates.Count - 1];
+    }
+
+    private ScenarioDefinition PickRandomEligibleTransportScenario(GameManager.TransportMode mode)
+    {
+        List<ScenarioDefinition> candidates = null;
+        float totalWeight = 0f;
+
+        for (int i = 0; i < allScenarios.Count; i++)
+        {
+            var s = allScenarios[i];
+            if (s == null) continue;
+
+            if (!s.CanRun(gameManager, gameManager.CurrentTime)) continue;
+            if (IsOnCooldown(s)) continue;
+
+            if (s.allowedTransportModes == null || s.allowedTransportModes.Count == 0) continue;
+            if (!s.allowedTransportModes.Contains(mode)) continue;
+
+            float w = Mathf.Max(0f, s.weight);
+            if (w <= 0f) continue;
+
+            candidates ??= new List<ScenarioDefinition>();
+            candidates.Add(s);
+            totalWeight += w;
+        }
+
+        if (candidates == null || candidates.Count == 0 || totalWeight <= 0f)
+            return null;
+
+        float roll = UnityEngine.Random.Range(0f, totalWeight);
+        float acc = 0f;
+
+        for (int i = 0; i < candidates.Count; i++)
+        {
+            acc += Mathf.Max(0f, candidates[i].weight);
+            if (roll <= acc)
+                return candidates[i];
+        }
+
+        return candidates[candidates.Count - 1];
+    }
+
+    private void UpdateAttentionIcons()
+    {
+        if (gameManager == null)
+        {
+            SetActiveSafe(computerAttentionIcon, false);
+            SetActiveSafe(phoneAttentionIcon, false);
+            return;
+        }
+
+        bool hasQueued = _queue.Count > 0;
+        bool hasForcedPhoneScenario = _forcedScenario != null;
+
+        bool needsComputerAttention =
+            hasQueued &&
+            gameManager.CurrentLocation == GameManager.Location.Home &&
+            !_isComputerOpen &&
+            !_isShowing;
+
+        bool needsPhoneAttention =
+            (hasForcedPhoneScenario || hasQueued) &&
+            gameManager.CurrentLocation != GameManager.Location.Home &&
+            !_isPhoneOpen &&
+            !_isShowing;
+
+        SetActiveSafe(computerAttentionIcon, needsComputerAttention);
+        SetActiveSafe(phoneAttentionIcon, needsPhoneAttention);
+    }
+
     private void ApplyChoice(ScenarioDefinition scenario, int choiceIndex)
     {
         if (scenario == null) return;
@@ -375,34 +631,6 @@ public class ScenarioManager : MonoBehaviour
             return ComputerPanel;
 
         return PhonePanel;
-    }
-
-    private void UpdateAttentionIcons()
-    {
-        if (gameManager == null)
-        {
-            SetActiveSafe(computerAttentionIcon, false);
-            SetActiveSafe(phoneAttentionIcon, false);
-            return;
-        }
-
-        // Only show an icon when there is something queued but cannot be shown yet because the needed device is closed.
-        bool hasQueued = _queue.Count > 0;
-
-        bool needsComputerAttention =
-            hasQueued &&
-            gameManager.CurrentLocation == GameManager.Location.Home &&
-            !_isComputerOpen &&
-            !_isShowing;
-
-        bool needsPhoneAttention =
-            hasQueued &&
-            gameManager.CurrentLocation != GameManager.Location.Home &&
-            !_isPhoneOpen &&
-            !_isShowing;
-
-        SetActiveSafe(computerAttentionIcon, needsComputerAttention);
-        SetActiveSafe(phoneAttentionIcon, needsPhoneAttention);
     }
 
     private static void SetActiveSafe(GameObject go, bool active)

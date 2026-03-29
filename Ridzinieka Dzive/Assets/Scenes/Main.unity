@@ -4515,6 +4515,8 @@ MonoBehaviour:
   bigPhoneCloseButtons:
   - {fileID: 1963914503}
   startOpened: 0
+  autoCloseOnLocationChange: 1
+  gameManager: {fileID: 1192363180}
 --- !u!1 &273566640
 GameObject:
   m_ObjectHideFlags: 0
@@ -24218,7 +24220,8 @@ MonoBehaviour:
   outsideMenu: {fileID: 1603617757}
   cameraMovement: {fileID: 1592000213}
   gameManager: {fileID: 1192363180}
-  transportPopup: {fileID: 0}
+  scenarioManager: {fileID: 1675862545}
+  transportPopup: {fileID: 484748265}
   outsideLockSecondsAfterOpen: 0.35
 --- !u!1 &1605171858
 GameObject:
@@ -25026,6 +25029,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3a296e82179c4ea4788571e7cc1c2f57, type: 2}
   - {fileID: 11400000, guid: 048dfad1344bd8b41a533e378fb5166f, type: 2}
   - {fileID: 11400000, guid: 6be8474cc250d394d911a6ccca360178, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   maxQueued: 3
   outsideChance: 0.35
@@ -27799,11 +27804,11 @@ RectTransform:
   - {fileID: 1560715911}
   - {fileID: 931605746}
   - {fileID: 489810693}
+  - {fileID: 1603617758}
+  - {fileID: 484748264}
   - {fileID: 272623645}
   - {fileID: 1477470418}
   - {fileID: 217595070}
-  - {fileID: 1603617758}
-  - {fileID: 484748264}
   - {fileID: 1013227931}
   - {fileID: 446213664}
   - {fileID: 1633007155}

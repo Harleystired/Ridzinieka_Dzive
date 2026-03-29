@@ -30,6 +30,10 @@ public class ScenarioDefinition : ScriptableObject
     [Tooltip("If empty: scenario can run for any job. If not empty: requires the player's selected job to be listed.")]
     public List<GameManager.JobType> allowedJobs = new();
 
+    [Header("Transport-only Scenarios (optional)")]
+    [Tooltip("Leave empty for normal scenarios. If set, this scenario is only eligible for these transport modes (used by transport-specific flow).")]
+    public List<GameManager.TransportMode> allowedTransportModes = new();
+
     [Header("Choices (2 to 3)")]
     public Choice[] choices = Array.Empty<Choice>();
 

@@ -15,8 +15,11 @@ public class PhoneUI : MonoBehaviour
     [Header("Optional")]
     [SerializeField] private bool startOpened = false;
 
-    private bool _isOpen;
+    [Header("Auto Close")]
+    [SerializeField] private bool autoCloseOnLocationChange = true;
+    [SerializeField] private GameManager gameManager;
 
+    private bool _isOpen;
     public bool IsOpen => _isOpen;
 
     public event Action Opened;
@@ -24,6 +27,9 @@ public class PhoneUI : MonoBehaviour
 
     private void Awake()
     {
+        if (gameManager == null)
+            gameManager = FindFirstObjectByType<GameManager>();
+
         if (smallPhoneOpenButton != null)
             smallPhoneOpenButton.onClick.AddListener(Open);
 
@@ -31,12 +37,24 @@ public class PhoneUI : MonoBehaviour
         {
             foreach (var b in bigPhoneCloseButtons)
             {
-                if (b != null)
-                    b.onClick.AddListener(Close);
+                if (b == null) continue;
+                b.onClick.AddListener(Close);
             }
         }
 
         SetOpen(startOpened, instant: true);
+    }
+
+    private void OnEnable()
+    {
+        if (autoCloseOnLocationChange && gameManager != null)
+            gameManager.OnLocationChanged += HandleLocationChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (autoCloseOnLocationChange && gameManager != null)
+            gameManager.OnLocationChanged -= HandleLocationChanged;
     }
 
     private void OnDestroy()
@@ -48,10 +66,18 @@ public class PhoneUI : MonoBehaviour
         {
             foreach (var b in bigPhoneCloseButtons)
             {
-                if (b != null)
-                    b.onClick.RemoveListener(Close);
+                if (b == null) continue;
+                b.onClick.RemoveListener(Close);
             }
         }
+    }
+
+    private void HandleLocationChanged(GameManager.Location newLocation)
+    {
+        // Close phone when arriving somewhere new (prevents immediate new scenarios popping on the open phone)
+        // If you ONLY want to close when arriving at Work/Shop/Home, keep this condition.
+        if (_isOpen && newLocation != GameManager.Location.Outside)
+            Close();
     }
 
     public void Open() => SetOpen(true, instant: false);

@@ -7,6 +7,9 @@ public class OutsideUI : MonoBehaviour
     [SerializeField] private CameraMovement cameraMovement;
     [SerializeField] private GameManager gameManager;
 
+    [Header("Scenario Flow")]
+    [SerializeField] private ScenarioManager scenarioManager;
+
     // NEW: popup reference
     [SerializeField] private TransportPurchasePopup transportPopup;
 
@@ -23,14 +26,15 @@ public class OutsideUI : MonoBehaviour
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
 
+        if (scenarioManager == null)
+            scenarioManager = FindFirstObjectByType<ScenarioManager>();
+
         if (transportPopup == null)
             transportPopup = FindFirstObjectByType<TransportPurchasePopup>();
     }
 
     private void OnEnable()
     {
-        if (gameManager == null)
-            gameManager = FindFirstObjectByType<GameManager>();
 
         if (gameManager != null)
             gameManager.OnLocationChanged += HandleLocationChanged;
@@ -72,9 +76,23 @@ public class OutsideUI : MonoBehaviour
    
     public void ShowOutsideMenu()
     {
-        SetOutsideMenuActive(true);
+        // Step 1: we're outside; show phone attention + run a normal outside scenario BEFORE transport is available.
+        // We keep transport menu hidden until scenario resolves.
+        SetOutsideMenuActive(false);
+
+        if (scenarioManager == null)
+        {
+            SetOutsideMenuActive(true);
+            return;
+        }
+
+        scenarioManager.RequestPreTransportOutsideScenario(() =>
+        {
+            // When the outside scenario is completed (or none available), allow transport selection UI.
+            SetOutsideMenuActive(true);
+        });
     }
-    
+
     public void CloseOutsideMenu()
     {
         SetOutsideMenuActive(false);
@@ -114,8 +132,21 @@ public class OutsideUI : MonoBehaviour
     {
         if (gameManager == null) return;
 
-        gameManager.ConfirmTravel(mode);
+        // Hide transport menu while the transport-specific phone scenario runs
+        SetOutsideMenuActive(false);
 
-        CloseOutsideMenu();
+        // If no ScenarioManager is available, just travel immediately
+        if (scenarioManager == null)
+        {
+            gameManager.ConfirmTravel(mode);
+            CloseOutsideMenu();
+            return;
+        }
+
+        scenarioManager.RequestTransportScenario(mode, () =>
+        {
+            gameManager.ConfirmTravel(mode);
+            CloseOutsideMenu();
+        });
     }
 }
