@@ -13,7 +13,10 @@ public class ScenarioManager : MonoBehaviour
     [Header("Phone Gating")]
     [SerializeField] private PhoneUI phoneUI; // assign in Inspector (recommended)
 
-    
+    [Header("Attention Icons (assign in Inspector)")]
+    [SerializeField] private GameObject computerAttentionIcon; // exclamation mark next to computer
+    [SerializeField] private GameObject phoneAttentionIcon;    // exclamation mark next to phone
+
     [Header("Scenario Pool")]
     [SerializeField] private List<ScenarioDefinition> allScenarios = new();
 
@@ -96,9 +99,11 @@ public class ScenarioManager : MonoBehaviour
 
         // Kick off an attempt immediately for testing / scene load cases
         TryEnqueueFromContext(gameManager.CurrentLocation);
+
+        UpdateAttentionIcons();
     }
-    
-     private void OnDisable()
+
+    private void OnDisable()
     {
         if (gameManager == null) return;
 
@@ -110,12 +115,16 @@ public class ScenarioManager : MonoBehaviour
             phoneUI.Opened -= NotifyPhoneOpened;
             phoneUI.Closed -= NotifyPhoneClosed;
         }
+
+        SetActiveSafe(computerAttentionIcon, false);
+        SetActiveSafe(phoneAttentionIcon, false);
     }
-     
-     
+
     public void NotifyComputerOpened()
     {
         _isComputerOpen = true;
+
+        UpdateAttentionIcons();
 
         if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Home)
             ShowNext();
@@ -124,11 +133,14 @@ public class ScenarioManager : MonoBehaviour
     public void NotifyComputerClosed()
     {
         _isComputerOpen = false;
+        UpdateAttentionIcons();
     }
-    
+
     private void NotifyPhoneOpened()
     {
         _isPhoneOpen = true;
+
+        UpdateAttentionIcons();
 
         // If we're not at home, phone scenarios are allowed once phone is fully open.
         if (gameManager != null && gameManager.CurrentLocation != GameManager.Location.Home)
@@ -138,23 +150,30 @@ public class ScenarioManager : MonoBehaviour
     private void NotifyPhoneClosed()
     {
         _isPhoneOpen = false;
+        UpdateAttentionIcons();
     }
 
     private void HandleLocationChanged(GameManager.Location location)
     {
         TryEnqueueFromContext(location);
 
+        UpdateAttentionIcons();
+
         // If we arrive home and the computer is open, show queued scenarios.
         if (location == GameManager.Location.Home && _isComputerOpen)
             ShowNext();
     }
+
     private void HandleTimeChanged(GameManager.TimeOfDay _)
     {
         TryEnqueueFromContext(gameManager.CurrentLocation);
 
+        UpdateAttentionIcons();
+
         if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Home && _isComputerOpen)
             ShowNext();
     }
+
     private void TryEnqueueFromContext(GameManager.Location location)
     {
         if (_queue.Count >= maxQueued) return;
@@ -169,6 +188,8 @@ public class ScenarioManager : MonoBehaviour
         if (picked == null) return;
 
         _queue.Enqueue(picked);
+
+        UpdateAttentionIcons();
 
         // IMPORTANT:
         // - Outside/Work/Shop: show immediately (phone UI).
@@ -262,18 +283,23 @@ public class ScenarioManager : MonoBehaviour
 
     private void ShowNext()
     {
-       
         if (_isShowing) return;
         if (_queue.Count == 0) return;
         if (gameManager == null) return;
 
         // Home gating: only show when computer is open
         if (gameManager.CurrentLocation == GameManager.Location.Home && !_isComputerOpen)
+        {
+            UpdateAttentionIcons();
             return;
+        }
 
         // Phone gating: only show when phone is fully open
         if (gameManager.CurrentLocation != GameManager.Location.Home && !_isPhoneOpen)
+        {
+            UpdateAttentionIcons();
             return;
+        }
 
         var panel = ResolvePanelForCurrentContext();
         if (panel == null)
@@ -283,16 +309,19 @@ public class ScenarioManager : MonoBehaviour
         }
 
         var scenario = _queue.Dequeue();
-        if (scenario == null) { ShowNext(); return; }
+        if (scenario == null) { UpdateAttentionIcons(); ShowNext(); return; }
 
         if (!scenario.CanRun(gameManager, gameManager.CurrentTime) || IsOnCooldown(scenario))
         {
+            UpdateAttentionIcons();
             ShowNext();
             return;
         }
 
         _currentScenario = scenario;
         _isShowing = true;
+
+        UpdateAttentionIcons();
 
         string c1 = scenario.choices[0].buttonText;
         string c2 = scenario.choices[1].buttonText;
@@ -312,6 +341,8 @@ public class ScenarioManager : MonoBehaviour
                 panel.Hide();
                 _isShowing = false;
 
+                UpdateAttentionIcons();
+
                 ShowNext();
             });
     }
@@ -329,8 +360,6 @@ public class ScenarioManager : MonoBehaviour
             effects[i].Apply(gameManager);
     }
 
-    
-
     private void MarkShownToday(ScenarioDefinition s)
     {
         if (s == null) return;
@@ -346,5 +375,40 @@ public class ScenarioManager : MonoBehaviour
             return ComputerPanel;
 
         return PhonePanel;
+    }
+
+    private void UpdateAttentionIcons()
+    {
+        if (gameManager == null)
+        {
+            SetActiveSafe(computerAttentionIcon, false);
+            SetActiveSafe(phoneAttentionIcon, false);
+            return;
+        }
+
+        // Only show an icon when there is something queued but cannot be shown yet because the needed device is closed.
+        bool hasQueued = _queue.Count > 0;
+
+        bool needsComputerAttention =
+            hasQueued &&
+            gameManager.CurrentLocation == GameManager.Location.Home &&
+            !_isComputerOpen &&
+            !_isShowing;
+
+        bool needsPhoneAttention =
+            hasQueued &&
+            gameManager.CurrentLocation != GameManager.Location.Home &&
+            !_isPhoneOpen &&
+            !_isShowing;
+
+        SetActiveSafe(computerAttentionIcon, needsComputerAttention);
+        SetActiveSafe(phoneAttentionIcon, needsPhoneAttention);
+    }
+
+    private static void SetActiveSafe(GameObject go, bool active)
+    {
+        if (go == null) return;
+        if (go.activeSelf == active) return;
+        go.SetActive(active);
     }
 }
