@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
+  m_Name: STRESS_L_FREETIME
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: STRESS_L_FREETIME
+  weight: 5
+  minDaysBetweenShows: 3
+  isMandatory: 1
+  prompt: "Tev ir br\u012Bvs laiks un mier\u012Bgs noska\u0146ojums."
+  allowedLocations: 00000000
+  allowedTimes: 
+  statRequirements:
+  - stat: 3
+    minInclusive: 0
+    maxInclusive: 40
+  allowedJobs: 
+  allowedTransportModes: 
+  choices:
+  - buttonText: "Lasi gr\u0101matu vai m\u0101cies"
+    effects:
+    - stat: 2
+      amount: -5
+    - stat: 4
+      amount: 5
+  - buttonText: "SkatiesTV vai sp\u0113l\u0113 sp\u0113les"
+    effects:
+    - stat: 2
+      amount: -5
+  - buttonText: Neko nedari
+    effects:
+    - stat: 2
+      amount: -1

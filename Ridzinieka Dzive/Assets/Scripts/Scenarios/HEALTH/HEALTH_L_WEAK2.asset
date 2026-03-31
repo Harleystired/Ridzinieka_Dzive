@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
+  m_Name: HEALTH_L_WEAK2
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: HEALTH_L_WEAK2
+  weight: 5
+  minDaysBetweenShows: 3
+  isMandatory: 1
+  prompt: "Tu j\u016Bties \u013Coti v\u0101j\u0161"
+  allowedLocations: 00000000
+  allowedTimes: 00000000
+  statRequirements:
+  - stat: 4
+    minInclusive: 0
+    maxInclusive: 40
+  allowedJobs: 
+  allowedTransportModes: 
+  choices:
+  - buttonText: "Paliec gult\u0101 visu dienu"
+    effects:
+    - stat: 4
+      amount: 10
+    - stat: 2
+      amount: -2
+    - stat: 3
+      amount: -10
+  - buttonText: "Pam\u0113\u0123ini dar\u012Bt kaut ko vieglu"
+    effects:
+    - stat: 2
+      amount: -10
+    - stat: 4
+      amount: -5
+    - stat: 3
+      amount: 10
+  - buttonText: "Ignor\u0113 un dari ierasto rut\u012Bnu"
+    effects:
+    - stat: 4
+      amount: -10
+    - stat: 3
+      amount: 10
+    - stat: 2
+      amount: -10
