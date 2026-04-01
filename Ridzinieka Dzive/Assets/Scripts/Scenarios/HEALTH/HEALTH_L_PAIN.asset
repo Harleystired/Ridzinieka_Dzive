@@ -16,7 +16,7 @@ MonoBehaviour:
   weight: 5
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "tev ir nelielas s\u0101pes vai diskomforts."
+  prompt: "Tev ir nelielas s\u0101pes vai diskomforts."
   allowedLocations: 00000000
   allowedTimes: 
   statRequirements:

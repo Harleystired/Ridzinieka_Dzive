@@ -16,7 +16,7 @@ MonoBehaviour:
   weight: 3
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Laikapst\u0101k\u013Ci ir slikt\u0101ki, ce\u013C\u0161 slidens."
+  prompt: "Laikapst\u0101k\u013Ci ir slikti, ce\u013C\u0161 slidens."
   allowedLocations: 01000000
   allowedTimes: 
   statRequirements: []

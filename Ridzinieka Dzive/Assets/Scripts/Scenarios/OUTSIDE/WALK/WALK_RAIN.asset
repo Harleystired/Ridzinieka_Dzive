@@ -16,7 +16,7 @@ MonoBehaviour:
   weight: 2
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "\u0100r\u0101 l\u012Bst, un tev j\u0101iet uz savu galam\u0113r\u0137i."
+  prompt: "\u0100r\u0101 l\u012Bst"
   allowedLocations: 01000000
   allowedTimes: 
   statRequirements: []

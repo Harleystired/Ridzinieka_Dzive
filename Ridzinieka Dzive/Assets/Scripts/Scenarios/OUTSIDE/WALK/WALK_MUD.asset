@@ -16,7 +16,7 @@ MonoBehaviour:
   weight: 2
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Ce\u013C\u0161 uz galam\u0113r\u0137i ir dub\u013Cains vai slidens."
+  prompt: "Ce\u013C\u0161 ir dub\u013Cains vai slidens."
   allowedLocations: 01000000
   allowedTimes: 
   statRequirements: []

@@ -16,15 +16,14 @@ MonoBehaviour:
   weight: 1
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tu pamodies un redzi, ka esi v\u0113l\u0101k nek\u0101 pl\u0101nots, bet
-    j\u0101iet uz galam\u0113r\u0137i."
+  prompt: "Tu kav\u0113jies."
   allowedLocations: 01000000
   allowedTimes: 
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 00000000
   choices:
-  - buttonText: "Skrien uz galam\u0113r\u0137i"
+  - buttonText: Skrien
     effects:
     - stat: 2
       amount: -20

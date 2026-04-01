@@ -16,7 +16,7 @@ MonoBehaviour:
   weight: 8
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tu brauc ar savu auto, bet ce\u013C\u0161 ir pilns ar automa\u0161\u012Bn\u0101m."
+  prompt: "Ce\u013C\u0161 ir pilns ar automa\u0161\u012Bn\u0101m."
   allowedLocations: 01000000
   allowedTimes: 
   statRequirements: []
