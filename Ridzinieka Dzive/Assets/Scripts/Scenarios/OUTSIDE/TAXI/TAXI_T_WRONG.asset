@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
+  m_Name: TAXI_T_WRONG
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: TAXI_T_WRONG
+  weight: 2
+  minDaysBetweenShows: 3
+  isMandatory: 1
+  prompt: "Taksists brauc pa nepareizu ce\u013Cu."
+  allowedLocations: 01000000
+  allowedTimes: 
+  statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 02000000
+  choices:
+  - buttonText: "Saki, lai labo mar\u0161rutu"
+    effects:
+    - stat: 0
+      amount: -5
+    - stat: 3
+      amount: 15
+  - buttonText: "\u013Bauj braukt t\u0101l\u0101k un cer uz lab\u0101ku ce\u013Cu"
+    effects:
+    - stat: 0
+      amount: -10
+    - stat: 3
+      amount: 10
+  - buttonText: "Izk\u0101p un mekl\u0113 citu transportu"
+    effects:
+    - stat: 2
+      amount: -15
+    - stat: 3
+      amount: 10
