@@ -8,10 +8,9 @@ public class GameManager : MonoBehaviour
     // Player Stats / Persistent Data
     // ---------------------------------------------------------------------
 
-    // stores the game data, add any extra data you want to store
     [Header("Player Stats")]
     public int money;
-    public int hunger = 100;
+    public int hunger = 0;
     public int energy = 100;
     public int stress = 0;
     public int health = 100;
@@ -412,6 +411,24 @@ public class GameManager : MonoBehaviour
     // Money / Needs
     // ---------------------------------------------------------------------
 
+    private const int StatMin = 0;
+    private const int StatMax = 100;
+
+    private static int ClampStat(int value)
+    {
+        return Mathf.Clamp(value, StatMin, StatMax);
+    }
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        hunger = ClampStat(hunger);
+        energy = ClampStat(energy);
+        stress = ClampStat(stress);
+        health = ClampStat(health);
+    }
+#endif
+
     public void AddMoney(int amount)
     {
         money += amount;
@@ -429,72 +446,41 @@ public class GameManager : MonoBehaviour
 
     public void AddHunger(int amount)
     {
-        hunger += amount;
-        if (hunger > 0)
-            hunger = 0;
-
-        if (hunger < -100)
-            hunger = -100;
+        hunger = ClampStat(hunger + amount);
     }
 
     public void RemoveHunger(int amount)
     {
-        hunger -= amount;
-        if (hunger < 0)
-            hunger = 0;
+        hunger = ClampStat(hunger - amount);
     }
 
     public void AddStress(int amount)
     {
-        stress += amount;
-
-        if (stress < 0)
-            stress = 0;
-
-        if (stress > 100)
-            stress = 100;
+        stress = ClampStat(stress + amount);
     }
 
     public void RemoveStress(int amount)
     {
-        stress -= amount;
-        if (stress < 0)
-            stress = 0;
+        stress = ClampStat(stress - amount);
     }
 
     public void AddHealth(int amount)
     {
-        health += amount;
-
-        if (health < 0)
-            health = 0;
-
-        if (health > 100)
-            health = 100;
+        health = ClampStat(health + amount);
     }
 
     public void RemoveHealth(int amount)
     {
-        health -= amount;
-
-        if (health < 0)
-            health = 0;
+        health = ClampStat(health - amount);
     }
 
     public void AddEnergy(int amount)
     {
-        energy += amount;
-        if (energy < 0)
-            energy = 0;
-
-        if (energy > 100)
-            energy = 100;
+        energy = ClampStat(energy + amount);
     }
 
     public void RemoveEnergy(int amount)
     {
-        energy -= amount;
-        if (energy < 0)
-            energy = 0;
+        energy = ClampStat(energy - amount);
     }
 }

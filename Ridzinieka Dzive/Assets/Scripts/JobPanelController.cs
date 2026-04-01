@@ -100,21 +100,32 @@ public class JobPanelController : MonoBehaviour
     {
         var job = jobs[currentJobIndex];
 
-        // Apply stat changes
-        gameManager.hunger += job.hungerChange;
-        gameManager.energy += job.energyChange;
-        gameManager.stress += job.stressChange;
-        gameManager.health += job.healthChange;
-        gameManager.money += job.moneyEarned;
+        // Apply stat changes via clamped methods (0..100)
+        if (job.hungerChange >= 0) gameManager.AddHunger(job.hungerChange);
+        else gameManager.RemoveHunger(-job.hungerChange);
+
+        if (job.energyChange >= 0) gameManager.AddEnergy(job.energyChange);
+        else gameManager.RemoveEnergy(-job.energyChange);
+
+        if (job.stressChange >= 0) gameManager.AddStress(job.stressChange);
+        else gameManager.RemoveStress(-job.stressChange);
+
+        if (job.healthChange >= 0) gameManager.AddHealth(job.healthChange);
+        else gameManager.RemoveHealth(-job.healthChange);
+
+        // Money
+        if (job.moneyEarned != 0)
+            gameManager.AddMoney(job.moneyEarned);
 
         Debug.Log("Chosen job: " + job.title);
-        
+
         if (gameManager != null)
             gameManager.SetSelectedJobFromIndex(currentJobIndex);
 
         var statsUI = FindFirstObjectByType<StatsUI>();
         if (statsUI != null)
             statsUI.UpdateStats();
+
         StartCoroutine(ClosePanelDelayed());
     }
 
