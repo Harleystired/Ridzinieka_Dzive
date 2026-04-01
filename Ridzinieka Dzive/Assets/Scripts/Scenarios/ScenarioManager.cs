@@ -13,6 +13,9 @@ public class ScenarioManager : MonoBehaviour
     [Header("Phone Gating")]
     [SerializeField] private PhoneUI phoneUI; // assign in Inspector (recommended)
 
+    [Header("Home Area Gating")]
+    [SerializeField] private CameraMovement cameraMovement; // assign in Inspector (recommended)
+
     [Header("Attention Icons (assign in Inspector)")]
     [SerializeField] private GameObject computerAttentionIcon; // exclamation mark next to computer
     [SerializeField] private GameObject phoneAttentionIcon;    // exclamation mark next to phone
@@ -34,6 +37,8 @@ public class ScenarioManager : MonoBehaviour
     private bool _isShowing;
     private bool _isComputerOpen;
     private bool _isPhoneOpen;
+
+    private CameraMovement.HomeArea _homeArea = CameraMovement.HomeArea.Computer;
 
     private ScenarioDefinition _currentScenario;
 
@@ -85,6 +90,9 @@ public class ScenarioManager : MonoBehaviour
         
         if (phoneUI == null)
             phoneUI = FindFirstObjectByType<PhoneUI>();
+
+        if (cameraMovement == null)
+            cameraMovement = FindFirstObjectByType<CameraMovement>();
     }
     
     private void OnEnable()
@@ -99,6 +107,11 @@ public class ScenarioManager : MonoBehaviour
             _isPhoneOpen = phoneUI.IsOpen;
             phoneUI.Opened += NotifyPhoneOpened;
             phoneUI.Closed += NotifyPhoneClosed;
+        }
+
+        if (cameraMovement != null)
+        {
+            cameraMovement.OnHomeAreaChanged += HandleHomeAreaChanged;
         }
 
         // Kick off an attempt immediately for testing / scene load cases
@@ -120,8 +133,19 @@ public class ScenarioManager : MonoBehaviour
             phoneUI.Closed -= NotifyPhoneClosed;
         }
 
+        if (cameraMovement != null)
+        {
+            cameraMovement.OnHomeAreaChanged -= HandleHomeAreaChanged;
+        }
+
         SetActiveSafe(computerAttentionIcon, false);
         SetActiveSafe(phoneAttentionIcon, false);
+    }
+
+    private void HandleHomeAreaChanged(CameraMovement.HomeArea area)
+    {
+        _homeArea = area;
+        UpdateAttentionIcons();
     }
 
     public void NotifyComputerOpened()
@@ -578,6 +602,23 @@ public class ScenarioManager : MonoBehaviour
     private void UpdateAttentionIcons()
     {
         if (gameManager == null)
+        {
+            SetActiveSafe(computerAttentionIcon, false);
+            SetActiveSafe(phoneAttentionIcon, false);
+            return;
+        }
+
+        // 1) If the big phone UI is open, never show attention icons (prevents drawing over the phone).
+        if (_isPhoneOpen)
+        {
+            SetActiveSafe(computerAttentionIcon, false);
+            SetActiveSafe(phoneAttentionIcon, false);
+            return;
+        }
+
+        // 2) If we're at home but not in the "Computer" area, hide home icons.
+        if (gameManager.CurrentLocation == GameManager.Location.Home &&
+            _homeArea != CameraMovement.HomeArea.Computer)
         {
             SetActiveSafe(computerAttentionIcon, false);
             SetActiveSafe(phoneAttentionIcon, false);

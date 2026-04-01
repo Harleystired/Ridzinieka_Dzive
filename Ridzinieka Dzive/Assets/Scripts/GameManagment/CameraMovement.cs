@@ -3,10 +3,28 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    // moves the camera around the room with the use of buttons, add any extra places and set camera position
+    public enum HomeArea
+    {
+        Computer = 0,
+        Kitchen = 1,
+        Other = 2
+    }
+
+    public event Action<HomeArea> OnHomeAreaChanged;
+
+    private HomeArea _currentArea = HomeArea.Computer;
+
     private void Awake()
     {
-        transform.position = new Vector3(0, 0, -10); //sets the camera position at the start of game
+        transform.position = new Vector3(0, 0, -10);
+        SetArea(HomeArea.Computer);
+    }
+
+    private void SetArea(HomeArea area)
+    {
+        if (_currentArea == area) return;
+        _currentArea = area;
+        OnHomeAreaChanged?.Invoke(_currentArea);
     }
 
     public void Kitchen()
@@ -14,19 +32,23 @@ public class CameraMovement : MonoBehaviour
         Debug.Log("Kitchen() clicked on: " + gameObject.name);
         transform.position = new Vector3(20.22f, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
+        SetArea(HomeArea.Kitchen);
     }
+
     public void Computer()
     {
         Debug.Log("Computer() clicked on: " + gameObject.name);
         transform.position = new Vector3(0, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
+        SetArea(HomeArea.Computer);
     }
-    
+
     public void Outside()
     {
         Debug.Log("Outside() clicked on: " + gameObject.name);
         transform.position = new Vector3(-25, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
+        SetArea(HomeArea.Other);
     }
 
     public void Shop()
@@ -34,28 +56,30 @@ public class CameraMovement : MonoBehaviour
         Debug.Log("Shop() clicked on: " + gameObject.name);
         transform.position = new Vector3(-50, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
+        SetArea(HomeArea.Other);
     }
 
-    // all job locations will be added here
     public void workOffice()
     {
         Debug.Log("Close() clicked on: " + gameObject.name);
         transform.position = new Vector3(-75, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
+        SetArea(HomeArea.Other);
     }
-    
+
     public void workCashier()
     {
         Debug.Log("Close() clicked on: " + gameObject.name);
         transform.position = new Vector3(-100, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
+        SetArea(HomeArea.Other);
     }
-    
+
     public void workTaxi()
     {
         Debug.Log("Close() clicked on: " + gameObject.name);
         transform.position = new Vector3(-130, 0, -10);
         Debug.Log("Camera position now: " + transform.position);
+        SetArea(HomeArea.Other);
     }
-    
 }
