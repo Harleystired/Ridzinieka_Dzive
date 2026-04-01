@@ -60,19 +60,21 @@ public class ShopUI : MonoBehaviour
     {
         bool atShop = location == GameManager.Location.Shop;
 
-        if (shopUI != null)
-            shopUI.SetActive(atShop);
+        
+        // if (shopUI != null)
+        //     shopUI.SetActive(atShop);
 
         if (!atShop)
         {
-            // Leaving the shop: ensure the panel is closed and modal released
             CloseShop();
             return;
         }
 
-        // IMPORTANT: don't SetActive(false) on the outside menu directly (it leaks UIModal)
         if (outsideUIController != null)
             outsideUIController.CloseOutsideMenu();
+
+        
+        OpenShop();
     }
     // Hook this to the Shop UI button's OnClick()
     public void OpenShop()

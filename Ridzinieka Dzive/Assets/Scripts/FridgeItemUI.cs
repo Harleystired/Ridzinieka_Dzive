@@ -29,6 +29,12 @@ public class FridgeItemUI : MonoBehaviour
         quantityText.text = count + "x";
         var button = GetComponent<Button>();
         button.interactable = gameManager.hunger > 0;
+        
+        Debug.Log("FRIDGE ITEM NAME = [" + name + "]");
+        var iconTest = fridgeUI.itemDatabase.GetIcon(name);
+        Debug.Log("ICON FOUND = " + (iconTest != null));
+
+
     }
 
     public void OnClick()

@@ -1954,12 +1954,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1155271476}
+    - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: price
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: itemName
-      value: Drink mix
+      value: Eggs
       objectReference: {fileID: 0}
     - target: {fileID: 2979982471047243983, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: m_Name
@@ -2051,7 +2055,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Viet\u0113jais veikals"
+  m_text: THE SHOP
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2078,8 +2082,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 120
-  m_fontSizeBase: 120
+  m_fontSize: 150
+  m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3341,7 +3345,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 368787974}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.99999976
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6124,7 +6128,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1162174043}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.00000023841858, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -8284,6 +8288,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 989818511532467608, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
   m_PrefabInstance: {fileID: 1283659123}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &530339343 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6918124419215997523, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+  m_PrefabInstance: {fileID: 1283659123}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a18fac174373ef49a10e38d7d0f42ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIShopItem
 --- !u!1 &539957812
 GameObject:
   m_ObjectHideFlags: 0
@@ -15361,11 +15376,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: price
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: itemName
-      value: Drink mix
+      value: Bread
       objectReference: {fileID: 0}
     - target: {fileID: 2979982471047243983, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: m_Name
@@ -16700,6 +16715,24 @@ MonoBehaviour:
   - itemName: Drink mix
     icon: {fileID: -3970203721277736015, guid: 17ecc93eb03b58046a29fdaadbb5295a, type: 3}
     hungerValue: 5
+  - itemName: Eggs
+    icon: {fileID: -5445851545866320189, guid: 99f278764c122a64aa63ec7af5a78772, type: 3}
+    hungerValue: 6
+  - itemName: Milk
+    icon: {fileID: -5110731548806032159, guid: 4628d97eb917ad542b9642a608b33a95, type: 3}
+    hungerValue: 4
+  - itemName: Bread
+    icon: {fileID: -4431494890709657585, guid: c33e6e60cf613e54eb83c89e3cc54bec, type: 3}
+    hungerValue: 10
+  - itemName: Chips
+    icon: {fileID: -7226382747494397708, guid: 4907626a96009ed44b0d6c8c6fbfb9ae, type: 3}
+    hungerValue: 2
+  - itemName: Cookies
+    icon: {fileID: -2902698247344732673, guid: 74baf726ab2bce943870147be7ec4155, type: 3}
+    hungerValue: 5
+  - itemName: Chicken legs
+    icon: {fileID: 8678448789981272047, guid: bd69da521228c6a4ba090c8fd0923fcb, type: 3}
+    hungerValue: 10
 --- !u!4 &1103281266
 Transform:
   m_ObjectHideFlags: 0
@@ -17648,6 +17681,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 989818511532467608, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
   m_PrefabInstance: {fileID: 95901860}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1155271476 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6918124419215997523, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+  m_PrefabInstance: {fileID: 95901860}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a18fac174373ef49a10e38d7d0f42ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIShopItem
 --- !u!1 &1162174042
 GameObject:
   m_ObjectHideFlags: 0
@@ -18040,6 +18084,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 989818511532467608, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
   m_PrefabInstance: {fileID: 1363933043}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1170775111 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6918124419215997523, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+  m_PrefabInstance: {fileID: 1363933043}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a18fac174373ef49a10e38d7d0f42ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIShopItem
 --- !u!1 &1177458141
 GameObject:
   m_ObjectHideFlags: 0
@@ -18574,12 +18629,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1898278666}
+    - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: price
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: itemName
-      value: Drink mix
+      value: Chips
       objectReference: {fileID: 0}
     - target: {fileID: 2979982471047243983, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: m_Name
@@ -19849,12 +19908,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 530339343}
+    - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: price
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: itemName
-      value: Drink mix
+      value: Cookies
       objectReference: {fileID: 0}
     - target: {fileID: 2979982471047243983, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: m_Name
@@ -21522,12 +21585,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1170775111}
+    - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: price
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: itemName
-      value: Drink mix
+      value: Milk
       objectReference: {fileID: 0}
     - target: {fileID: 2979982471047243983, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: m_Name
@@ -23891,7 +23958,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -25.213135, y: 23.418457}
+  m_AnchoredPosition: {x: -25.213196, y: 23.418457}
   m_SizeDelta: {x: -1743.6002, y: -1013.1883}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1528174439
@@ -26242,6 +26309,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 989818511532467608, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
   m_PrefabInstance: {fileID: 1722879924}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1710985890 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6918124419215997523, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+  m_PrefabInstance: {fileID: 1722879924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a18fac174373ef49a10e38d7d0f42ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIShopItem
 --- !u!1 &1716903225
 GameObject:
   m_ObjectHideFlags: 0
@@ -26385,12 +26463,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+      propertyPath: ui
+      value: 
+      objectReference: {fileID: 1710985890}
+    - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: price
-      value: 1
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1335512009842159851, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: itemName
-      value: Drink mix
+      value: Chicken legs
       objectReference: {fileID: 0}
     - target: {fileID: 2979982471047243983, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
       propertyPath: m_Name
@@ -28750,6 +28832,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 989818511532467608, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
   m_PrefabInstance: {fileID: 1196117084}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1898278666 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6918124419215997523, guid: ef3f288f173a7284c8ffd624617595a7, type: 3}
+  m_PrefabInstance: {fileID: 1196117084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a18fac174373ef49a10e38d7d0f42ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIShopItem
 --- !u!1 &1901874238
 GameObject:
   m_ObjectHideFlags: 0
@@ -30726,7 +30819,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -263, y: -333}
+  m_AnchoredPosition: {x: -357, y: -333}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2024823191
