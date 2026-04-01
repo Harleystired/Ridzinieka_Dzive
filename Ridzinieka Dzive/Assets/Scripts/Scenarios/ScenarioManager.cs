@@ -446,6 +446,9 @@ public class ScenarioManager : MonoBehaviour
             {
                 ApplyChoice(scenario, choiceIndex);
                 MarkShownToday(scenario);
+                var statsUI = FindFirstObjectByType<StatsUI>();
+                if (statsUI != null)
+                    statsUI.UpdateStats();
 
                 _currentScenario = null;
                 panel.Hide();
@@ -526,6 +529,9 @@ public class ScenarioManager : MonoBehaviour
             {
                 ApplyChoice(scenario, choiceIndex);
                 MarkShownToday(scenario);
+                var statsUI = FindFirstObjectByType<StatsUI>();
+                if (statsUI != null)
+                    statsUI.UpdateStats();
 
                 _currentScenario = null;
                 panel.Hide();
