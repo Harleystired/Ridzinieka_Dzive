@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
+  m_Name: TRANS-PUB-FULL-BUS
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: TRANS_PUB_FULL_BUS
+  weight: 8
+  minDaysBetweenShows: 3
+  isMandatory: 1
+  prompt: "Autobus ir pilns ar cilv\u0113kiem un visu st\u0101v cie\u0161i kop\u0101."
+  allowedLocations: 
+  allowedTimes: 
+  statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 01000000
+  choices:
+  - buttonText: "K\u0101p iek\u0161\u0101"
+    effects:
+    - stat: 3
+      amount: 5
+    - stat: 2
+      amount: -5
+  - buttonText: "Gaidu n\u0101kamo autobusu"
+    effects:
+    - stat: 3
+      amount: 10
+  - buttonText: "Ej ar k\u0101j\u0101m"
+    effects:
+    - stat: 3
+      amount: 5
+    - stat: 2
+      amount: -10
+    - stat: 4
+      amount: 5

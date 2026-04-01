@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
+  m_Name: TRANS-NEW-CAR-BAD-ROAD 1
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: TRANS_NEW_CAR_BAD_ROAD
+  weight: 8
+  minDaysBetweenShows: 3
+  isMandatory: 1
+  prompt: "Ce\u013C\u0161 ir nel\u012Bdzens un pilns ar bedr\u0113m."
+  allowedLocations: 
+  allowedTimes: 
+  statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 06000000
+  choices:
+  - buttonText: "Brauc uzman\u012Bgi"
+    effects:
+    - stat: 3
+      amount: 5
+    - stat: 0
+      amount: -2
+  - buttonText: "Mekl\u0113 citu mar\u0161rutu"
+    effects:
+    - stat: 3
+      amount: 5
+    - stat: 0
+      amount: -2
+  - buttonText: "Ej ar k\u0101j\u0101m"
+    effects:
+    - stat: 4
+      amount: 5
+    - stat: 2
+      amount: -5
+    - stat: 3
+      amount: 5

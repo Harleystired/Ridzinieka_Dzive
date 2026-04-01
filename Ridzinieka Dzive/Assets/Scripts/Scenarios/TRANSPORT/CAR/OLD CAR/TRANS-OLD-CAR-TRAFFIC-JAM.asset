@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
+  m_Name: TRANS-OLD-CAR-TRAFFIC-JAM
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: TRANS_OLD_CAR_TRAFFIC_JAM
+  weight: 7
+  minDaysBetweenShows: 3
+  isMandatory: 1
+  prompt: "Ce\u013C\u0161 ir pilns ar ma\u0161\u012Bn\u0101m un kust\u012Bba ir l\u0113na"
+  allowedLocations: 
+  allowedTimes: 
+  statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 05000000
+  choices:
+  - buttonText: Paliec un gaidi
+    effects:
+    - stat: 3
+      amount: 10
+    - stat: 0
+      amount: -2
+  - buttonText: "Mekl\u0113 citu mar\u0161rutu"
+    effects:
+    - stat: 3
+      amount: 10
+    - stat: 0
+      amount: -2
+  - buttonText: "Atst\u0101j ma\u0161\u012Bnu un ej ar k\u0101j\u0101m"
+    effects:
+    - stat: 4
+      amount: 5
+    - stat: 3
+      amount: 5
+    - stat: 2
+      amount: -5
