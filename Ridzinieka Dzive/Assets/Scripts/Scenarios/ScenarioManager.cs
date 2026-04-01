@@ -46,6 +46,9 @@ public class ScenarioManager : MonoBehaviour
     private ScenarioDefinition _forcedScenario;
     private Action _forcedOnComplete;
 
+    // NEW: callback invoked only after ALL scenarios are done (queue drained)
+    private Action _afterScenarioDrain;
+
     // scenarioId -> last day index shown
     private readonly Dictionary<string, int> _lastShownDayById = new();
 
@@ -294,6 +297,16 @@ public class ScenarioManager : MonoBehaviour
             if (IsAlreadyQueued(s)) continue;
             if (IsOnCooldown(s)) continue;
 
+            // NEW: while Outside, do NOT enqueue transport-specific scenarios.
+            // Transport-specific scenarios must only appear via RequestTransportScenario(mode, ...).
+            if (gameManager != null &&
+                gameManager.CurrentLocation == GameManager.Location.Outside &&
+                s.allowedTransportModes != null &&
+                s.allowedTransportModes.Count > 0)
+            {
+                continue;
+            }
+
             float w = Mathf.Max(0f, s.weight);
             if (w <= 0f) continue;
 
@@ -344,14 +357,124 @@ public class ScenarioManager : MonoBehaviour
         return false;
     }
 
+    private void SetAfterDrainAction(Action onComplete)
+    {
+        if (onComplete == null) return;
+
+        // Only one "after drain" action at a time; last writer wins.
+        _afterScenarioDrain = onComplete;
+    }
+
+    private void MaybeInvokeAfterDrain()
+    {
+        if (_afterScenarioDrain == null) return;
+        if (HasPendingScenarios) return;
+
+        var a = _afterScenarioDrain;
+        _afterScenarioDrain = null;
+        a?.Invoke();
+    }
+
+    private void ForcePhoneScenario(ScenarioDefinition scenario, Action onComplete)
+    {
+        if (scenario == null)
+        {
+            onComplete?.Invoke();
+            return;
+        }
+
+        // NEW: do not complete until all scenarios are done
+        SetAfterDrainAction(onComplete);
+
+        _forcedScenario = scenario;
+        _forcedOnComplete = null; // no longer used for immediate completion
+
+        UpdateAttentionIcons();
+        TryShowForcedScenario();
+    }
+
+    private bool TryShowForcedScenario()
+    {
+        if (_isShowing) return false;
+        if (_forcedScenario == null) return false;
+        if (gameManager == null) return false;
+
+        if (!_isPhoneOpen)
+        {
+            UpdateAttentionIcons();
+            return true;
+        }
+
+        var panel = PhonePanel;
+        if (panel == null)
+        {
+            Debug.LogWarning("ScenarioManager: Phone panel missing, cannot show forced scenario.");
+            // We are "stuck"; allow after-drain to fire only if there is truly nothing pending.
+            _forcedScenario = null;
+            UpdateAttentionIcons();
+            ShowNext();
+            MaybeInvokeAfterDrain();
+            return true;
+        }
+
+        var scenario = _forcedScenario;
+        _forcedScenario = null;
+
+        if (!scenario.CanRun(gameManager, gameManager.CurrentTime) || IsOnCooldown(scenario))
+        {
+            UpdateAttentionIcons();
+            ShowNext();
+            MaybeInvokeAfterDrain();
+            return true;
+        }
+
+        _currentScenario = scenario;
+        _isShowing = true;
+
+        UpdateAttentionIcons();
+
+        string c1 = scenario.choices[0].buttonText;
+        string c2 = scenario.choices[1].buttonText;
+        string c3 = scenario.choices.Length >= 3 ? scenario.choices[2].buttonText : null;
+
+        panel.Show(
+            scenario.prompt,
+            c1,
+            c2,
+            c3,
+            choiceIndex =>
+            {
+                ApplyChoice(scenario, choiceIndex);
+                MarkShownToday(scenario);
+
+                _currentScenario = null;
+                panel.Hide();
+                _isShowing = false;
+
+                UpdateAttentionIcons();
+
+                // Continue draining queue (if any)
+                ShowNext();
+
+                // NEW: only now (when everything is finished) allow the travel callback to run
+                MaybeInvokeAfterDrain();
+            });
+
+        return true;
+    }
+
     private void ShowNext()
     {
-        // NEW: forced scenario has priority (used for Outside flows)
         if (TryShowForcedScenario())
             return;
 
         if (_isShowing) return;
-        if (_queue.Count == 0) return;
+        if (_queue.Count == 0)
+        {
+            UpdateAttentionIcons();
+            MaybeInvokeAfterDrain();
+            return;
+        }
         if (gameManager == null) return;
 
         // Home gating: only show when computer is open
@@ -411,6 +534,9 @@ public class ScenarioManager : MonoBehaviour
                 UpdateAttentionIcons();
 
                 ShowNext();
+
+                // NEW: in case this was the last one
+                MaybeInvokeAfterDrain();
             });
     }
 
@@ -465,89 +591,6 @@ public class ScenarioManager : MonoBehaviour
         }
 
         ForcePhoneScenario(scenario, onComplete);
-    }
-
-    private void ForcePhoneScenario(ScenarioDefinition scenario, Action onComplete)
-    {
-        if (scenario == null)
-        {
-            onComplete?.Invoke();
-            return;
-        }
-
-        // Only one forced scenario at a time; replace any pending forced scenario
-        _forcedScenario = scenario;
-        _forcedOnComplete = onComplete;
-
-        UpdateAttentionIcons();
-        TryShowForcedScenario();
-    }
-
-    private bool TryShowForcedScenario()
-    {
-        if (_isShowing) return false;
-        if (_forcedScenario == null) return false;
-        if (gameManager == null) return false;
-
-        // Forced scenarios are always shown on phone in this design
-        if (!_isPhoneOpen)
-        {
-            UpdateAttentionIcons();
-            return true; // we consumed the “attempt” (we are waiting on phone)
-        }
-
-        var panel = PhonePanel;
-        if (panel == null)
-        {
-            Debug.LogWarning("ScenarioManager: Phone panel missing, cannot show forced scenario.");
-            return true;
-        }
-
-        var scenario = _forcedScenario;
-        var onComplete = _forcedOnComplete;
-
-        _forcedScenario = null;
-        _forcedOnComplete = null;
-
-        if (!scenario.CanRun(gameManager, gameManager.CurrentTime) || IsOnCooldown(scenario))
-        {
-            onComplete?.Invoke();
-            UpdateAttentionIcons();
-            return true;
-        }
-
-        _currentScenario = scenario;
-        _isShowing = true;
-
-        UpdateAttentionIcons();
-
-        string c1 = scenario.choices[0].buttonText;
-        string c2 = scenario.choices[1].buttonText;
-        string c3 = scenario.choices.Length >= 3 ? scenario.choices[2].buttonText : null;
-
-        panel.Show(
-            scenario.prompt,
-            c1,
-            c2,
-            c3,
-            choiceIndex =>
-            {
-                ApplyChoice(scenario, choiceIndex);
-                MarkShownToday(scenario);
-
-                _currentScenario = null;
-                panel.Hide();
-                _isShowing = false;
-
-                UpdateAttentionIcons();
-
-                onComplete?.Invoke();
-
-                // After the forced scenario finishes, continue normal queue if any
-                ShowNext();
-            });
-
-        return true;
     }
 
     private ScenarioDefinition PickRandomEligibleOutsideNonTransportScenario()
