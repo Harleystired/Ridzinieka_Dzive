@@ -3196,7 +3196,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 368787974}
   m_Direction: 0
   m_Value: 1
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5979,7 +5979,7 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1162174043}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.000000059604645, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -17955,6 +17955,7 @@ MonoBehaviour:
   energy: 100
   stress: 0
   health: 100
+  maxHunger: 100
   oldBike: 0
   newBike: 0
   oldCar: 0

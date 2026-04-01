@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     public int energy = 100;
     public int stress = 0;
     public int health = 100;
+    public int maxHunger = 100;
+
 
     [Header("Transport Ownership")]
     public bool oldBike = false;

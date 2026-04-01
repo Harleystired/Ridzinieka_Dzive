@@ -7,6 +7,7 @@ public class FridgeItemUI : MonoBehaviour
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI quantityText;
     public Image icon;
+    
 
     private string itemName;
     private GameManager gameManager;
@@ -27,19 +28,19 @@ public class FridgeItemUI : MonoBehaviour
 
         quantityText.text = count + "x";
         var button = GetComponent<Button>();
-        if (button != null) button.interactable = gameManager.hunger < 0;
+        button.interactable = gameManager.hunger > 0;
     }
 
     public void OnClick()
     {
         // Ja jau esi paēdis (hunger = 0), neko nedarām
-        if (gameManager.hunger >= 0)
+        if (gameManager.hunger <= 0)
             return;
 
         int hungerGain = fridgeUI.itemDatabase.GetHungerValue(itemName);
 
         // hungerGain ir pozitīvs, piemēram +5
-        gameManager.AddHunger(hungerGain);
+        gameManager.RemoveHunger(hungerGain);
 
         // Izņemam vienu gabalu tikai tad, ja tiešām ēdām
         gameManager.ownedItems.Remove(itemName);
