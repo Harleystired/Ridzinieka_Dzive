@@ -45,7 +45,7 @@ public class Bed : MonoBehaviour, IClickable2D
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) return;
 
-        gameManager.AddHunger(-35);
+        gameManager.AddHunger(35);
 
         // Stress vienmēr uz 0
         gameManager.stress = 0;
@@ -85,8 +85,8 @@ public class Bed : MonoBehaviour, IClickable2D
         if (before == GameManager.TimeOfDay.Night && gameManager.CurrentTime == GameManager.TimeOfDay.Morning)
             gameManager.AdvanceDay();
 
-        gameManager.AddHunger(-20);
-        gameManager.AddStress(-20);
+        gameManager.AddHunger(20);
+        gameManager.AddStress(20);
 
         var statsUI = FindFirstObjectByType<StatsUI>();
         if (statsUI != null)

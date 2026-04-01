@@ -72,11 +72,43 @@ public class ScenarioManager : MonoBehaviour
         }
     }
 
+    public bool HasPendingMandatoryWorkScenario
+    {
+        get
+        {
+            if (gameManager == null) return false;
+            if (gameManager.CurrentLocation != GameManager.Location.Work) return false;
+
+            if (_currentScenario != null && _isShowing && _currentScenario.isMandatory) return true;
+
+            if (_forcedScenario != null && _forcedScenario.isMandatory) return true;
+
+            foreach (var s in _queue)
+            {
+                if (s != null && s.isMandatory) return true;
+            }
+
+            return false;
+        }
+    }
+
     public bool IsHomeBlocked(out string reason)
     {
         if (HasPendingMandatoryHomeScenario)
         {
             reason = "Pagaidi! Tev atnāca ziņa datorā!";
+            return true;
+        }
+
+        reason = null;
+        return false;
+    }
+
+    public bool IsWorkBlocked(out string reason)
+    {
+        if (HasPendingMandatoryWorkScenario)
+        {
+            reason = "Pagaidi! Tev jāatbild uz ziņu telefonā!";
             return true;
         }
 
