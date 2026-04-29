@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
+  m_Name: OFF-VIRUS
+  m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
+  scenarioId: OFF_VIRUS
+  weight: 3
+  minDaysBetweenShows: 14
+  isMandatory: 1
+  prompt: "Ofis\u0101 ir izplatijies v\u012Brus."
+  allowedLocations: 02000000
+  allowedTimes: 
+  statRequirements: []
+  allowedJobs: 02000000
+  allowedTransportModes: 
+  choices:
+  - buttonText: "Ej m\u0101j\u0101s agr\u0101k un sa\u0146em maz\u0101k algu"
+    effects:
+    - stat: 0
+      amount: -10
+  - buttonText: "Paliec un risk\u0113 ar vesel\u012Bbu"
+    effects:
+    - stat: 4
+      amount: -5
+    - stat: 3
+      amount: 5
