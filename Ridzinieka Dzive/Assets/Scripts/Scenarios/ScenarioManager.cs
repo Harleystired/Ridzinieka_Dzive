@@ -37,6 +37,7 @@ public class ScenarioManager : MonoBehaviour
     private bool _isShowing;
     private bool _isComputerOpen;
     private bool _isPhoneOpen;
+    private bool _isCalendarOpen;
 
     private CameraMovement.HomeArea _homeArea = CameraMovement.HomeArea.Computer;
 
@@ -187,6 +188,12 @@ public class ScenarioManager : MonoBehaviour
 
         SetActiveSafe(computerAttentionIcon, false);
         SetActiveSafe(phoneAttentionIcon, false);
+    }
+
+    public void NotifyCalendarOpenStateChanged(bool isOpen)
+    {
+        _isCalendarOpen = isOpen;
+        UpdateAttentionIcons();
     }
 
     private void HandleHomeAreaChanged(CameraMovement.HomeArea area)
@@ -695,6 +702,14 @@ public class ScenarioManager : MonoBehaviour
     private void UpdateAttentionIcons()
     {
         if (gameManager == null)
+        {
+            SetActiveSafe(computerAttentionIcon, false);
+            SetActiveSafe(phoneAttentionIcon, false);
+            return;
+        }
+        
+        // If the calendar UI is open, never show attention icons over it.
+        if (_isCalendarOpen)
         {
             SetActiveSafe(computerAttentionIcon, false);
             SetActiveSafe(phoneAttentionIcon, false);

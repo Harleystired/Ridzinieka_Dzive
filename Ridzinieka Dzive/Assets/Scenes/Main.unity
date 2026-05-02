@@ -25290,6 +25290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Calendar
   calendar: {fileID: 1477470417}
   gameManager: {fileID: 1192363180}
+  scenarioManager: {fileID: 1675862545}
   previousDayAlpha: 0.5
   timeOfDayUI: {fileID: 2101524870}
 --- !u!114 &1605171863

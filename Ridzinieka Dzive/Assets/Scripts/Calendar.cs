@@ -5,18 +5,24 @@ public class Calendar : MonoBehaviour, IClickable2D
 {   
     [SerializeField] GameObject calendar; //assigns the UI element
     [SerializeField] private GameManager gameManager;
-    
+
+    [Header("Scenarios")]
+    [SerializeField] private ScenarioManager scenarioManager;
+
     [Range(0f, 1f)]
     [SerializeField] private float previousDayAlpha = 0.5f;
     [SerializeField] private GameObject timeOfDayUI;
 
-    
+
     private void Awake() //hides the calendar
     {
         if (calendar != null)
             calendar.SetActive(false);
+
+        if (scenarioManager == null)
+            scenarioManager = FindFirstObjectByType<ScenarioManager>();
     }
-    
+
     private void OnEnable() // Handles day changes 
     {
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
@@ -67,20 +73,26 @@ public class Calendar : MonoBehaviour, IClickable2D
 
         bool newState = !calendar.activeSelf;
         calendar.SetActive(newState);
-        
+
+        if (scenarioManager != null)
+            scenarioManager.NotifyCalendarOpenStateChanged(newState);
+    
         if (timeOfDayUI != null) 
             timeOfDayUI.SetActive(!newState);
 
         if (newState) UIModal.Open(); // makes it so other object can't be clicked through UI
         else UIModal.Close();
     }
-    
+
     public void CloseCalendar() //closes the calendar
     {
         if (calendar == null) return;
         if (!calendar.activeSelf) return;
 
         calendar.SetActive(false);
+
+        if (scenarioManager != null)
+            scenarioManager.NotifyCalendarOpenStateChanged(false);
 
         if (timeOfDayUI != null) 
             timeOfDayUI.SetActive(true);
