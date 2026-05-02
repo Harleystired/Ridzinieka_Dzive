@@ -20,6 +20,9 @@ public class ScenarioManager : MonoBehaviour
     [SerializeField] private GameObject computerAttentionIcon; // exclamation mark next to computer
     [SerializeField] private GameObject phoneAttentionIcon;    // exclamation mark next to phone
 
+    [Header("Stat Change Tooltip")]
+    [SerializeField] private StatChangeTooltipUI statChangeTooltipUI;
+
     [Header("Scenario Pool")]
     [SerializeField] private List<ScenarioDefinition> allScenarios = new();
 
@@ -141,7 +144,10 @@ public class ScenarioManager : MonoBehaviour
 
         if (cameraMovement == null)
             cameraMovement = FindFirstObjectByType<CameraMovement>();
-    }
+
+    if (statChangeTooltipUI == null)
+        statChangeTooltipUI = FindFirstObjectByType<StatChangeTooltipUI>();
+}
     
     private void OnEnable()
     {
@@ -763,8 +769,10 @@ public class ScenarioManager : MonoBehaviour
 
         for (int i = 0; i < effects.Count; i++)
             effects[i].Apply(gameManager);
-    }
 
+    if (statChangeTooltipUI != null)
+        statChangeTooltipUI.ShowChanges(effects);
+}
     private void MarkShownToday(ScenarioDefinition s)
     {
         if (s == null) return;
