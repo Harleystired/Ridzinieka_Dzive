@@ -21,6 +21,10 @@ public class Computer : MonoBehaviour, IClickable2D
         if (computer == null) return;
 
         bool newState = !computer.activeSelf;
+
+        if (!newState && scenarioManager != null && scenarioManager.IsScenarioActive)
+            return;
+
         computer.SetActive(newState);
 
         if (TimeOfDayUI != null)
@@ -37,11 +41,14 @@ public class Computer : MonoBehaviour, IClickable2D
             if (scenarioManager != null) scenarioManager.NotifyComputerClosed();
         }
     }
-    
+
     public void CloseComputer() //closes the computer
     {
         if (computer == null) return;
         if (!computer.activeSelf) return;
+
+        if (scenarioManager != null && scenarioManager.IsScenarioActive)
+            return;
 
         computer.SetActive(false);
         if (TimeOfDayUI != null)
@@ -51,5 +58,4 @@ public class Computer : MonoBehaviour, IClickable2D
 
         if (scenarioManager != null) scenarioManager.NotifyComputerClosed();
     }
-    
 }

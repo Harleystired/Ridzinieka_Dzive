@@ -8,6 +8,9 @@ public class PhoneUI : MonoBehaviour
     [SerializeField] private GameObject smallPhoneRoot; // always visible when closed
     [SerializeField] private GameObject bigPhoneRoot;   // visible when opened
 
+    [Header("Big Phone Content")]
+    [SerializeField] private GameObject bigPhoneStatsRoot;
+
     [Header("Buttons")]
     [SerializeField] private Button smallPhoneOpenButton; // click the peeking phone
     [SerializeField] private Button[] bigPhoneCloseButtons; // any button that should close the phone (apps, back, etc.)
@@ -19,6 +22,9 @@ public class PhoneUI : MonoBehaviour
     [SerializeField] private bool autoCloseOnLocationChange = true;
     [SerializeField] private GameManager gameManager;
 
+    [Header("Scenarios")]
+    [SerializeField] private ScenarioManager scenarioManager;
+
     private bool _isOpen;
     public bool IsOpen => _isOpen;
 
@@ -29,6 +35,9 @@ public class PhoneUI : MonoBehaviour
     {
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+
+        if (scenarioManager == null)
+            scenarioManager = FindFirstObjectByType<ScenarioManager>();
 
         if (smallPhoneOpenButton != null)
             smallPhoneOpenButton.onClick.AddListener(Open);
@@ -49,12 +58,20 @@ public class PhoneUI : MonoBehaviour
     {
         if (autoCloseOnLocationChange && gameManager != null)
             gameManager.OnLocationChanged += HandleLocationChanged;
+
+        if (scenarioManager != null)
+            scenarioManager.ScenarioActiveChanged += HandleScenarioActiveChanged;
+
+        RefreshStatsVisibility();
     }
 
     private void OnDisable()
     {
         if (autoCloseOnLocationChange && gameManager != null)
             gameManager.OnLocationChanged -= HandleLocationChanged;
+
+        if (scenarioManager != null)
+            scenarioManager.ScenarioActiveChanged -= HandleScenarioActiveChanged;
     }
 
     private void OnDestroy()
@@ -80,9 +97,27 @@ public class PhoneUI : MonoBehaviour
             Close();
     }
 
+    private void HandleScenarioActiveChanged(bool active)
+    {
+        RefreshStatsVisibility();
+    }
+
     public void Open() => SetOpen(true, instant: false);
-    public void Close() => SetOpen(false, instant: false);
-    public void Toggle() => SetOpen(!_isOpen, instant: false);
+    public void Close()
+    {
+        if (scenarioManager != null && scenarioManager.IsScenarioActive)
+            return;
+
+        SetOpen(false, instant: false);
+    }
+
+    public void Toggle()
+    {
+        if (_isOpen && scenarioManager != null && scenarioManager.IsScenarioActive)
+            return;
+
+        SetOpen(!_isOpen, instant: false);
+    }
 
     private void SetOpen(bool open, bool instant)
     {
@@ -97,10 +132,21 @@ public class PhoneUI : MonoBehaviour
         if (bigPhoneRoot != null)
             bigPhoneRoot.SetActive(open);
 
+        RefreshStatsVisibility();
+
         if (instant)
             return;
 
         if (open) Opened?.Invoke();
         else Closed?.Invoke();
+    }
+
+    private void RefreshStatsVisibility()
+    {
+        if (bigPhoneStatsRoot == null)
+            return;
+
+        bool scenarioActive = scenarioManager != null && scenarioManager.IsScenarioActive;
+        bigPhoneStatsRoot.SetActive(_isOpen && !scenarioActive);
     }
 }

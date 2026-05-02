@@ -42,6 +42,18 @@ public class ScenarioManager : MonoBehaviour
 
     private ScenarioDefinition _currentScenario;
 
+    public bool IsScenarioActive => _isShowing;
+    public event Action<bool> ScenarioActiveChanged;
+
+    private void SetScenarioActive(bool active)
+    {
+        if (_isShowing == active)
+            return;
+
+        _isShowing = active;
+        ScenarioActiveChanged?.Invoke(_isShowing);
+    }
+
     // NEW: “forced scenario” pipeline (used by OutsideUI flow)
     private ScenarioDefinition _forcedScenario;
     private Action _forcedOnComplete;
@@ -429,7 +441,7 @@ public class ScenarioManager : MonoBehaviour
         }
 
         _currentScenario = scenario;
-        _isShowing = true;
+        SetScenarioActive(true);
 
         UpdateAttentionIcons();
 
@@ -452,7 +464,7 @@ public class ScenarioManager : MonoBehaviour
 
                 _currentScenario = null;
                 panel.Hide();
-                _isShowing = false;
+                SetScenarioActive(false);
 
                 UpdateAttentionIcons();
 
@@ -512,7 +524,7 @@ public class ScenarioManager : MonoBehaviour
         }
 
         _currentScenario = scenario;
-        _isShowing = true;
+        SetScenarioActive(true);
 
         UpdateAttentionIcons();
 
@@ -535,7 +547,7 @@ public class ScenarioManager : MonoBehaviour
 
                 _currentScenario = null;
                 panel.Hide();
-                _isShowing = false;
+                SetScenarioActive(false);
 
                 UpdateAttentionIcons();
 
