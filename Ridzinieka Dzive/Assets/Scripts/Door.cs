@@ -9,7 +9,10 @@ public class Door : MonoBehaviour, IClickable2D
 
     [SerializeField] private OutsideUI outsideController; // NEW: the script that now owns the Outside() logic
     [SerializeField] private GameManager gameManager;
-    
+
+    [Header("Job")]
+    [SerializeField] private JobManager jobManager;
+
     [Header("Scenario Blocking")]
     [SerializeField] private ScenarioManager scenarioManager;
     [SerializeField] private SimpleTooltip tooltip;
@@ -32,10 +35,13 @@ public class Door : MonoBehaviour, IClickable2D
         
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
-        
+
+        if (jobManager == null)
+            jobManager = FindFirstObjectByType<JobManager>();
+    
         if (scenarioManager == null)
             scenarioManager = FindFirstObjectByType<ScenarioManager>();
-        
+    
         _outsideAllowedAtUnscaledTime = 0f;
     }
 
@@ -88,7 +94,57 @@ public class Door : MonoBehaviour, IClickable2D
 
     public void GoToWork()
     {
-        if (gameManager == null) return;
+        if (gameManager == null)
+            return;
+
+        if (scenarioManager != null && scenarioManager.IsHomeBlocked(out string reason))
+        {
+            if (tooltip != null) tooltip.Show(reason);
+            else Debug.Log(reason);
+            return;
+        }
+
+        if (jobManager == null)
+            jobManager = FindFirstObjectByType<JobManager>();
+
+        if (jobManager == null)
+        {
+            Debug.LogWarning("Door.GoToWork(): JobManager not found.");
+            return;
+        }
+
+        if (jobManager.IsWorkBlockedToday())
+        {
+            string message = "Tu izvēlējies šodien palikt mājās.";
+
+            if (tooltip != null) tooltip.Show(message);
+            else Debug.Log(message);
+
+            return;
+        }
+
+        if (!jobManager.CanWorkToday())
+        {
+            string message = jobManager.HasWorkedToday
+                ? "Tu jau šodien strādāji."
+                : "Šodien nav tava darba diena.";
+
+            if (tooltip != null) tooltip.Show(message);
+            else Debug.Log(message);
+
+            return;
+        }
+
+        bool worked = jobManager.TryWorkToday();
+
+        if (!worked)
+        {
+            if (tooltip != null) tooltip.Show("Šobrīd nevari doties uz darbu.");
+            else Debug.Log("Cannot go to work right now.");
+
+            return;
+        }
+
         gameManager.SetPendingDestination(GameManager.Destination.Work);
 
         Outside();
@@ -97,6 +153,14 @@ public class Door : MonoBehaviour, IClickable2D
     public void GoToShop()
     {
         if (gameManager == null) return;
+
+        if (scenarioManager != null && scenarioManager.IsHomeBlocked(out string reason))
+        {
+            if (tooltip != null) tooltip.Show(reason);
+            else Debug.Log(reason);
+            return;
+        }
+
         gameManager.SetPendingDestination(GameManager.Destination.Shop);
 
         Outside();

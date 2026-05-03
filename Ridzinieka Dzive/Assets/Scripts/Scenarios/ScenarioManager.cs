@@ -6,6 +6,9 @@ public class ScenarioManager : MonoBehaviour
 {
     [SerializeField] private GameManager gameManager;
 
+    [Header("Jobs")]
+    [SerializeField] private JobManager jobManager;
+
     [Header("Panels (assign in Inspector)")]
     [SerializeField] private MonoBehaviour computerPanelBehaviour; // must implement IScenarioPanel
     [SerializeField] private MonoBehaviour phonePanelBehaviour;    // must implement IScenarioPanel
@@ -138,7 +141,10 @@ public class ScenarioManager : MonoBehaviour
     {
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
-        
+
+        if (jobManager == null)
+            jobManager = FindFirstObjectByType<JobManager>();
+    
         if (phoneUI == null)
             phoneUI = FindFirstObjectByType<PhoneUI>();
 
@@ -764,15 +770,27 @@ public class ScenarioManager : MonoBehaviour
         if (scenario.choices == null) return;
         if (choiceIndex < 0 || choiceIndex >= scenario.choices.Length) return;
 
-        var effects = scenario.choices[choiceIndex].effects;
+        var choice = scenario.choices[choiceIndex];
+
+        if (choice.blocksWorkToday)
+        {
+            if (jobManager == null)
+                jobManager = FindFirstObjectByType<JobManager>();
+
+            if (jobManager != null)
+                jobManager.BlockWorkTodayFromScenario();
+        }
+
+        var effects = choice.effects;
         if (effects == null) return;
 
         for (int i = 0; i < effects.Count; i++)
             effects[i].Apply(gameManager);
 
-    if (statChangeTooltipUI != null)
-        statChangeTooltipUI.ShowChanges(effects);
-}
+        if (statChangeTooltipUI != null)
+            statChangeTooltipUI.ShowChanges(effects);
+    }
+
     private void MarkShownToday(ScenarioDefinition s)
     {
         if (s == null) return;

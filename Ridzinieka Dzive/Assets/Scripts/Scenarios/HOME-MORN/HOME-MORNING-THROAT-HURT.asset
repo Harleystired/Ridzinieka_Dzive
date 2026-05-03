@@ -20,8 +20,11 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 00000000
   statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "Nekas, gan jau p\u0101ries"
+    blocksWorkToday: 0
     effects:
     - stat: 2
       amount: -10
@@ -30,10 +33,12 @@ MonoBehaviour:
     - stat: 4
       amount: -10
   - buttonText: "Uztaisi t\u0113ju"
+    blocksWorkToday: 0
     effects:
     - stat: 0
       amount: -5
     - stat: 4
       amount: -5
   - buttonText: "Paliec m\u0101j\u0101s"
+    blocksWorkToday: 1
     effects: []

@@ -20,6 +20,23 @@ public class StatChangeTooltipUI : MonoBehaviour
         HideInstant();
     }
 
+    public void ShowMessage(string message)
+    {
+        if (string.IsNullOrWhiteSpace(message))
+            return;
+
+        if (root == null || tooltipText == null)
+            return;
+
+        tooltipText.text = message;
+        root.SetActive(true);
+
+        if (_hideRoutine != null)
+            StopCoroutine(_hideRoutine);
+
+        _hideRoutine = StartCoroutine(HideAfterDelay());
+    }
+
     public void ShowChanges(IReadOnlyList<ScenarioDefinition.StatDelta> changes)
     {
         if (changes == null || changes.Count == 0)

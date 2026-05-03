@@ -20,16 +20,21 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 00000000
   statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "Lec no gultas \u0101r\u0101 un skrieni \u0101r\u0101 no m\u0101jas"
+    blocksWorkToday: 0
     effects:
     - stat: 1
       amount: -10
   - buttonText: "Neko dar\u012Bt, celies un sataisies k\u0101 parasti"
+    blocksWorkToday: 0
     effects:
     - stat: 3
       amount: 5
   - buttonText: "Jau nogul\u0113ju, nav j\u0113ga iet uz darbu"
+    blocksWorkToday: 1
     effects:
     - stat: 3
       amount: 10

@@ -27,6 +27,7 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "Paliec m\u0101j\u0101s"
+    blocksWorkToday: 1
     effects:
     - stat: 2
       amount: -5
@@ -35,6 +36,7 @@ MonoBehaviour:
     - stat: 4
       amount: 5
   - buttonText: "Esi akt\u012Bvs (darbs, hobijs)"
+    blocksWorkToday: 0
     effects:
     - stat: 4
       amount: -5
@@ -43,6 +45,7 @@ MonoBehaviour:
     - stat: 3
       amount: 10
   - buttonText: "Dodies \u0101r\u0101"
+    blocksWorkToday: 0
     effects:
     - stat: 4
       amount: -10

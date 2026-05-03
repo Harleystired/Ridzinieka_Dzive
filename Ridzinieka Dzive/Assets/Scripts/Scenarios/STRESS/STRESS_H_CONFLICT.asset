@@ -27,12 +27,14 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "Paliec m\u0101j\u0101s"
+    blocksWorkToday: 1
     effects:
     - stat: 3
       amount: -10
     - stat: 2
       amount: 10
   - buttonText: "Risin\u0101t visu uzreiz"
+    blocksWorkToday: 0
     effects:
     - stat: 2
       amount: -10

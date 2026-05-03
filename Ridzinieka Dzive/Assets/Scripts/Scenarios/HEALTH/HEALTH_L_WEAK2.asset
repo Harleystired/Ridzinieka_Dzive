@@ -27,6 +27,7 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "Paliec gult\u0101 visu dienu"
+    blocksWorkToday: 1
     effects:
     - stat: 4
       amount: 10
@@ -35,6 +36,7 @@ MonoBehaviour:
     - stat: 3
       amount: -10
   - buttonText: "Pam\u0113\u0123ini dar\u012Bt kaut ko vieglu"
+    blocksWorkToday: 0
     effects:
     - stat: 2
       amount: -10
@@ -43,6 +45,7 @@ MonoBehaviour:
     - stat: 3
       amount: 10
   - buttonText: "Ignor\u0113 un dari ierasto rut\u012Bnu"
+    blocksWorkToday: 0
     effects:
     - stat: 4
       amount: -10

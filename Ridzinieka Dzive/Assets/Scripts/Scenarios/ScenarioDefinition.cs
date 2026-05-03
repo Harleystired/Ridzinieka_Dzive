@@ -72,6 +72,10 @@ public class ScenarioDefinition : ScriptableObject
     public struct Choice
     {
         public string buttonText;
+
+        [Tooltip("If true, choosing this option blocks going to work for the rest of the current day.")]
+        public bool blocksWorkToday;
+
         public List<StatDelta> effects;
     }
 

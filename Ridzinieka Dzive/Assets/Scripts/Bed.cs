@@ -1,14 +1,26 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Bed : MonoBehaviour, IClickable2D
 {
     [SerializeField] GameObject bed; //assigns the UI element
     [SerializeField] private GameManager gameManager;
-    
+
+    [Header("Job")]
+    [SerializeField] private JobManager jobManager;
+
+    [Header("Rent")]
+    [SerializeField] private RentManager rentManager;
+    private int lastRentPaidAmount;
+    private int lastUnpaidRentDebt;
+
+    [Header("Stat Tooltip")]
+    [SerializeField] private StatChangeTooltipUI statChangeTooltip;
+
     [Header("Scenario Blocking")]
     [SerializeField] private ScenarioManager scenarioManager;
     [SerializeField] private SimpleTooltip tooltip;
-    
+
     private void Awake() //hides the bed
     {
         if (bed != null)
@@ -16,12 +28,43 @@ public class Bed : MonoBehaviour, IClickable2D
 
         if (scenarioManager == null)
             scenarioManager = FindFirstObjectByType<ScenarioManager>();
+
+        if (jobManager == null)
+            jobManager = FindFirstObjectByType<JobManager>();
+
+        if (rentManager == null)
+            rentManager = FindFirstObjectByType<RentManager>();
+
+        if (statChangeTooltip == null)
+            statChangeTooltip = FindFirstObjectByType<StatChangeTooltipUI>();
     }
+
+    private void OnEnable()
+    {
+        if (rentManager == null)
+            rentManager = FindFirstObjectByType<RentManager>();
+
+        if (rentManager != null)
+            rentManager.OnRentPaid += HandleRentPaid;
+    }
+
+    private void OnDisable()
+    {
+        if (rentManager != null)
+            rentManager.OnRentPaid -= HandleRentPaid;
+    }
+
+    private void HandleRentPaid(int paidAmount, int unpaidDebt)
+    {
+        lastRentPaidAmount = paidAmount;
+        lastUnpaidRentDebt = unpaidDebt;
+    }
+
     private void Start()
     {
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
     }
-    
+
     public void OnClicked(RaycastHit2D hit) //opens the bed upon clicking
     {
         if (bed == null) return;
@@ -45,17 +88,68 @@ public class Bed : MonoBehaviour, IClickable2D
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) return;
 
-        gameManager.RemoveHunger(35);
+        List<ScenarioDefinition.StatDelta> changes = new List<ScenarioDefinition.StatDelta>();
 
+        int hungerBefore = gameManager.hunger;
+        int stressBefore = gameManager.stress;
+
+        gameManager.AddHunger(35);
+
+        int hungerChange = gameManager.hunger - hungerBefore;
+        if (hungerChange != 0)
+        {
+            changes.Add(new ScenarioDefinition.StatDelta
+            {
+                stat = StatType.Hunger,
+                amount = hungerChange
+            });
+        }
 
         // Stress vienmēr uz 0
         gameManager.stress = 0;
+
+        int stressChange = gameManager.stress - stressBefore;
+        if (stressChange != 0)
+        {
+            changes.Add(new ScenarioDefinition.StatDelta
+            {
+                stat = StatType.Stress,
+                amount = stressChange
+            });
+        }
+
+        lastRentPaidAmount = 0;
+        lastUnpaidRentDebt = 0;
 
         // Pāriet uz nākamo dienu
         gameManager.AdvanceDay();
 
         // No rīta
         gameManager.SetTimeOfDay(GameManager.TimeOfDay.Morning);
+
+        int paidAmount = PayPendingWorkMoney();
+        if (paidAmount > 0)
+        {
+            changes.Add(new ScenarioDefinition.StatDelta
+            {
+                stat = StatType.Money,
+                amount = paidAmount
+            });
+        }
+
+        if (lastRentPaidAmount > 0)
+        {
+            changes.Add(new ScenarioDefinition.StatDelta
+            {
+                stat = StatType.Money,
+                amount = -lastRentPaidAmount
+            });
+        }
+
+        if (lastUnpaidRentDebt > 0)
+            Debug.Log($"Unpaid rent debt remaining: {lastUnpaidRentDebt}");
+
+        ShowStatChanges(changes);
 
         // Atjauno UI, ja ir StatsUI
         var statsUI = FindFirstObjectByType<StatsUI>();
@@ -79,20 +173,98 @@ public class Bed : MonoBehaviour, IClickable2D
         if (gameManager == null) gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager == null) return;
 
+        List<ScenarioDefinition.StatDelta> changes = new List<ScenarioDefinition.StatDelta>();
+
         var before = gameManager.CurrentTime;
+
+        int hungerBefore = gameManager.hunger;
+        int stressBefore = gameManager.stress;
 
         gameManager.AdvanceTimeOfDay();
 
         if (before == GameManager.TimeOfDay.Night && gameManager.CurrentTime == GameManager.TimeOfDay.Morning)
+        {
+            lastRentPaidAmount = 0;
+            lastUnpaidRentDebt = 0;
+
             gameManager.AdvanceDay();
+
+            int paidAmount = PayPendingWorkMoney();
+            if (paidAmount > 0)
+            {
+                changes.Add(new ScenarioDefinition.StatDelta
+                {
+                    stat = StatType.Money,
+                    amount = paidAmount
+                });
+            }
+
+            if (lastRentPaidAmount > 0)
+            {
+                changes.Add(new ScenarioDefinition.StatDelta
+                {
+                    stat = StatType.Money,
+                    amount = -lastRentPaidAmount
+                });
+            }
+
+            if (lastUnpaidRentDebt > 0)
+                Debug.Log($"Unpaid rent debt remaining: {lastUnpaidRentDebt}");
+        }
 
         gameManager.AddHunger(20);
         gameManager.RemoveStress(20);
 
+        int hungerChange = gameManager.hunger - hungerBefore;
+        if (hungerChange != 0)
+        {
+            changes.Add(new ScenarioDefinition.StatDelta
+            {
+                stat = StatType.Hunger,
+                amount = hungerChange
+            });
+        }
+
+        int stressChange = gameManager.stress - stressBefore;
+        if (stressChange != 0)
+        {
+            changes.Add(new ScenarioDefinition.StatDelta
+            {
+                stat = StatType.Stress,
+                amount = stressChange
+            });
+        }
+
+        ShowStatChanges(changes);
 
         var statsUI = FindFirstObjectByType<StatsUI>();
         if (statsUI != null)
             statsUI.UpdateStats();
+    }
+
+    private int PayPendingWorkMoney()
+    {
+        if (jobManager == null)
+            jobManager = FindFirstObjectByType<JobManager>();
+
+        if (jobManager == null)
+            return 0;
+
+        return jobManager.ClaimPendingPay();
+    }
+
+    private void ShowStatChanges(List<ScenarioDefinition.StatDelta> changes)
+    {
+        if (changes == null || changes.Count == 0)
+            return;
+
+        if (statChangeTooltip == null)
+            statChangeTooltip = FindFirstObjectByType<StatChangeTooltipUI>();
+
+        if (statChangeTooltip == null)
+            return;
+
+        statChangeTooltip.ShowChanges(changes);
     }
 
     public void CloseBed() //closes the bed

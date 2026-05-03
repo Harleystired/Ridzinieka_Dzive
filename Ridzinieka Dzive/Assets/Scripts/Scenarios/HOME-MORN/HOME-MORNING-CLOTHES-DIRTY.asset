@@ -20,18 +20,23 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 00000000
   statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "Mekl\u0113 ko uzvilkt"
+    blocksWorkToday: 0
     effects:
     - stat: 2
       amount: -5
     - stat: 3
       amount: 15
   - buttonText: "Velc net\u012Bras"
+    blocksWorkToday: 0
     effects:
     - stat: 3
       amount: 5
   - buttonText: "Paliec m\u0101j\u0101s"
+    blocksWorkToday: 1
     effects:
     - stat: 0
       amount: -10
