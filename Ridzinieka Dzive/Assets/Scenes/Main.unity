@@ -963,14 +963,14 @@ RectTransform:
   m_GameObject: {fileID: 21910778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.34, y: 1.34, z: 1.34}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 504206836}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -3}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &21910780
@@ -1020,8 +1020,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.84
-  m_fontSizeBase: 27.84
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1058,7 +1058,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -42.333786, y: 0, z: -42.333717, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4160,6 +4160,11 @@ MonoBehaviour:
   defaultSeconds: 2
   followCursor: 0
   cursorOffset: {x: 20, y: -20}
+  panelRectTransform: {fileID: 0}
+  textRectTransform: {fileID: 0}
+  minSize: {x: 100, y: 30}
+  maxSize: {x: 400, y: 200}
+  padding: {x: 20, y: 15}
 --- !u!114 &241958928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8420,16 +8425,16 @@ RectTransform:
   m_GameObject: {fileID: 504206835}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.53, y: 1.53, z: 1.53}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 21910779}
   m_Father: {fileID: 195762147}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 334, y: 0}
+  m_SizeDelta: {x: 434, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &504206837
 MonoBehaviour:
@@ -8448,6 +8453,11 @@ MonoBehaviour:
   defaultSeconds: 10
   followCursor: 0
   cursorOffset: {x: 20, y: -20}
+  panelRectTransform: {fileID: 504206836}
+  textRectTransform: {fileID: 21910779}
+  minSize: {x: 200, y: 60}
+  maxSize: {x: 400, y: 200}
+  padding: {x: 20, y: 15}
 --- !u!114 &504206838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19027,6 +19037,14 @@ MonoBehaviour:
   stress: 0
   health: 100
   maxHunger: 100
+  sicknessHealthThreshold: 25
+  firstLowHealthSicknessChance: 0.1
+  extraLowHealthDayChance: 0.05
+  hasFever: 0
+  isOnSickLeave: 0
+  consecutiveLowHealthDays: 0
+  sickLeaveStartDayIndex: -1
+  sickLeaveDaysUsed: 0
   oldBike: 0
   newBike: 0
   oldCar: 0
@@ -25905,6 +25923,8 @@ MonoBehaviour:
   jobManager: {fileID: 1166147730}
   normalDayColor: {r: 0, g: 0, b: 0, a: 1}
   workDayColor: {r: 1, g: 0, b: 0, a: 1}
+  sickDayColor: {r: 0.45, g: 0.2, b: 0.75, a: 1}
+  sickLeaveDayColor: {r: 0.15, g: 0.45, b: 1, a: 1}
   rentManager: {fileID: 442661294}
   calendarTooltip: {fileID: 504206837}
   scenarioManager: {fileID: 1675862545}
@@ -26425,7 +26445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioManager
   gameManager: {fileID: 1192363180}
-  jobManager: {fileID: 0}
+  jobManager: {fileID: 1166147730}
   computerPanelBehaviour: {fileID: 2092016678}
   phonePanelBehaviour: {fileID: 16995279}
   phoneUI: {fileID: 272623646}
@@ -26433,6 +26453,7 @@ MonoBehaviour:
   computerAttentionIcon: {fileID: 373629864}
   phoneAttentionIcon: {fileID: 2058690910}
   statChangeTooltipUI: {fileID: 102234251}
+  tooltip: {fileID: 241958927}
   allScenarios:
   - {fileID: 11400000, guid: 0c8ff28e2d505e340b1fa69fe3fefbdc, type: 2}
   - {fileID: 11400000, guid: 2598dab319aa0c04f8326ac752f4c3d1, type: 2}
@@ -26529,9 +26550,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d8dffe6295a99c64e98507c48e0b9cc2, type: 2}
   - {fileID: 11400000, guid: 34c32bc3f4062cd4bad96172254741d1, type: 2}
   - {fileID: 11400000, guid: e90663164d2deaf4fadb876cad8a59b7, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0114df2ea09da234fa8121e26e93f20b, type: 2}
   - {fileID: 0}
   maxQueued: 3
   outsideChance: 0.35
@@ -32235,6 +32254,11 @@ MonoBehaviour:
   defaultSeconds: 2
   followCursor: 0
   cursorOffset: {x: 20, y: -20}
+  panelRectTransform: {fileID: 0}
+  textRectTransform: {fileID: 0}
+  minSize: {x: 100, y: 30}
+  maxSize: {x: 400, y: 200}
+  padding: {x: 20, y: 15}
 --- !u!114 &2107416440
 MonoBehaviour:
   m_ObjectHideFlags: 0

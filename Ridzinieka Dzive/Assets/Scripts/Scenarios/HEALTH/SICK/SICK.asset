@@ -10,47 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: HOME-MORNING-CALM
+  m_Name: SICK
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: HOME_MORNING_CALM
-  weight: 4
-  minDaysBetweenShows: 3
+  scenarioId: SICK
+  weight: 1e+22
+  minDaysBetweenShows: 0
   isMandatory: 1
-  prompt: "Tu pamodies un j\u016Bties mier\u012Bgs, nav steigas."
+  prompt: Tu pamosties ar drudzi
   allowedLocations: 00000000
   allowedTimes: 00000000
   requiresFreshWakeUpMorning: 1
-  requiresWorkDay: 0
-  requiresFever: 0
+  requiresWorkDay: 1
+  requiresFever: 1
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
-  - buttonText: "Dari visu l\u0113n\u0101m"
-    blocksWorkToday: 0
+  - buttonText: "Pa\u0146em slim\u012Bbas lapu"
+    blocksWorkToday: 1
     consumesFridgeFood: 0
-    startsSickLeave: 0
+    startsSickLeave: 1
     goesToWorkWhileSick: 0
     effects:
-    - stat: 2
-      amount: -5
     - stat: 3
-      amount: -10
-  - buttonText: "Dari papildus lietas (t\u012Br\u012B\u0161ana u.c.)"
+      amount: -5
+  - buttonText: "Izdz\u012Bvosi, turpini iet uz darbu."
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
-    goesToWorkWhileSick: 0
-    effects:
-    - stat: 2
-      amount: -10
-    - stat: 4
-      amount: 5
-  - buttonText: "S\u0113di telefon\u0101"
-    blocksWorkToday: 0
-    consumesFridgeFood: 0
-    startsSickLeave: 0
-    goesToWorkWhileSick: 0
-    effects:
-    - stat: 2
-      amount: -15
+    goesToWorkWhileSick: 1
+    effects: []

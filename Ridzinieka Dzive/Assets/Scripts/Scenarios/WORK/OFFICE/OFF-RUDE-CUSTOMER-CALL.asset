@@ -20,20 +20,36 @@ MonoBehaviour:
     ko tu centies pateikt."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 02000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Nospied klausuli, nav j\u0113gas ar t\u0101du cilv\u0113ku run\u0101t"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: -5
   - buttonText: "Pieciet un centies vienalga vi\u0146am pal\u012Bdz\u0113t"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5
     - stat: 2
       amount: -5
   - buttonText: "Pied\u0101v\u0101 klientam run\u0101t ar priek\u0161nieku"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10

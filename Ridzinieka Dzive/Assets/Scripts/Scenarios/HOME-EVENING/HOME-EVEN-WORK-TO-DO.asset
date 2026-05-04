@@ -19,20 +19,36 @@ MonoBehaviour:
   prompt: "Tev ir v\u0113l nepabeigti darbi no dienas."
   allowedLocations: 00000000
   allowedTimes: 02000000
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: Pabeidz darbus
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -10
     - stat: 3
       amount: -10
   - buttonText: "Atliec uz r\u012Btu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
   - buttonText: "Ignor\u0113"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 15

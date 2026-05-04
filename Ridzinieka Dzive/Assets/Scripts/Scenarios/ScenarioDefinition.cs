@@ -25,6 +25,16 @@ public class ScenarioDefinition : ScriptableObject
     [Header("Conditions")]
     public List<GameManager.Location> allowedLocations = new();
     public List<GameManager.TimeOfDay> allowedTimes = new();
+
+    [Tooltip("If true, this scenario can only run right after the player wakes up into a new morning.")]
+    public bool requiresFreshWakeUpMorning;
+
+    [Tooltip("If true, this scenario can only run on days where the selected job is scheduled to work.")]
+    public bool requiresWorkDay;
+
+    [Tooltip("If true, this scenario can only run while the player has a fever.")]
+    public bool requiresFever;
+
     public List<StatRequirement> statRequirements = new();
 
     [Tooltip("If empty: scenario can run for any job. If not empty: requires the player's selected job to be listed.")]
@@ -45,6 +55,15 @@ public class ScenarioDefinition : ScriptableObject
             return false;
 
         if (allowedTimes.Count > 0 && !allowedTimes.Contains(gm.CurrentTime))
+            return false;
+
+        if (requiresFreshWakeUpMorning && !gm.HasFreshWakeUpMorningScenarioWindow)
+            return false;
+
+        if (requiresWorkDay && !IsCurrentDayWorkDay(gm))
+            return false;
+
+        if (requiresFever && !gm.HasFever)
             return false;
 
         if (allowedJobs.Count > 0 && !allowedJobs.Contains(gm.SelectedJob))
@@ -68,6 +87,16 @@ public class ScenarioDefinition : ScriptableObject
         return true;
     }
 
+    private static bool IsCurrentDayWorkDay(GameManager gm)
+    {
+        if (gm == null) return false;
+
+        JobManager jobManager = UnityEngine.Object.FindFirstObjectByType<JobManager>();
+        if (jobManager == null) return false;
+
+        return jobManager.IsWorkDay(gm.CurrentDayIndex);
+    }
+
     [Serializable]
     public struct Choice
     {
@@ -75,6 +104,17 @@ public class ScenarioDefinition : ScriptableObject
 
         [Tooltip("If true, choosing this option blocks going to work for the rest of the current day.")]
         public bool blocksWorkToday;
+
+        [Header("Food")]
+        [Tooltip("If true, this choice consumes one available food item from the player's fridge/inventory. If no food exists, the choice will fail and the scenario stays open.")]
+        public bool consumesFridgeFood;
+
+        [Header("Sickness")]
+        [Tooltip("If true, choosing this option starts sick leave. Sick leave lasts 3 days, pays salary, and restores health.")]
+        public bool startsSickLeave;
+
+        [Tooltip("If true, choosing this option means the player goes to work while sick and loses health.")]
+        public bool goesToWorkWhileSick;
 
         public List<StatDelta> effects;
     }

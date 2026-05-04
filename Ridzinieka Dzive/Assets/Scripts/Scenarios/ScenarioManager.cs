@@ -26,6 +26,9 @@ public class ScenarioManager : MonoBehaviour
     [Header("Stat Change Tooltip")]
     [SerializeField] private StatChangeTooltipUI statChangeTooltipUI;
 
+    [Header("Feedback Tooltip")]
+    [SerializeField] private SimpleTooltip tooltip;
+
     [Header("Scenario Pool")]
     [SerializeField] private List<ScenarioDefinition> allScenarios = new();
 
@@ -153,7 +156,10 @@ public class ScenarioManager : MonoBehaviour
 
     if (statChangeTooltipUI == null)
         statChangeTooltipUI = FindFirstObjectByType<StatChangeTooltipUI>();
-}
+
+            if (tooltip == null)
+                tooltip = FindFirstObjectByType<SimpleTooltip>();
+        }
     
     private void OnEnable()
     {
@@ -161,7 +167,8 @@ public class ScenarioManager : MonoBehaviour
 
         gameManager.OnLocationChanged += HandleLocationChanged;
         gameManager.OnTimeOfDayChanged += HandleTimeChanged;
-        
+        gameManager.OnDayChanged += HandleDayChanged;
+    
         if (phoneUI != null)
         {
             _isPhoneOpen = phoneUI.IsOpen;
@@ -186,7 +193,8 @@ public class ScenarioManager : MonoBehaviour
 
         gameManager.OnLocationChanged -= HandleLocationChanged;
         gameManager.OnTimeOfDayChanged -= HandleTimeChanged;
-        
+        gameManager.OnDayChanged -= HandleDayChanged;
+    
         if (phoneUI != null)
         {
             phoneUI.Opened -= NotifyPhoneOpened;
@@ -262,6 +270,16 @@ public class ScenarioManager : MonoBehaviour
     }
 
     private void HandleTimeChanged(GameManager.TimeOfDay _)
+    {
+        TryEnqueueFromContext(gameManager.CurrentLocation);
+
+        UpdateAttentionIcons();
+
+        if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Home && _isComputerOpen)
+            ShowNext();
+    }
+
+    private void HandleDayChanged(int _)
     {
         TryEnqueueFromContext(gameManager.CurrentLocation);
 
@@ -475,7 +493,9 @@ public class ScenarioManager : MonoBehaviour
             c3,
             choiceIndex =>
             {
-                ApplyChoice(scenario, choiceIndex);
+                if (!ApplyChoice(scenario, choiceIndex))
+                    return;
+
                 MarkShownToday(scenario);
                 var statsUI = FindFirstObjectByType<StatsUI>();
                 if (statsUI != null)
@@ -558,7 +578,9 @@ public class ScenarioManager : MonoBehaviour
             c3,
             choiceIndex =>
             {
-                ApplyChoice(scenario, choiceIndex);
+                if (!ApplyChoice(scenario, choiceIndex))
+                    return;
+
                 MarkShownToday(scenario);
                 var statsUI = FindFirstObjectByType<StatsUI>();
                 if (statsUI != null)
@@ -764,31 +786,69 @@ public class ScenarioManager : MonoBehaviour
         SetActiveSafe(phoneAttentionIcon, needsPhoneAttention);
     }
 
-    private void ApplyChoice(ScenarioDefinition scenario, int choiceIndex)
-    {
-        if (scenario == null) return;
-        if (scenario.choices == null) return;
-        if (choiceIndex < 0 || choiceIndex >= scenario.choices.Length) return;
-
-        var choice = scenario.choices[choiceIndex];
-
-        if (choice.blocksWorkToday)
+        private bool ApplyChoice(ScenarioDefinition scenario, int choiceIndex)
         {
-            if (jobManager == null)
-                jobManager = FindFirstObjectByType<JobManager>();
+            if (scenario == null) return false;
+            if (scenario.choices == null) return false;
+            if (choiceIndex < 0 || choiceIndex >= scenario.choices.Length) return false;
 
-            if (jobManager != null)
-                jobManager.BlockWorkTodayFromScenario();
+            var choice = scenario.choices[choiceIndex];
+
+            if (choice.consumesFridgeFood && !TryConsumeOneFridgeFood())
+            {
+                ShowTooltip("Ledusskapī nav ēdiena!");
+                return false;
+            }
+
+            if (choice.startsSickLeave)
+                gameManager.StartSickLeave();
+
+            if (choice.goesToWorkWhileSick)
+                gameManager.GoToWorkWhileSick();
+
+            if (choice.blocksWorkToday)
+            {
+                if (jobManager == null)
+                    jobManager = FindFirstObjectByType<JobManager>();
+
+                if (jobManager != null)
+                    jobManager.BlockWorkTodayFromScenario();
+            }
+
+            var effects = choice.effects;
+            if (effects == null) return true;
+
+            for (int i = 0; i < effects.Count; i++)
+                effects[i].Apply(gameManager);
+
+            if (statChangeTooltipUI != null)
+                statChangeTooltipUI.ShowChanges(effects);
+
+            return true;
         }
 
-        var effects = choice.effects;
-        if (effects == null) return;
+    private bool TryConsumeOneFridgeFood()
+    {
+        if (gameManager == null) return false;
+        if (gameManager.ownedItems == null) return false;
+        if (gameManager.ownedItems.Count == 0) return false;
 
-        for (int i = 0; i < effects.Count; i++)
-            effects[i].Apply(gameManager);
+        gameManager.ownedItems.RemoveAt(0);
+        return true;
+    }
 
-        if (statChangeTooltipUI != null)
-            statChangeTooltipUI.ShowChanges(effects);
+    private void ShowTooltip(string message)
+    {
+        if (tooltip == null)
+            tooltip = FindFirstObjectByType<SimpleTooltip>();
+
+        if (tooltip != null)
+        {
+            tooltip.ShowAtCursor(message, 2f);
+            return;
+        }
+
+        Debug.Log(message);
     }
 
     private void MarkShownToday(ScenarioDefinition s)

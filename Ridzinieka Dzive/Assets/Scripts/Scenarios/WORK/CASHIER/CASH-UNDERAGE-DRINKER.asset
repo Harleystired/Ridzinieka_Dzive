@@ -21,20 +21,36 @@ MonoBehaviour:
     ka ir pilngad\u012Bgs."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 00000000
+  allowedTransportModes: 
   choices:
   - buttonText: Pieprasi dokumentus
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5
     - stat: 3
       amount: 10
   - buttonText: "P\u0101rdod alkoholu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: -5
   - buttonText: "Sauc vad\u012Bt\u0101ju, lai pal\u012Bdz"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: -10

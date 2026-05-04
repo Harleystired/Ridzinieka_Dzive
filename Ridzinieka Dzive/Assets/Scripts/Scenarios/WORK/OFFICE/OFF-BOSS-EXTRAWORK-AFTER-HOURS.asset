@@ -21,15 +21,27 @@ MonoBehaviour:
     tas ir \u0101rpus taviem pien\u0101kumiem bet nopeln\u012Bsi papildus."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 02000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Nepiekr\u012Bti, tas nav iek\u0161 taviem pien\u0101kumiem"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5
   - buttonText: "Piekr\u012Bti, paliec p\u0113c darbai lai izl\u012Bdz\u0113tu priek\u0161niekam
       un piepeln\u012Bt nedaudz"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: 50

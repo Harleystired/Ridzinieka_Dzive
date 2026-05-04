@@ -19,16 +19,28 @@ MonoBehaviour:
   prompt: "Klients atst\u0101j lielu dzeramnaudu."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 01000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Pie\u0146em"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: 50
     - stat: 3
       amount: -15
   - buttonText: "Nepie\u0146em naudu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5

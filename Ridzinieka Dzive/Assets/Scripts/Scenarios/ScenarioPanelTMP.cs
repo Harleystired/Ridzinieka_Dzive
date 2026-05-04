@@ -46,9 +46,12 @@ public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
 
         bool showThird = !string.IsNullOrWhiteSpace(choice3);
         if (button3 != null)
+        {
+            button3.onClick.RemoveAllListeners();
             button3.gameObject.SetActive(showThird);
+        }
 
-        if (showThird)
+        if (showThird && button3 != null)
             button3.onClick.AddListener(() => Pick(2));
 
         root.SetActive(true);
@@ -56,13 +59,13 @@ public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
 
     public void Hide()
     {
+        _onChoicePicked = null;
+
         if (root != null) root.SetActive(false);
     }
 
     private void Pick(int index)
     {
-        var cb = _onChoicePicked;
-        _onChoicePicked = null;
-        cb?.Invoke(index);
+        _onChoicePicked?.Invoke(index);
     }
 }

@@ -19,10 +19,18 @@ MonoBehaviour:
   prompt: "Tev j\u0101str\u0101d\u0101 ilg\u0101k nek\u0101 pl\u0101nots."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 00000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Paliec un str\u0101d\u0101"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
@@ -31,10 +39,18 @@ MonoBehaviour:
     - stat: 2
       amount: -10
   - buttonText: "Atsaki un ej m\u0101j\u0101s"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 15
   - buttonText: "Paliec uz pusi no \u0161\u012B laika"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: 5

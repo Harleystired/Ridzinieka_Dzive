@@ -19,22 +19,34 @@ MonoBehaviour:
   prompt: "Tu pamodies un redzi ka esi aizgul\u0113jies."
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
   - buttonText: "Lec no gultas \u0101r\u0101 un skrieni \u0101r\u0101 no m\u0101jas"
     blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 1
       amount: -10
   - buttonText: "Neko dar\u012Bt, celies un sataisies k\u0101 parasti"
     blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5
   - buttonText: "Jau nogul\u0113ju, nav j\u0113ga iet uz darbu"
     blocksWorkToday: 1
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10

@@ -183,6 +183,30 @@ public class JobManager : MonoBehaviour
         return true;
     }
 
+    public void AddSickLeavePayForToday()
+    {
+        if (gameManager == null)
+            return;
+
+        if (!IsWorkDay(gameManager.CurrentDayIndex))
+            return;
+
+        JobSchedule schedule = GetCurrentSchedule();
+
+        if (schedule == null)
+        {
+            Debug.LogWarning($"No job schedule found for {gameManager.SelectedJob}.");
+            return;
+        }
+
+        int sickLeavePay = GetRandomPay(schedule);
+        pendingPay += sickLeavePay;
+
+        OnJobWorkStateChanged?.Invoke();
+
+        Debug.Log($"Sick leave pay added: {sickLeavePay}. Pending pay is now {pendingPay}.");
+    }
+
     public int ClaimPendingPay()
     {
         if (gameManager == null)

@@ -19,23 +19,30 @@ MonoBehaviour:
   prompt: "Tu pamodies un esi \u013Coti noguris."
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 
   choices:
-  - buttonText: "Pasnau\u017E v\u0113l 10 min\u016Btes"
+  - buttonText: "Pasnaud v\u0113l 10 min\u016Btes"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: 25
     - stat: 3
       amount: 10
   - buttonText: Celies uzreiz
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -30
     - stat: 3
       amount: 5
-  - buttonText: 
-    effects:
-    - stat: 3
-      amount: 15
-    - stat: 2
-      amount: 45

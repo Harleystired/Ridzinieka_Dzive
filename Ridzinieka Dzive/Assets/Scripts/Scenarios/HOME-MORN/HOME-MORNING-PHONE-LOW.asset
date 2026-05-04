@@ -20,15 +20,27 @@ MonoBehaviour:
     ir uz 5%"
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "\u0145em l\u012Bdzi l\u0101d\u0113t\u0101ju un uzl\u0101d\u0113
       kad esi darb\u0101"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5
   - buttonText: "Kav\u0113 darbu lai uzl\u0101d\u0113tu telefonu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10

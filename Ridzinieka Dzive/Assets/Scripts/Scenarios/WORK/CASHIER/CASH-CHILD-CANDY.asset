@@ -20,16 +20,28 @@ MonoBehaviour:
     saldumus, bet vi\u0146ai pietr\u016Bkst naudas."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 00000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Piemet no savas naudas tr\u016Bksto\u0161o"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -5
     - stat: 3
       amount: -5
   - buttonText: "Pasaki ka vi\u0146ai nepietiek un lai noliek atpaka\u013C saldumus"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10

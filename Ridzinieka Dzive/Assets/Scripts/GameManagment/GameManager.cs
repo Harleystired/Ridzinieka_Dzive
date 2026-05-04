@@ -16,6 +16,22 @@ public class GameManager : MonoBehaviour
     public int health = 100;
     public int maxHunger = 100;
 
+    [Header("Sickness")]
+    [SerializeField] private int sicknessHealthThreshold = 25;
+    [SerializeField] private float firstLowHealthSicknessChance = 0.10f;
+    [SerializeField] private float extraLowHealthDayChance = 0.05f;
+    [SerializeField] private bool hasFever;
+    [SerializeField] private bool isOnSickLeave;
+    [SerializeField] private int consecutiveLowHealthDays;
+    [SerializeField] private int sickLeaveStartDayIndex = -1;
+    [SerializeField] private int sickLeaveDaysUsed;
+
+    public bool HasFever => hasFever;
+    public bool IsOnSickLeave => isOnSickLeave;
+    public int SickLeaveStartDayIndex => sickLeaveStartDayIndex;
+    public int SickLeaveDaysUsed => sickLeaveDaysUsed;
+
+    public event Action OnSicknessChanged;
 
     [Header("Transport Ownership")]
     public bool oldBike = false;
@@ -91,8 +107,20 @@ public class GameManager : MonoBehaviour
     public Location CurrentLocation => currentLocation;
     public Destination PendingDestination => pendingDestination;
 
+    public bool HasFreshWakeUpMorningScenarioWindow { get; private set; }
+
     public event Action<Location> OnLocationChanged;
     public event Action<Destination> OnPendingDestinationChanged;
+
+    public void MarkFreshWakeUpMorningScenarioWindow()
+    {
+        HasFreshWakeUpMorningScenarioWindow = true;
+    }
+
+    public void ClearFreshWakeUpMorningScenarioWindow()
+    {
+        HasFreshWakeUpMorningScenarioWindow = false;
+    }
 
     public void EnterOutside()
     {
@@ -308,6 +336,10 @@ public class GameManager : MonoBehaviour
         if (currentLocation == newLocation) return;
 
         currentLocation = newLocation;
+
+        if (currentLocation != Location.Home)
+            ClearFreshWakeUpMorningScenarioWindow();
+
         OnLocationChanged?.Invoke(currentLocation);
     }
 
@@ -337,6 +369,10 @@ public class GameManager : MonoBehaviour
         if (currentTimeOfDay == value) return;
 
         currentTimeOfDay = value;
+
+        if (currentTimeOfDay != TimeOfDay.Morning)
+            ClearFreshWakeUpMorningScenarioWindow();
+
         OnTimeOfDayChanged?.Invoke(currentTimeOfDay);
     }
 
@@ -398,6 +434,141 @@ public class GameManager : MonoBehaviour
         OnDayChanged?.Invoke(currentDayIndex);
     }
 
+    public bool IsSickCalendarDay(int dayIndex)
+    {
+        if (!hasFever)
+            return false;
+
+        if (isOnSickLeave)
+            return sickLeaveStartDayIndex >= 0 &&
+                   dayIndex >= sickLeaveStartDayIndex &&
+                   dayIndex < sickLeaveStartDayIndex + 3;
+
+        return dayIndex == currentDayIndex;
+    }
+
+    public bool IsSickLeaveCalendarDay(int dayIndex)
+    {
+        if (!hasFever || !isOnSickLeave)
+            return false;
+
+        return sickLeaveStartDayIndex >= 0 &&
+               dayIndex >= sickLeaveStartDayIndex &&
+               dayIndex < sickLeaveStartDayIndex + 3;
+    }
+
+    public void StartSickLeave()
+    {
+        if (!hasFever)
+            return;
+
+        if (!isOnSickLeave)
+        {
+            isOnSickLeave = true;
+            sickLeaveStartDayIndex = currentDayIndex;
+            sickLeaveDaysUsed = 0;
+        }
+
+        ApplySickLeaveDayBenefits();
+        OnSicknessChanged?.Invoke();
+    }
+
+    public void GoToWorkWhileSick()
+    {
+        if (!hasFever)
+            return;
+
+        RemoveHealth(1);
+        OnSicknessChanged?.Invoke();
+    }
+
+    private void ProcessSicknessForNewDay()
+    {
+        if (hasFever)
+        {
+            if (isOnSickLeave)
+            {
+                ApplySickLeaveDayBenefits();
+
+                if (sickLeaveDaysUsed >= 3)
+                    RecoverFromFever();
+            }
+            else
+            {
+                OnSicknessChanged?.Invoke();
+            }
+
+            return;
+        }
+
+        RollForSicknessFromLowHealth();
+    }
+
+    private void RollForSicknessFromLowHealth()
+    {
+        if (health > sicknessHealthThreshold)
+        {
+            consecutiveLowHealthDays = 0;
+            return;
+        }
+
+        consecutiveLowHealthDays++;
+
+        float sicknessChance = firstLowHealthSicknessChance +
+                               extraLowHealthDayChance * (consecutiveLowHealthDays - 1);
+
+        sicknessChance = Mathf.Clamp01(sicknessChance);
+
+        if (UnityEngine.Random.value <= sicknessChance)
+            BecomeSick();
+    }
+
+    private void BecomeSick()
+    {
+        if (hasFever)
+            return;
+
+        hasFever = true;
+        isOnSickLeave = false;
+        sickLeaveStartDayIndex = -1;
+        sickLeaveDaysUsed = 0;
+
+        OnSicknessChanged?.Invoke();
+
+        Debug.Log("Player got a fever.");
+    }
+
+    private void RecoverFromFever()
+    {
+        hasFever = false;
+        isOnSickLeave = false;
+        consecutiveLowHealthDays = 0;
+        sickLeaveStartDayIndex = -1;
+        sickLeaveDaysUsed = 0;
+
+        OnSicknessChanged?.Invoke();
+
+        Debug.Log("Player recovered from fever.");
+    }
+
+    private void ApplySickLeaveDayBenefits()
+    {
+        if (!hasFever || !isOnSickLeave)
+            return;
+
+        if (sickLeaveDaysUsed >= 3)
+            return;
+
+        AddHealth(5);
+        sickLeaveDaysUsed++;
+
+        JobManager jobManager = FindFirstObjectByType<JobManager>();
+        if (jobManager != null && jobManager.IsWorkDay(currentDayIndex))
+            jobManager.AddSickLeavePayForToday();
+
+        Debug.Log($"Sick leave day {sickLeaveDaysUsed}/3. Health restored by 5.");
+    }
+
     public void AdvanceDay()
     {
         if (calendarDay == null || calendarDay.Length == 0) return;
@@ -406,6 +577,9 @@ public class GameManager : MonoBehaviour
         if (currentDayIndex >= maxIndex) return; // already at last day
 
         currentDayIndex++;
+
+        ProcessSicknessForNewDay();
+
         OnDayChanged?.Invoke(currentDayIndex);
     }
 

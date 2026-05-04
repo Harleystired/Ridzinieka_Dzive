@@ -19,21 +19,38 @@ MonoBehaviour:
   prompt: "Tu pamodies un nav laika brokast\u012Bm."
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "Kav\u0113 darbu lai pa\u0113stu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 1
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 1
       amount: -20
     - stat: 3
       amount: 10
   - buttonText: "Pa\u0146em \u0113dienu pa ce\u013Cam"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -15
     - stat: 1
       amount: -30
   - buttonText: "Ne\u0113d"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 1
       amount: 30

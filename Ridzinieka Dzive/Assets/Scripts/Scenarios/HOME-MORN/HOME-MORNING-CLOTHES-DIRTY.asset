@@ -19,12 +19,18 @@ MonoBehaviour:
   prompt: "Tu pamodies un redzi, ka nav t\u012Bru dr\u0113bju."
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
   - buttonText: "Mekl\u0113 ko uzvilkt"
     blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5
@@ -32,11 +38,17 @@ MonoBehaviour:
       amount: 15
   - buttonText: "Velc net\u012Bras"
     blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5
   - buttonText: "Paliec m\u0101j\u0101s"
     blocksWorkToday: 1
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -10

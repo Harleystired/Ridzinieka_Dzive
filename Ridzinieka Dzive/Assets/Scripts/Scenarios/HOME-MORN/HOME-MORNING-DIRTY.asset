@@ -19,15 +19,28 @@ MonoBehaviour:
   prompt: "Tu pamodies un j\u016Bties sasv\u012Bdis, \u0101tri ej nomazg\u0101jies?"
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "J\u0101"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -10
     - stat: 3
       amount: -5
   - buttonText: "N\u0113, biju vakar jau"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5

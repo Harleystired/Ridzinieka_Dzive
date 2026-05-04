@@ -12,6 +12,10 @@ public class Calendar : MonoBehaviour, IClickable2D
     [SerializeField] private Color normalDayColor = Color.black;
     [SerializeField] private Color workDayColor = Color.red;
 
+    [Header("Sickness")]
+    [SerializeField] private Color sickDayColor = new Color(0.45f, 0.2f, 0.75f);
+    [SerializeField] private Color sickLeaveDayColor = new Color(0.15f, 0.45f, 1f);
+
     [Header("Rent")]
     [SerializeField] private RentManager rentManager;
 
@@ -53,6 +57,7 @@ public class Calendar : MonoBehaviour, IClickable2D
         {
             gameManager.OnDayChanged += HandleDayChanged;
             gameManager.OnSelectedJobChanged += HandleSelectedJobChanged;
+            gameManager.OnSicknessChanged += HandleSicknessChanged;
         }
 
         if (jobManager == null)
@@ -72,6 +77,7 @@ public class Calendar : MonoBehaviour, IClickable2D
         {
             gameManager.OnDayChanged -= HandleDayChanged;
             gameManager.OnSelectedJobChanged -= HandleSelectedJobChanged;
+            gameManager.OnSicknessChanged -= HandleSicknessChanged;
         }
     }
 
@@ -81,6 +87,11 @@ public class Calendar : MonoBehaviour, IClickable2D
     }
 
     private void HandleSelectedJobChanged(GameManager.JobType _)
+    {
+        RefreshVisuals();
+    }
+
+    private void HandleSicknessChanged()
     {
         RefreshVisuals();
     }
@@ -105,6 +116,8 @@ public class Calendar : MonoBehaviour, IClickable2D
             bool isCurrent = i == current;
             bool isWorkDay = jobManager != null && jobManager.IsWorkDay(i);
             bool isRentDay = rentManager != null && rentManager.IsRentDay(i);
+            bool isSickDay = gameManager.IsSickCalendarDay(i);
+            bool isSickLeaveDay = gameManager.IsSickLeaveCalendarDay(i);
 
             // Style
             FontStyles style = FontStyles.Normal;
@@ -118,7 +131,16 @@ public class Calendar : MonoBehaviour, IClickable2D
             tmp.fontStyle = style;
 
             // Color
-            Color c = isWorkDay ? workDayColor : normalDayColor;
+            Color c = normalDayColor;
+
+            if (isWorkDay)
+                c = workDayColor;
+
+            if (isSickDay)
+                c = sickDayColor;
+
+            if (isSickLeaveDay)
+                c = sickLeaveDayColor;
 
             // Alpha (dim past days)
             c.a = isPast ? previousDayAlpha : 1f;
@@ -180,6 +202,8 @@ public class Calendar : MonoBehaviour, IClickable2D
         bool isCurrent = dayIndex == gameManager.CurrentDayIndex;
         bool isWorkDay = jobManager != null && jobManager.IsWorkDay(dayIndex);
         bool isRentDay = rentManager != null && rentManager.IsRentDay(dayIndex);
+        bool isSickDay = gameManager.IsSickCalendarDay(dayIndex);
+        bool isSickLeaveDay = gameManager.IsSickLeaveCalendarDay(dayIndex);
 
         if (isCurrent)
             sb.AppendLine("Šodiena");
@@ -189,6 +213,11 @@ public class Calendar : MonoBehaviour, IClickable2D
 
         if (isRentDay)
             sb.AppendLine("Īres diena");
+
+        if (isSickLeaveDay)
+            sb.AppendLine("Slimības lapa");
+        else if (isSickDay)
+            sb.AppendLine("Slims");
 
         if (isPast && !isCurrent)
             sb.AppendLine("Pagājušā diena");

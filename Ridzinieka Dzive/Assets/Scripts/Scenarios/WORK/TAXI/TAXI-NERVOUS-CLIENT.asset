@@ -19,14 +19,26 @@ MonoBehaviour:
   prompt: "Klients ir \u013Coti klus\u0113jo\u0161s vai izliekas ne\u0113rts."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 01000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Nerun\u0101 un turpinu ce\u013Cu klusum\u0101"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: -10
   - buttonText: "Mei\u0123ini sarun\u0101ties"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10

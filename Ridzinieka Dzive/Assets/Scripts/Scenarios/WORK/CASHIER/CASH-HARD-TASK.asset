@@ -19,22 +19,38 @@ MonoBehaviour:
   prompt: "Tev j\u0101str\u0101d\u0101 ar sare\u017E\u0123\u012Btu uzdevumu."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 00000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Mei\u0123ini izpild\u012Bt pats"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -15
     - stat: 3
       amount: 10
   - buttonText: "L\u016Bdz pal\u012Bdz\u012Bbu kol\u0113\u0123iem"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -10
     - stat: 3
       amount: 5
   - buttonText: Uzdevumu nepildi
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 20

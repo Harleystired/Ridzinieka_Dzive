@@ -117,9 +117,12 @@ public class Bed : MonoBehaviour, IClickable2D
                 amount = stressChange
             });
         }
+        gameManager.AddEnergy(25);
 
         lastRentPaidAmount = 0;
         lastUnpaidRentDebt = 0;
+
+        gameManager.MarkFreshWakeUpMorningScenarioWindow();
 
         // Pāriet uz nākamo dienu
         gameManager.AdvanceDay();
@@ -180,6 +183,9 @@ public class Bed : MonoBehaviour, IClickable2D
         int hungerBefore = gameManager.hunger;
         int stressBefore = gameManager.stress;
 
+        if (before == GameManager.TimeOfDay.Night)
+            gameManager.MarkFreshWakeUpMorningScenarioWindow();
+
         gameManager.AdvanceTimeOfDay();
 
         if (before == GameManager.TimeOfDay.Night && gameManager.CurrentTime == GameManager.TimeOfDay.Morning)
@@ -214,6 +220,7 @@ public class Bed : MonoBehaviour, IClickable2D
 
         gameManager.AddHunger(20);
         gameManager.RemoveStress(20);
+        gameManager.AddEnergy(20);
 
         int hungerChange = gameManager.hunger - hungerBefore;
         if (hungerChange != 0)

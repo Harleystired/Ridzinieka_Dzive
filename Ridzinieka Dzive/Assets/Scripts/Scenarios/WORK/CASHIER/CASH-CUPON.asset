@@ -19,20 +19,36 @@ MonoBehaviour:
   prompt: "Klients m\u0113\u0123ina izmantot kuponu, kas iesp\u0113jams ir neder\u012Bgs."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 00000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Pie\u0146em kuponu un to nep\u0101rbaudi"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
     - stat: 2
       amount: -5
   - buttonText: Aizliedz klientam izmantot kuponu
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 5
   - buttonText: "P\u0101rbaudi kuponu sist\u0113m\u0101"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -15

@@ -20,12 +20,24 @@ MonoBehaviour:
     excel lapas, vi\u0146\u0161 tev pied\u0101v\u0101 samaks\u0101t par to."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 02000000
+  allowedTransportModes: 
   choices:
   - buttonText: "Laipni nepiekr\u012Bti vi\u0146am pal\u012Bdz\u0113t"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects: []
   - buttonText: "Piekr\u012Bti pal\u012Bdz\u0113t par samaksu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: 25
@@ -34,6 +46,10 @@ MonoBehaviour:
     - stat: 2
       amount: -10
   - buttonText: "Piekr\u012Bti pal\u012Bdz\u0113t, bet atsakies pie\u0146emt naudu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10

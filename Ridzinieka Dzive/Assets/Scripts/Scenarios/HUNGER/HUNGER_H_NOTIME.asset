@@ -19,6 +19,9 @@ MonoBehaviour:
   prompt: "Tev gribas \u0113st t\u016Bl\u012Bt, bet nav laika."
   allowedLocations: 00000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements:
   - stat: 1
     minInclusive: 80
@@ -27,6 +30,10 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "\u0112d \u0101tru uzkodu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 1
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -2
@@ -35,12 +42,20 @@ MonoBehaviour:
     - stat: 2
       amount: -5
   - buttonText: "Ignor\u0113 izsalkumu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 1
       amount: 20
     - stat: 2
       amount: -15
   - buttonText: "Pacenties pagaid\u012Bt l\u012Bdz n\u0101kamajai \u0113dienreizei"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 15

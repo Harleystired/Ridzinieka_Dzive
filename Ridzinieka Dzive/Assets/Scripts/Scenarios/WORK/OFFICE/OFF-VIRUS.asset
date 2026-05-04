@@ -19,15 +19,26 @@ MonoBehaviour:
   prompt: "Ofis\u0101 ir izplatijies v\u012Brus."
   allowedLocations: 02000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 02000000
   allowedTransportModes: 
   choices:
   - buttonText: "Ej m\u0101j\u0101s agr\u0101k un sa\u0146em maz\u0101k algu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -10
   - buttonText: "Paliec un risk\u0113 ar vesel\u012Bbu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 4
       amount: -5

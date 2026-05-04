@@ -20,6 +20,9 @@ MonoBehaviour:
     \u0161odien iet uz darbu ar k\u0101j\u0101m vai braukt ar velosip\u0113du?"
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements:
   - stat: 2
     minInclusive: 80
@@ -28,16 +31,28 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "Iet ar k\u0101j\u0101m"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 4
       amount: 10
     - stat: 2
       amount: -2
   - buttonText: "Braukt ar velosip\u0113du"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -4
     - stat: 4
       amount: 10
   - buttonText: "N\u0113, es lab\u0101k brauk\u0161u ar transportu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects: []

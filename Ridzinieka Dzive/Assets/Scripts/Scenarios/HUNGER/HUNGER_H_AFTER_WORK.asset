@@ -19,6 +19,9 @@ MonoBehaviour:
   prompt: "Tu esi \u013Coti izsalcis p\u0113c darba"
   allowedLocations: 00000000
   allowedTimes: 02000000
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements:
   - stat: 1
     minInclusive: 80
@@ -27,6 +30,10 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "Pagatavo vakari\u0146as m\u0101j\u0101s"
+    blocksWorkToday: 0
+    consumesFridgeFood: 1
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -10
@@ -37,6 +44,10 @@ MonoBehaviour:
     - stat: 4
       amount: 10
   - buttonText: "Pas\u016Bti \u0101tru \u0113dienu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -10
@@ -45,6 +56,10 @@ MonoBehaviour:
     - stat: 3
       amount: 5
   - buttonText: "Izlaidi vakari\u0146as"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 1
       amount: 20

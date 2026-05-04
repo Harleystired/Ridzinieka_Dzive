@@ -19,10 +19,18 @@ MonoBehaviour:
   prompt: "Tev j\u0101\u0113d vakari\u0146as, bet jau ir v\u0113ls."
   allowedLocations: 00000000
   allowedTimes: 02000000
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "Pagatavo vesel\u012Bgas vakari\u0146as"
+    blocksWorkToday: 0
+    consumesFridgeFood: 1
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -10
@@ -33,12 +41,20 @@ MonoBehaviour:
     - stat: 1
       amount: -30
   - buttonText: "\u0112d mazu porciju"
+    blocksWorkToday: 0
+    consumesFridgeFood: 1
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5
     - stat: 1
       amount: -15
   - buttonText: "Izlaid vakari\u0146as"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 1
       amount: 50
