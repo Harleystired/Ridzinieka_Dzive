@@ -364,18 +364,17 @@ public class GameManager : MonoBehaviour
 
     public event Action<TimeOfDay> OnTimeOfDayChanged;
 
-    public void SetTimeOfDay(TimeOfDay value)
-    {
-        if (currentTimeOfDay == value) return;
-
-        currentTimeOfDay = value;
-
-        if (currentTimeOfDay != TimeOfDay.Morning)
-            ClearFreshWakeUpMorningScenarioWindow();
-
-        OnTimeOfDayChanged?.Invoke(currentTimeOfDay);
-    }
-
+   public void SetTimeOfDay(TimeOfDay value)
+   {
+       if (currentTimeOfDay == value) return;
+   
+       currentTimeOfDay = value;
+   
+       if (currentTimeOfDay != TimeOfDay.Morning)
+           ClearFreshWakeUpMorningScenarioWindow();
+   
+       OnTimeOfDayChanged?.Invoke(currentTimeOfDay);
+   }
     public void AdvanceTimeOfDay()
     {
         int next = ((int)currentTimeOfDay + 1) % 4;

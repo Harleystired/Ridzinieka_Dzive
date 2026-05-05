@@ -16,7 +16,7 @@ public class Computer : MonoBehaviour, IClickable2D
             scenarioManager = FindFirstObjectByType<ScenarioManager>();
     }
     
-    public void OnClicked(RaycastHit2D hit) //opens the computer upon clicking
+    public void OnClicked(RaycastHit2D hit)
     {
         if (computer == null) return;
 
@@ -25,6 +25,12 @@ public class Computer : MonoBehaviour, IClickable2D
         if (!newState && scenarioManager != null && scenarioManager.IsScenarioActive)
             return;
 
+        // 🔊 PC open/close sound
+        if (newState)
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.pcStart);
+        else
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.pcStart);
+
         computer.SetActive(newState);
 
         if (TimeOfDayUI != null)
@@ -32,7 +38,7 @@ public class Computer : MonoBehaviour, IClickable2D
 
         if (newState)
         {
-            UIModal.Open(); // makes it so other object can't be clicked through UI
+            UIModal.Open();
             if (scenarioManager != null) scenarioManager.NotifyComputerOpened();
         }
         else
