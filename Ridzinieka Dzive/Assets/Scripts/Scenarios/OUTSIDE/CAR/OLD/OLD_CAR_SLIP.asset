@@ -19,11 +19,18 @@ MonoBehaviour:
   prompt: "Laikapst\u0101k\u013Ci ir slikti, ce\u013C\u0161 slidens."
   allowedLocations: 01000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 05000000
   choices:
   - buttonText: "Brauc uzman\u012Bgi"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -5
@@ -32,6 +39,10 @@ MonoBehaviour:
     - stat: 3
       amount: 10
   - buttonText: "Brauc riskanti, lai \u0101tr\u0101k nok\u013C\u016Btu galam\u0113r\u0137\u012B"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -5
@@ -40,6 +51,10 @@ MonoBehaviour:
     - stat: 3
       amount: 15
   - buttonText: "Atst\u0101j auto un ej ar k\u0101j\u0101m"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5

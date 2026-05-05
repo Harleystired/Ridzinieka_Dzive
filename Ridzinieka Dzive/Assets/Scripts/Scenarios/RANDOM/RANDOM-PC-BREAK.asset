@@ -10,43 +10,39 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: ENERGY_H_FREETIME
+  m_Name: RANDOM-PC-BREAK
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: ENERGY_H_FREETIME
-  weight: 4
-  minDaysBetweenShows: 3
+  scenarioId: 
+  weight: 1
+  minDaysBetweenShows: 15
   isMandatory: 1
-  prompt: "Tev ir br\u012Bvs laiks un j\u016Bties ener\u0123iju pilns."
+  prompt: "P\u0113k\u0161\u0146i dators s\u0101k d\u012Bvaini str\u0101d\u0101t."
   allowedLocations: 00000000
   allowedTimes: 
-  statRequirements:
-  - stat: 2
-    minInclusive: 80
-    maxInclusive: 100
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
+  statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
-  - buttonText: "Dodies pastaig\u0101"
+  - buttonText: "Sauc profesion\u0101li"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
-    - stat: 2
-      amount: -5
-    - stat: 3
-      amount: -10
-    - stat: 4
-      amount: 10
-  - buttonText: "Veic vingrin\u0101jumus m\u0101j\u0101s"
-    effects:
-    - stat: 3
-      amount: -10
-    - stat: 2
-      amount: -5
-    - stat: 4
-      amount: 10
-  - buttonText: "Apmekl\u0113 treni\u0146z\u0101li"
-    effects:
-    - stat: 2
-      amount: -10
-    - stat: 3
-      amount: -20
     - stat: 0
-      amount: -5
+      amount: -30
+  - buttonText: Pats labo
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
+    effects:
+    - stat: 0
+      amount: -10
+    - stat: 3
+      amount: 10
+    - stat: 2
+      amount: -10

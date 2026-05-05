@@ -10,38 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: ENERGY_L_NAP
+  m_Name: RANDOM-JOB
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: ENERGY_L_NAP
-  weight: 5
-  minDaysBetweenShows: 3
+  scenarioId: 
+  weight: 1
+  minDaysBetweenShows: 8
   isMandatory: 1
-  prompt: "Tev ir darbs r\u012Bt\u0101 un tu j\u016Bties \u013Coti noguris."
+  prompt: "Tu internet\u0101 ieraugi pied\u0101v\u0101jumu uz mazu darbu."
   allowedLocations: 00000000
-  allowedTimes: 0300000002000000
+  allowedTimes: 
   requiresFreshWakeUpMorning: 0
   requiresWorkDay: 0
   requiresFever: 0
-  statRequirements:
-  - stat: 2
-    minInclusive: 0
-    maxInclusive: 40
+  statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
-  - buttonText: "Nedaudz atp\u016Bties"
+  - buttonText: Dari to
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
     goesToWorkWhileSick: 0
     effects:
-    - stat: 2
-      amount: 10
-  - buttonText: 'Dari kaut ko '
-    blocksWorkToday: 0
-    consumesFridgeFood: 0
-    startsSickLeave: 0
-    goesToWorkWhileSick: 0
-    effects:
+    - stat: 0
+      amount: 20
     - stat: 2
       amount: -10
+  - buttonText: "Ignor\u0113"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
+    effects: []

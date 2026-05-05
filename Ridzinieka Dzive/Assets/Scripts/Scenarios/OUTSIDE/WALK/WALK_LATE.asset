@@ -13,25 +13,40 @@ MonoBehaviour:
   m_Name: WALK_LATE
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
   scenarioId: WALK_LATE
-  weight: 1
+  weight: 5
   minDaysBetweenShows: 3
   isMandatory: 1
   prompt: "Tu kav\u0113jies."
   allowedLocations: 01000000
-  allowedTimes: 
+  allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 00000000
   choices:
-  - buttonText: Skrien
+  - buttonText: "Steidzies un ierodies v\u0113lu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -20
     - stat: 3
       amount: 10
+    - stat: 0
+      amount: -10
   - buttonText: "Iet mier\u012Bg\u0101 sol\u012B"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
+    - stat: 0
+      amount: -20
+    - stat: 3
+      amount: 5
     - stat: 2
       amount: -5
-    - stat: 3
-      amount: 10

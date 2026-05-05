@@ -16,8 +16,8 @@ MonoBehaviour:
   weight: 3
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Tu j\u016Bties ener\u0123\u0113tisks un labi izgul\u0113jies, varb\u016Bt
-    \u0161odien iet uz darbu ar k\u0101j\u0101m vai braukt ar velosip\u0113du?"
+  prompt: "Tu j\u016Bties ener\u0123\u0113tisks un labi izgul\u0113jies. Tev ir br\u012Bvs
+    laiks pirms darba."
   allowedLocations: 00000000
   allowedTimes: 00000000
   requiresFreshWakeUpMorning: 1
@@ -30,7 +30,7 @@ MonoBehaviour:
   allowedJobs: 
   allowedTransportModes: 
   choices:
-  - buttonText: "Iet ar k\u0101j\u0101m"
+  - buttonText: Vingro
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
@@ -39,20 +39,20 @@ MonoBehaviour:
     - stat: 4
       amount: 10
     - stat: 2
-      amount: -2
-  - buttonText: "Braukt ar velosip\u0113du"
+      amount: -5
+  - buttonText: "Dodies uz darbu \u0101tr\u0101k"
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
     goesToWorkWhileSick: 0
     effects:
-    - stat: 2
-      amount: -4
-    - stat: 4
-      amount: 10
-  - buttonText: "N\u0113, es lab\u0101k brauk\u0161u ar transportu"
+    - stat: 0
+      amount: 5
+  - buttonText: "Izbaudi br\u012Bvo laiku"
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
     goesToWorkWhileSick: 0
-    effects: []
+    effects:
+    - stat: 3
+      amount: -5

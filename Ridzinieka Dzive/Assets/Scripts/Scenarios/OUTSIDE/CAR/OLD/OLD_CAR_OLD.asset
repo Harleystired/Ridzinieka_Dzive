@@ -19,19 +19,28 @@ MonoBehaviour:
   prompt: "Tu dzirdi joc\u012Bgas ska\u0146as no ma\u0161\u012Bnas"
   allowedLocations: 01000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 05000000
   choices:
   - buttonText: "Igor\u0113 ska\u0146as"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 20
     - stat: 2
       amount: -5
-    - stat: 0
-      amount: -2
   - buttonText: "Apst\u0101jies ielas mal\u0101 un m\u0113\u0123ini labot pats"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -5
@@ -40,9 +49,13 @@ MonoBehaviour:
     - stat: 3
       amount: 20
   - buttonText: Brauc uz autoservisu
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
-      amount: -10
+      amount: -30
     - stat: 2
       amount: -5
     - stat: 3

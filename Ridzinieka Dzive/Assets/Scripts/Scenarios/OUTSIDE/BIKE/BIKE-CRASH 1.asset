@@ -10,51 +10,51 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: TAXI_T_FULLROAD
+  m_Name: BIKE-CRASH 1
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: TAXI_T_FULLROAD
-  weight: 6
-  minDaysBetweenShows: 3
+  scenarioId: 
+  weight: 2
+  minDaysBetweenShows: 7
   isMandatory: 1
-  prompt: "Tu izsauc taksi, bet ce\u013C\u0161 ir pilns ar automa\u0161\u012Bn\u0101m."
+  prompt: "Strauji pagrie\u017Eot st\u016Bri tu nokr\u012Bti un smagi ievainojies."
   allowedLocations: 01000000
   allowedTimes: 
-  requiresFreshWakeUpMorning: 0
-  requiresWorkDay: 0
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 1
   requiresFever: 0
   statRequirements: []
   allowedJobs: 
-  allowedTransportModes: 02000000
+  allowedTransportModes: 0300000004000000
   choices:
-  - buttonText: "Paliec taks\u012B un gaidi"
-    blocksWorkToday: 0
+  - buttonText: "Dodies uz slimn\u012Bcu"
+    blocksWorkToday: 1
     consumesFridgeFood: 0
-    startsSickLeave: 0
+    startsSickLeave: 1
     goesToWorkWhileSick: 0
     effects:
+    - stat: 4
+      amount: 30
     - stat: 0
-      amount: -5
+      amount: -50
     - stat: 3
-      amount: 10
-  - buttonText: "Pajaut\u0101 vad\u012Bt\u0101jam main\u012Bt mar\u0161rutu"
-    blocksWorkToday: 0
+      amount: -10
+  - buttonText: "Atp\u016Bties m\u0101j\u0101s"
+    blocksWorkToday: 1
     consumesFridgeFood: 0
     startsSickLeave: 0
-    goesToWorkWhileSick: 0
+    goesToWorkWhileSick: 1
     effects:
-    - stat: 0
+    - stat: 4
+      amount: -20
+    - stat: 4
+      amount: -20
+  - buttonText: Dodies uz darbu ievainots
+    blocksWorkToday: 1
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 1
+    effects:
+    - stat: 4
       amount: -10
     - stat: 3
-      amount: 5
-  - buttonText: "Izk\u0101p un ej ar k\u0101j\u0101m"
-    blocksWorkToday: 0
-    consumesFridgeFood: 0
-    startsSickLeave: 0
-    goesToWorkWhileSick: 0
-    effects:
-    - stat: 2
-      amount: -5
-    - stat: 4
-      amount: 5
-    - stat: 3
-      amount: 10
+      amount: 15

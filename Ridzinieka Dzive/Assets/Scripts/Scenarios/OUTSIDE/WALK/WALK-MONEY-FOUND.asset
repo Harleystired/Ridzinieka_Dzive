@@ -16,22 +16,29 @@ MonoBehaviour:
   weight: 2
   minDaysBetweenShows: 7
   isMandatory: 1
-  prompt: "Tu atrodi 10\u20AC uz ielas."
+  prompt: Tu pamani kaut ko uz zemes.
   allowedLocations: 01000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 00000000
   choices:
-  - buttonText: "Pa\u0146em sev"
+  - buttonText: "Pa\u0146em to"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
-      amount: 10
+      amount: 5
     - stat: 3
       amount: 5
   - buttonText: "Atst\u0101j kur atradi"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects: []
-  - buttonText: Nodod policijai
-    effects:
-    - stat: 3
-      amount: 5

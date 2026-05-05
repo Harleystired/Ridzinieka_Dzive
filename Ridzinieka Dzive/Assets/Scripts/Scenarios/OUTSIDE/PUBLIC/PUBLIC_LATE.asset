@@ -19,21 +19,38 @@ MonoBehaviour:
   prompt: "Autobus kav\u0113jas"
   allowedLocations: 01000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 01000000
   choices:
   - buttonText: Paliec un gaidi autobusu
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 15
-  - buttonText: "Mekl\u0113 citu autobusu vai alternat\u012Bvu mar\u0161rutu"
+  - buttonText: "Mekl\u0113 citu autobusu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
     - stat: 2
       amount: -10
-  - buttonText: "Ej ar k\u0101j\u0101m uz savu galam\u0113r\u0137i"
+    - stat: 0
+      amount: -5
+  - buttonText: "Ej ar k\u0101j\u0101m"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -10

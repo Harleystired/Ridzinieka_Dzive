@@ -19,11 +19,18 @@ MonoBehaviour:
   prompt: "Ce\u013C\u0161 ir nel\u012Bdzens un pilns ar bedr\u0113m."
   allowedLocations: 01000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 06000000
   choices:
   - buttonText: "Brauc uzman\u012Bgi pa galveno ce\u013Cu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -4
@@ -32,6 +39,10 @@ MonoBehaviour:
     - stat: 3
       amount: 10
   - buttonText: "Apbrauc pa gar\u0101ku mar\u0161rutu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -5

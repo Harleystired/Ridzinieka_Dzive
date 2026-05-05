@@ -10,38 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: ENERGY_L_NAP
+  m_Name: RANDOM-BIG-FEE
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: ENERGY_L_NAP
-  weight: 5
-  minDaysBetweenShows: 3
+  scenarioId: 
+  weight: 1
+  minDaysBetweenShows: 15
   isMandatory: 1
-  prompt: "Tev ir darbs r\u012Bt\u0101 un tu j\u016Bties \u013Coti noguris."
-  allowedLocations: 00000000
-  allowedTimes: 0300000002000000
+  prompt: "Tev uzr\u0101d\u0101s negaid\u012Bts r\u0113\u0137ins."
+  allowedLocations: 
+  allowedTimes: 
   requiresFreshWakeUpMorning: 0
   requiresWorkDay: 0
   requiresFever: 0
-  statRequirements:
-  - stat: 2
-    minInclusive: 0
-    maxInclusive: 40
+  statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
-  - buttonText: "Nedaudz atp\u016Bties"
+  - buttonText: "Samaks\u0101 pilno maksu"
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
     goesToWorkWhileSick: 0
     effects:
-    - stat: 2
-      amount: 10
-  - buttonText: 'Dari kaut ko '
+    - stat: 0
+      amount: 100
+  - buttonText: "Samaks\u0101 pusi"
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
     goesToWorkWhileSick: 0
     effects:
-    - stat: 2
-      amount: -10
+    - stat: 0
+      amount: 50

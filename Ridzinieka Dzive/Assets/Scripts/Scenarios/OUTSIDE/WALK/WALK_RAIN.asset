@@ -16,22 +16,43 @@ MonoBehaviour:
   weight: 2
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "\u0100r\u0101 l\u012Bst"
+  prompt: "\u0100r\u0101 smagi l\u012Bst."
   allowedLocations: 01000000
-  allowedTimes: 
+  allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 00000000
   choices:
   - buttonText: "Iet liet\u016B"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
-    - stat: 2
-      amount: -10
     - stat: 4
-      amount: 5
+      amount: -5
     - stat: 3
       amount: 15
+  - buttonText: "Nop\u0113rc lietussargu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
+    effects:
+    - stat: 0
+      amount: -10
+    - stat: 3
+      amount: -10
   - buttonText: Gaidi, cerot, ka lietus pierims
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
+    - stat: 0
+      amount: -5

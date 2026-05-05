@@ -10,38 +10,53 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
-  m_Name: ENERGY_L_NAP
+  m_Name: WALK-DOG
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: ENERGY_L_NAP
-  weight: 5
-  minDaysBetweenShows: 3
+  scenarioId: 
+  weight: 2
+  minDaysBetweenShows: 10
   isMandatory: 1
-  prompt: "Tev ir darbs r\u012Bt\u0101 un tu j\u016Bties \u013Coti noguris."
-  allowedLocations: 00000000
-  allowedTimes: 0300000002000000
+  prompt: "Mier\u012Bgi ejot tev uzbr\u016Bk un ieko\u017E suns."
+  allowedLocations: 01000000
+  allowedTimes: 
   requiresFreshWakeUpMorning: 0
   requiresWorkDay: 0
   requiresFever: 0
-  statRequirements:
-  - stat: 2
-    minInclusive: 0
-    maxInclusive: 40
+  statRequirements: []
   allowedJobs: 
-  allowedTransportModes: 
+  allowedTransportModes: 00000000
   choices:
-  - buttonText: "Nedaudz atp\u016Bties"
+  - buttonText: "Apmekl\u0113 slimn\u012Bcu"
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
     goesToWorkWhileSick: 0
     effects:
-    - stat: 2
+    - stat: 0
+      amount: -50
+    - stat: 4
+      amount: 40
+    - stat: 3
+      amount: -20
+  - buttonText: "Ignor\u0113 un turpini iet"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
+    effects:
+    - stat: 4
+      amount: -20
+    - stat: 3
       amount: 10
-  - buttonText: 'Dari kaut ko '
+  - buttonText: "\u0100rst\u0113 sevi"
     blocksWorkToday: 0
     consumesFridgeFood: 0
     startsSickLeave: 0
     goesToWorkWhileSick: 0
     effects:
-    - stat: 2
+    - stat: 0
       amount: -10
+    - stat: 3
+      amount: 5
+    - stat: 4
+      amount: 15

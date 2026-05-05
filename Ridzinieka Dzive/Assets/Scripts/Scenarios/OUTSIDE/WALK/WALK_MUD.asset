@@ -13,27 +13,48 @@ MonoBehaviour:
   m_Name: WALK_MUD
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
   scenarioId: WALK_MUD
-  weight: 2
+  weight: 4
   minDaysBetweenShows: 3
   isMandatory: 1
-  prompt: "Ce\u013C\u0161 ir dub\u013Cains vai slidens."
+  prompt: "Ce\u013C\u0161 ir dub\u013Cains un slidens."
   allowedLocations: 01000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 00000000
   choices:
   - buttonText: "Iet pa dub\u013Ciem/slideno ce\u013Cu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
     - stat: 2
       amount: -10
     - stat: 4
-      amount: -2
+      amount: -5
   - buttonText: "Izv\u0113lies ilg\u0101ku, dro\u0161u mar\u0161rutu"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -15
     - stat: 3
       amount: 10
+  - buttonText: Zvani taksim
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
+    effects:
+    - stat: 0
+      amount: -10
+    - stat: 3
+      amount: -5

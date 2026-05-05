@@ -19,15 +19,28 @@ MonoBehaviour:
   prompt: "Tu ietriecies cit\u0101 auto un vad\u012Bt\u0101js tev pieprasa samaks\u0101t"
   allowedLocations: 01000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 0500000006000000
   choices:
   - buttonText: "Samaks\u0101 piepras\u012Bto"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
-      amount: -20
+      amount: -50
   - buttonText: "Samaks\u0101 vair\u0101k"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
-      amount: -30
+      amount: -60
+    - stat: 3
+      amount: -10

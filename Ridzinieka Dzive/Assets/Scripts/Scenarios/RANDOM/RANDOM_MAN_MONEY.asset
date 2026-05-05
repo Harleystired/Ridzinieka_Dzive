@@ -17,22 +17,37 @@ MonoBehaviour:
   minDaysBetweenShows: 3
   isMandatory: 1
   prompt: "Pie veikala durv\u012Bm st\u0101v nel\u0101ga paskata v\u012Brietis, bez
-    ze\u0137\u0113m un prasa tev 3 eiro, lai ieg\u0101d\u0101tos t\u0101s"
+    ze\u0137\u0113m un prasa tev 3 eiro, lai ieg\u0101d\u0101tos t\u0101s."
   allowedLocations: 03000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
   - buttonText: "Ignor\u0113"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
   - buttonText: Iedod naudu
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -3
   - buttonText: "Zi\u0146o apsargam"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 10
