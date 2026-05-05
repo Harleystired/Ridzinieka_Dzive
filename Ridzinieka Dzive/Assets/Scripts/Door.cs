@@ -47,6 +47,7 @@ public class Door : MonoBehaviour, IClickable2D
 
     public void OnClicked(RaycastHit2D hit) //opens the door upon clicking
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.door);
         if (doorMenu == null) return;
 
         bool newState = !doorMenu.activeSelf;

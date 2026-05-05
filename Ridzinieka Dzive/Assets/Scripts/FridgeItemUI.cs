@@ -40,6 +40,7 @@ public class FridgeItemUI : MonoBehaviour
     public void OnClick()
     {
         // Ja jau esi paēdis (hunger = 0), neko nedarām
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.eat);
         if (gameManager.hunger <= 0)
             return;
 

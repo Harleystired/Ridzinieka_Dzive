@@ -14,26 +14,54 @@ public class Fridge : MonoBehaviour, IClickable2D
     {
         if (fridge == null) return;
 
+        // 1) Atskaņo atvēršanas skaņu
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.fridge_open);
+
         bool newState = !fridge.activeSelf;
         fridge.SetActive(newState);
 
-        if (newState) UIModal.Open(); // makes it so other object can't be clicked through UI
-        else UIModal.Close();
+        if (newState)
+        {
+            // 2) Ieslēdz hum
+            AudioManager.Instance.PlayAmbience(AudioManager.Instance.fridge_hum);
+            UIModal.Open();
+        }
+        else
+        {
+            // 3) Izslēdz hum
+            AudioManager.Instance.StopAmbience();
+            UIModal.Close();
+        }
     }
 
     public void OpenFridgeFromButton()
     {
         if (fridge == null) return;
-        fridge.SetActive(true); UIModal.Open();
+
+        // 1) Atskaņo atvēršanas skaņu
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.fridge_open);
+
+        // 2) Ieslēdz hum
+        AudioManager.Instance.PlayAmbience(AudioManager.Instance.fridge_hum);
+
+        fridge.SetActive(true);
+        UIModal.Open();
     }
 
     public void CloseFridgeFromButton()
     {
         if (fridge == null) return;
-        fridge.SetActive(false); UIModal.Close();
+
+        // Izslēdz hum
+        AudioManager.Instance.StopAmbience();
+
+        fridge.SetActive(false);
+        UIModal.Close();
     }
+
     public void Eat()
     {
+        // Te varēsi ielikt ēšanas skaņu vēlāk
     }
 
     public void CloseFridge() //closes the fridge
@@ -41,8 +69,10 @@ public class Fridge : MonoBehaviour, IClickable2D
         if (fridge == null) return;
         if (!fridge.activeSelf) return;
 
-        fridge.SetActive(false);
+        // Izslēdz hum
+        AudioManager.Instance.StopAmbience();
 
-        UIModal.Close(); // allows other objects to be clicked, if this is not done, NOTHING will be clickable
+        fridge.SetActive(false);
+        UIModal.Close();
     }
 }

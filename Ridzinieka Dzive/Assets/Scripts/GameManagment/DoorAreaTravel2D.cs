@@ -20,6 +20,7 @@ public sealed class DoorAreaTravel2D : MonoBehaviour, IClickable2D, IHoverable2D
 
     public void OnClicked(RaycastHit2D hit)
     {
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.door);
         if (cameraMovement == null) return;
 
         switch (destination)
