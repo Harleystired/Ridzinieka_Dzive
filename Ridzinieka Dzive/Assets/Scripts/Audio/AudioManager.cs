@@ -13,6 +13,10 @@ public class AudioManager : MonoBehaviour
     public AudioClip door;
     public AudioClip fridge_open;
     public AudioClip eat;
+    public AudioClip pcStart;
+    
+    [Header("Phone")]
+    public AudioClip phoneSwoosh;
 
     [Header("Fridge")]
     public AudioClip fridge_hum; // loop only when fridge panel is open

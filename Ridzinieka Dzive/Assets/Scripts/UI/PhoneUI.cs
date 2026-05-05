@@ -137,8 +137,18 @@ public class PhoneUI : MonoBehaviour
         if (instant)
             return;
 
-        if (open) Opened?.Invoke();
-        else Closed?.Invoke();
+        if (open)
+        {
+            //  Swoosh skaņa, kad telefons tiek izvilkts
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick); 
+            Opened?.Invoke();
+        }
+        else
+        {
+            //  Maza “close” skaņa, kad telefons aizveras
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClick);
+            Closed?.Invoke();
+        }
     }
 
     private void RefreshStatsVisibility()

@@ -29821,6 +29821,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: d7e18e1826193b441afaa04aaecc6efb, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1907554833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32239,6 +32251,8 @@ MonoBehaviour:
   door: {fileID: 8300000, guid: d4e371355a894614a8ec18237d3ec84b, type: 3}
   fridge_open: {fileID: 8300000, guid: b6b9460bfcebe05408a0753c6d822916, type: 3}
   eat: {fileID: 8300000, guid: 35aeabebc58cf1e4c93b1a9328c91d20, type: 3}
+  pcStart: {fileID: 8300000, guid: 30a48edd2f92e494da610b10329ec3da, type: 3}
+  phoneSwoosh: {fileID: 8300000, guid: 4097570c8239e454f9da56facde25de6, type: 3}
   fridge_hum: {fileID: 8300000, guid: 458bc97e471ea5242b5613de4d51b043, type: 3}
   outside_bg: {fileID: 8300000, guid: 50a7e3d706b8be64c8060389721b9993, type: 3}
   store_bg: {fileID: 8300000, guid: 0614b4ff547fda849a5a223c9f4cb6dc, type: 3}
