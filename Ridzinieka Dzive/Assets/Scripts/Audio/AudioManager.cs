@@ -19,14 +19,15 @@ public class AudioManager : MonoBehaviour
     public AudioClip phoneSwoosh;
 
     [Header("Fridge")]
-    public AudioClip fridge_hum; // loop only when fridge panel is open
+    public AudioClip fridge_hum; 
 
     [Header("Ambience")]
-    public AudioClip outside_bg;   // you will add this later
-    public AudioClip store_bg;     // shopping ambience
-    public AudioClip store_work;   // cashier job ambience
-    public AudioClip office_bg;    // office job ambience
-    public AudioClip traffic_bg;   // taxi job ambience
+    public AudioClip outside_bg;   
+    public AudioClip store_bg;     
+    public AudioClip store_work;   
+    public AudioClip office_bg;    
+    public AudioClip traffic_bg;   
+    public AudioClip home_bg;
 
     [Header("Audio Sources")]
     public AudioSource uiSource;
@@ -120,10 +121,12 @@ public class AudioManager : MonoBehaviour
         switch (loc)
         {
             case GameManager.Location.Home:
+                PlayAmbience(home_bg);
                 break;
 
             case GameManager.Location.Outside:
                 PlayAmbience(outside_bg);
+                Debug.Log("Playing home ambience");
                 break;
 
             case GameManager.Location.Shop:

@@ -1875,6 +1875,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &77037804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2693,6 +2705,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -9275,6 +9299,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &597323118
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14706,6 +14742,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &990599680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15930,6 +15978,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1067247526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16554,7 +16614,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1080190379}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1081813186
 GameObject:
   m_ObjectHideFlags: 0
@@ -16779,6 +16851,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -17290,6 +17374,30 @@ MonoBehaviour:
   - itemName: Chicken legs
     icon: {fileID: 8678448789981272047, guid: bd69da521228c6a4ba090c8fd0923fcb, type: 3}
     hungerValue: 10
+  - itemName: "Aukst\u0101 zupa"
+    icon: {fileID: -7807834264706927355, guid: abc227818ef718f49aa02ae08034273d, type: 3}
+    hungerValue: 15
+  - itemName: Biezpiens
+    icon: {fileID: 1258102001160877895, guid: 25a15506c3bdb4c438f7a5fd0e4ecf30, type: 3}
+    hungerValue: 8
+  - itemName: Siers
+    icon: {fileID: 3046393464926905738, guid: 19d396c39f1580f4a982f9a9891c13e3, type: 3}
+    hungerValue: 3
+  - itemName: "Pelme\u0146i"
+    icon: {fileID: 5319157311882030151, guid: 86de544e91d0bf8458b6a882897855d8, type: 3}
+    hungerValue: 8
+  - itemName: Sula
+    icon: {fileID: 2791105872119289076, guid: 3796e868faf0a6e478544061cd6472ca, type: 3}
+    hungerValue: 4
+  - itemName: Pusdienu komplekts
+    icon: {fileID: -7425262544454171421, guid: 59f7c19ec842ea348ab352cc28f8cade, type: 3}
+    hungerValue: 15
+  - itemName: "Maiz\u012Btes"
+    icon: {fileID: -4951520517554352830, guid: 943d6a6703f309a4d9b48f6829516488, type: 3}
+    hungerValue: 4
+  - itemName: Kafija
+    icon: {fileID: 9110908409640437338, guid: 16e42d34f85c35d48b1d4d9bcf2e8a15, type: 3}
+    hungerValue: 4
 --- !u!4 &1103281266
 Transform:
   m_ObjectHideFlags: 0
@@ -17395,6 +17503,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -17941,6 +18061,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1137106318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18099,7 +18231,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1137847103}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1138150571
 GameObject:
   m_ObjectHideFlags: 0
@@ -18882,7 +19026,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1181331619}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1181331619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21608,7 +21764,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1334751212}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1342295434
 GameObject:
   m_ObjectHideFlags: 0
@@ -22826,6 +22994,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -25386,7 +25566,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1562782984}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1562782984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29966,6 +30158,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1907797783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32258,7 +32462,8 @@ MonoBehaviour:
   store_bg: {fileID: 8300000, guid: 0614b4ff547fda849a5a223c9f4cb6dc, type: 3}
   store_work: {fileID: 8300000, guid: a0d2e0c162358fa4a972947f73600326, type: 3}
   office_bg: {fileID: 8300000, guid: 1d5feab8628f71047891986568371822, type: 3}
-  traffic_bg: {fileID: 8300000, guid: a30889e1444ee0443b3488d4147894b3, type: 3}
+  traffic_bg: {fileID: 8300000, guid: b29fb612bf3a2f3479ba047d82532cc6, type: 3}
+  home_bg: {fileID: 8300000, guid: 7018bc157cbc73246b05293b36c730db, type: 3}
   uiSource: {fileID: 2071034612}
   sfxSource: {fileID: 2071034616}
   ambienceSource: {fileID: 2071034615}
@@ -32967,7 +33172,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2124650345}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2124650345
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33096,6 +33313,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2071034613}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlaySFX
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 5acd2d901ae42d44d9c19d109b42ecce, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
