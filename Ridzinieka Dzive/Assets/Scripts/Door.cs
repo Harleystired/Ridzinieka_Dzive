@@ -151,6 +151,9 @@ public class Door : MonoBehaviour, IClickable2D
         Outside();
     }
 
+
+
+
     public void GoToShop()
     {
         if (gameManager == null) return;

@@ -54,6 +54,21 @@ public class AudioManager : MonoBehaviour
         gameManager = FindFirstObjectByType<GameManager>();
         if (gameManager != null)
             gameManager.OnLocationChanged += HandleLocationChanged;
+        var cam = FindFirstObjectByType<CameraMovement>();
+        if (cam != null)
+            cam.OnHomeAreaChanged += HandleHomeAreaChanged;
+        
+    }
+    private void HandleHomeAreaChanged(CameraMovement.HomeArea area)
+    {
+        if (area == CameraMovement.HomeArea.Computer)
+        {
+            PlayAmbience(home_bg);   // istabas ambience
+        }
+        else
+        {
+            StopAmbience();          
+        }
     }
 
     // ------------------------------

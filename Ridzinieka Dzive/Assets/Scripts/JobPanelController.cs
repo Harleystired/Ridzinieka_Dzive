@@ -125,6 +125,7 @@ public class JobPanelController : MonoBehaviour
         var statsUI = FindFirstObjectByType<StatsUI>();
         if (statsUI != null)
             statsUI.UpdateStats();
+        AudioManager.Instance.PlayAmbience(AudioManager.Instance.home_bg);
 
         StartCoroutine(ClosePanelDelayed());
     }
