@@ -8,17 +8,16 @@ public class TutorialManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject tooltipPanel;
     [SerializeField] private TextMeshProUGUI tooltipText;
+    [SerializeField] private GameObject skipButton;   
 
     [Header("Steps")]
     [SerializeField] private TutorialStep[] steps;
 
     private int currentIndex = 0;
-    private int highestStepReached = -1;   //  Neļauj atkārtot vai iet atpakaļ
-    public int CurrentStep => currentIndex;
-
-    
+    private int highestStepReached = -1;
     private bool tutorialActive = true;
-    
+
+    public int CurrentStep => currentIndex;
 
     private void Awake()
     {
@@ -32,7 +31,7 @@ public class TutorialManager : MonoBehaviour
     {
         if (!tutorialActive) return;
 
-        //  Ļauj parādīt 0. soli vienmēr
+        // 0. solis vienmēr atļauts
         if (index == 0)
         {
             currentIndex = 0;
@@ -41,14 +40,19 @@ public class TutorialManager : MonoBehaviour
             tooltipPanel.SetActive(true);
             tooltipPanel.transform.position = steps[0].position;
             tooltipText.text = steps[0].text;
+
+            // Skip poga redzama jau no 0. soļa
+            if (skipButton != null)
+                skipButton.SetActive(true);
+
             return;
         }
 
-        //  Neļauj izlaist soļus
+        // Neļauj izlaist soļus
         if (index != currentIndex + 1)
             return;
 
-        //  Neļauj atkārtot vai iet atpakaļ
+        // Neļauj atkārtot vai iet atpakaļ
         if (index <= highestStepReached)
             return;
 
@@ -58,8 +62,11 @@ public class TutorialManager : MonoBehaviour
         tooltipPanel.SetActive(true);
         tooltipPanel.transform.position = steps[index].position;
         tooltipText.text = steps[index].text;
-    }
 
+        // Skip poga vienmēr redzama, kamēr tutorials aktīvs
+        if (skipButton != null)
+            skipButton.SetActive(true);
+    }
 
     // -----------------------------
     // TRIGGER (ja izmanto ID)
@@ -68,7 +75,6 @@ public class TutorialManager : MonoBehaviour
     {
         if (!tutorialActive) return;
 
-        // Tikai tad, ja ID sakrīt ar pašreizējo soli
         if (steps[currentIndex].id == id)
             NextStep();
     }
@@ -96,16 +102,20 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialActive = false;
         tooltipPanel.SetActive(false);
+
+        if (skipButton != null)
+            skipButton.SetActive(false);
     }
 
     // -----------------------------
     // COMPLETE
     // -----------------------------
-    
     public void CompleteTutorial()
     {
         tutorialActive = false;
         tooltipPanel.SetActive(false);
+
+        if (skipButton != null)
+            skipButton.SetActive(false);
     }
-    
 }

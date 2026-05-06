@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip fridge_open;
     public AudioClip eat;
     public AudioClip pcStart;
+    public AudioClip buy;
     
     [Header("Phone")]
     public AudioClip phoneSwoosh;

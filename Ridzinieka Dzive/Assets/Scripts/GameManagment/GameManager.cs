@@ -577,18 +577,21 @@ public class GameManager : MonoBehaviour
         if (calendarDay == null || calendarDay.Length == 0) return;
 
         int maxIndex = Mathf.Min(30, calendarDay.Length - 1);
-        if (currentDayIndex >= maxIndex) return; // already at last day
+        if (currentDayIndex >= maxIndex) return; 
 
         currentDayIndex++;
 
         ProcessSicknessForNewDay();
 
         OnDayChanged?.Invoke(currentDayIndex);
-        if (TutorialManager.Instance != null && TutorialManager.Instance.CurrentStep == 10)
+
+        
+        if (TutorialManager.Instance != null && currentDayIndex == 1)
         {
             TutorialManager.Instance.CompleteTutorial();
         }
     }
+
     
 
     // ---------------------------------------------------------------------
