@@ -42,7 +42,7 @@ MonoBehaviour:
     goesToWorkWhileSick: 0
     effects:
     - stat: 0
-      amount: -3
+      amount: -5
   - buttonText: "Zi\u0146o apsargam"
     blocksWorkToday: 0
     consumesFridgeFood: 0
