@@ -47,6 +47,7 @@ public class JobPanelController : MonoBehaviour
     {
         if (gameManager == null)
             gameManager = FindFirstObjectByType<GameManager>();
+        TutorialManager.Instance.ShowStep(0);
 
         UpdateHeader();
         UpdateStats();
@@ -99,6 +100,7 @@ public class JobPanelController : MonoBehaviour
     public void ChooseJob()
     {
         var job = jobs[currentJobIndex];
+        TutorialManager.Instance.ShowStep(1);
 
         // Apply stat changes via clamped methods (0..100)
         if (job.hungerChange >= 0) gameManager.AddHunger(job.hungerChange);

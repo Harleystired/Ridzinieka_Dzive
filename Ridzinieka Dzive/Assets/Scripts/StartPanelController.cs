@@ -56,6 +56,7 @@ public class StartPanelController : MonoBehaviour
     public void OnFindJobPressed()
     {
         UIManager.Instance.Show("JobPanel");
+        
     }
 
     public void OnExitPressed()

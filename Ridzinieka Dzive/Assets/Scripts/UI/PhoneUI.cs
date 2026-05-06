@@ -109,6 +109,7 @@ public class PhoneUI : MonoBehaviour
             return;
 
         SetOpen(false, instant: false);
+       
     }
 
     public void Toggle()
@@ -148,6 +149,7 @@ public class PhoneUI : MonoBehaviour
             //  Maza “close” skaņa, kad telefons aizveras
             AudioManager.Instance.PlaySFX(AudioManager.Instance.phoneSwoosh);
             Closed?.Invoke();
+            TutorialManager.Instance.ShowStep(2);
         }
     }
 
