@@ -55,6 +55,8 @@ public class Door : MonoBehaviour, IClickable2D
 
         if (newState) UIModal.Open(); // makes it so other object can't be clicked through UI
         else UIModal.Close();
+        
+
     }
     
     public void CloseDoor() //closes the door

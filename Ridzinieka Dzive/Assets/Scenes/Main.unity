@@ -8439,7 +8439,7 @@ MonoBehaviour:
     text: Apskaties savus stats
     position: {x: 384, y: 143}
   - id: ClosePhone
-    text: Apskaties uzdevumu
+    text: "Apskaties uzdevumus dator\u0101"
     position: {x: 384, y: 143}
   - id: Bulta
     text: "Dodies uz virtuvi, kas atrodas labaj\u0101 pus\u0113 aiz durv\u012Bm"
@@ -8452,29 +8452,16 @@ MonoBehaviour:
       pa\u0113dis un nesaslimtu"
     position: {x: 384, y: 143}
   - id: Back
-    text: "Tev ir j\u0101ieg\u0101d\u0101j\u0101s produkti veikal\u0101, lai b\u016Btu
-      pa\u0113dis un nesaslimtu"
-    position: {x: 384, y: 143}
-  - id: Durvis2
-    text: dodies pa otram durvim ara uz veikalu
+    text: dodies pa otram durvim ara uz veikalu ar kajam
     position: {x: 384, y: 143}
   - id: ClosePoga
-    text: "ej ar k\u0101j\u0101m"
+    text: dodies majas un paed, ja esi izsalcis, izdair parejos uzdevumus
     position: {x: 384, y: 143}
   - id: Buy
-    text: "Ieg\u0101d\u0101jies produktus"
+    text: no majam ej uz darbu
     position: {x: 384, y: 143}
   - id: BuyPoga
-    text: "dodies atpakal m\u0101j\u0101s"
-    position: {x: 384, y: 143}
-  - id: Kalendars
-    text: "Apskati k\u0101da diena ir "
-    position: {x: 384, y: 143}
-  - id: KalendarsBack
-    text: iespeja doties uz darbu utt
-    position: {x: 384, y: 143}
-  - id: bed
-    text: dodies sleep
+    text: sis ir darbs/dodies majas gulet
     position: {x: 384, y: 143}
 --- !u!4 &480352994
 Transform:

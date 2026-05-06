@@ -54,6 +54,7 @@ public class ShopUI : MonoBehaviour
         gameManager.BeginTravelTo(GameManager.Destination.Home);
         if (outsideUIController != null)
             outsideUIController.ShowOutsideMenu();
+        TutorialManager.Instance.ShowStep(8);
     }
     
     private void HandleLocationChanged(GameManager.Location location)
@@ -75,6 +76,7 @@ public class ShopUI : MonoBehaviour
 
         
         OpenShop();
+        TutorialManager.Instance.ShowStep(7);
     }
     // Hook this to the Shop UI button's OnClick()
     public void OpenShop()

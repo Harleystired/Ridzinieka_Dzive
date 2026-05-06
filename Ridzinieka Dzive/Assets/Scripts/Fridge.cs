@@ -25,6 +25,7 @@ public class Fridge : MonoBehaviour, IClickable2D
             // 2) Ieslēdz hum
             AudioManager.Instance.PlayAmbience(AudioManager.Instance.fridge_hum);
             UIModal.Open();
+            TutorialManager.Instance.ShowStep(5);
         }
         else
         {
@@ -57,6 +58,7 @@ public class Fridge : MonoBehaviour, IClickable2D
 
         fridge.SetActive(false);
         UIModal.Close();
+        TutorialManager.Instance.ShowStep(6);
     }
 
     public void Eat()

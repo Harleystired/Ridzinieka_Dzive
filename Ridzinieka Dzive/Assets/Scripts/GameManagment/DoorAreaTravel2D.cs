@@ -27,6 +27,7 @@ public sealed class DoorAreaTravel2D : MonoBehaviour, IClickable2D, IHoverable2D
         {
             case Destination.Kitchen:
                 cameraMovement.Kitchen();
+                TutorialManager.Instance.ShowStep(4);
                 break;
 
             case Destination.Computer:

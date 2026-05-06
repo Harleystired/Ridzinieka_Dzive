@@ -25,7 +25,7 @@ public class Computer : MonoBehaviour, IClickable2D
         if (!newState && scenarioManager != null && scenarioManager.IsScenarioActive)
             return;
 
-        // 🔊 PC open/close sound
+        // PC open/close sound
         if (newState)
             AudioManager.Instance.PlaySFX(AudioManager.Instance.pcStart);
         else
@@ -63,5 +63,7 @@ public class Computer : MonoBehaviour, IClickable2D
         UIModal.Close(); // allows other objects to be clicked
 
         if (scenarioManager != null) scenarioManager.NotifyComputerClosed();
+        TutorialManager.Instance.ShowStep(3);
+
     }
 }

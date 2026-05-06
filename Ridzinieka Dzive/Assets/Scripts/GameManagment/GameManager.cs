@@ -336,6 +336,10 @@ public class GameManager : MonoBehaviour
         if (currentLocation == newLocation) return;
 
         currentLocation = newLocation;
+        if (newLocation == Location.Work)
+            TutorialManager.Instance.ShowStep(8);
+        
+        
 
         if (currentLocation != Location.Home)
             ClearFreshWakeUpMorningScenarioWindow();
@@ -580,7 +584,12 @@ public class GameManager : MonoBehaviour
         ProcessSicknessForNewDay();
 
         OnDayChanged?.Invoke(currentDayIndex);
+        if (TutorialManager.Instance != null && TutorialManager.Instance.CurrentStep == 10)
+        {
+            TutorialManager.Instance.CompleteTutorial();
+        }
     }
+    
 
     // ---------------------------------------------------------------------
     // Money / Needs

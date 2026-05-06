@@ -93,7 +93,10 @@ public class WorkUI : MonoBehaviour
             default:
                 if (officeUI != null) officeUI.SetActive(true);
                 break;
+            
         }
+        if (TutorialManager.Instance.CurrentStep == 8)
+            TutorialManager.Instance.ShowStep(9);
     }
 
     private void SetAllJobUIsActive(bool active)
