@@ -9,5 +9,9 @@ public class OfficeWorkComputer : BaseWorkComputer
     {
         base.Awake();
         jobType = GameManager.JobType.Office;
+        
+        // Use the officePanel as the computerUI if not explicitly set
+        if (computerUI == null && officePanel != null)
+            computerUI = officePanel;
     }
 }

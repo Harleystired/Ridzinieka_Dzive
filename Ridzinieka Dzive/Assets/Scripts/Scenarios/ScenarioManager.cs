@@ -35,8 +35,11 @@ public class ScenarioManager : MonoBehaviour
 
     [Header("Attention Icons (assign in Inspector)")]
     [SerializeField] private GameObject computerAttentionIcon; // exclamation mark next to computer
-    [SerializeField] private GameObject phoneAttentionIcon;    // exclamation mark next to phone
-
+    [SerializeField] private GameObject phoneAttentionIcon;   // exclamation mark next to phone
+    [SerializeField] private GameObject cashierAttentionIcon;   // exclamation mark near cashier computer
+    [SerializeField] private GameObject officeAttentionIcon;    // exclamation mark near office computer
+    [SerializeField] private GameObject taxiAttentionIcon;      // exclamation mark near taxi computer
+    
     [Header("Stat Change Tooltip")]
     [SerializeField] private StatChangeTooltipUI statChangeTooltipUI;
 
@@ -61,6 +64,15 @@ public class ScenarioManager : MonoBehaviour
     private bool _isComputerOpen;
     private bool _isPhoneOpen;
     private bool _isCalendarOpen;
+
+// NEW: Track if work computer is open (for attention icon logic)
+    private bool _isWorkComputerOpen;
+    
+    // Add to ScenarioManager.cs - gives work computers a way to check if any scenarios left
+    public bool HasNoPendingScenariosAtWork => 
+        !_isShowing && 
+        _queue.Count == 0 && 
+        _forcedScenario == null;
 
     private CameraMovement.HomeArea _homeArea = CameraMovement.HomeArea.Computer;
 
@@ -217,7 +229,7 @@ public class ScenarioManager : MonoBehaviour
         gameManager.OnLocationChanged -= HandleLocationChanged;
         gameManager.OnTimeOfDayChanged -= HandleTimeChanged;
         gameManager.OnDayChanged -= HandleDayChanged;
-    
+
         if (phoneUI != null)
         {
             phoneUI.Opened -= NotifyPhoneOpened;
@@ -231,6 +243,9 @@ public class ScenarioManager : MonoBehaviour
 
         SetActiveSafe(computerAttentionIcon, false);
         SetActiveSafe(phoneAttentionIcon, false);
+        SetActiveSafe(cashierAttentionIcon, false);  // NEW
+        SetActiveSafe(officeAttentionIcon, false);   // NEW
+        SetActiveSafe(taxiAttentionIcon, false);     // NEW
     }
 
     public void NotifyCalendarOpenStateChanged(bool isOpen)
@@ -284,6 +299,7 @@ public class ScenarioManager : MonoBehaviour
     public void NotifyWorkComputerOpened(GameManager.JobType jobType)
     {
         _openWorkComputerJob = jobType;
+        _isWorkComputerOpen = true;  // NEW
     
         // Set the appropriate work panel
         switch (jobType)
@@ -308,12 +324,13 @@ public class ScenarioManager : MonoBehaviour
         if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Work)
             ShowNext();
     }
-    
+
     public void NotifyWorkComputerClosed(GameManager.JobType jobType)
     {
         if (_openWorkComputerJob == jobType)
             _openWorkComputerJob = null;
     
+        _isWorkComputerOpen = false;  // NEW
         _activeWorkPanel = null;
         UpdateAttentionIcons();
     }
@@ -810,14 +827,20 @@ public class ScenarioManager : MonoBehaviour
         {
             SetActiveSafe(computerAttentionIcon, false);
             SetActiveSafe(phoneAttentionIcon, false);
+            SetActiveSafe(cashierAttentionIcon, false);
+            SetActiveSafe(officeAttentionIcon, false);
+            SetActiveSafe(taxiAttentionIcon, false);
             return;
         }
-        
+
         // If the calendar UI is open, never show attention icons over it.
         if (_isCalendarOpen)
         {
             SetActiveSafe(computerAttentionIcon, false);
             SetActiveSafe(phoneAttentionIcon, false);
+            SetActiveSafe(cashierAttentionIcon, false);
+            SetActiveSafe(officeAttentionIcon, false);
+            SetActiveSafe(taxiAttentionIcon, false);
             return;
         }
 
@@ -826,6 +849,9 @@ public class ScenarioManager : MonoBehaviour
         {
             SetActiveSafe(computerAttentionIcon, false);
             SetActiveSafe(phoneAttentionIcon, false);
+            SetActiveSafe(cashierAttentionIcon, false);
+            SetActiveSafe(officeAttentionIcon, false);
+            SetActiveSafe(taxiAttentionIcon, false);
             return;
         }
 
@@ -835,29 +861,60 @@ public class ScenarioManager : MonoBehaviour
         {
             SetActiveSafe(computerAttentionIcon, false);
             SetActiveSafe(phoneAttentionIcon, false);
+            SetActiveSafe(cashierAttentionIcon, false);
+            SetActiveSafe(officeAttentionIcon, false);
+            SetActiveSafe(taxiAttentionIcon, false);
             return;
         }
 
         bool hasQueued = _queue.Count > 0;
         bool hasForcedPhoneScenario = _forcedScenario != null;
 
+        // Home computer attention icon
         bool needsComputerAttention =
             hasQueued &&
             gameManager.CurrentLocation == GameManager.Location.Home &&
             !_isComputerOpen &&
             !_isShowing;
 
+        // Phone attention icon
         bool needsPhoneAttention =
             (hasForcedPhoneScenario || hasQueued) &&
             gameManager.CurrentLocation != GameManager.Location.Home &&
+            gameManager.CurrentLocation != GameManager.Location.Work &&
             !_isPhoneOpen &&
             !_isShowing;
 
+        // NEW: Work computer attention icons
+        bool hasWorkScenarios = hasQueued && gameManager.CurrentLocation == GameManager.Location.Work;
+        bool needsCashierAttention = false;
+        bool needsOfficeAttention = false;
+        bool needsTaxiAttention = false;
+
+        if (hasWorkScenarios && !_isWorkComputerOpen && !_isShowing)
+        {
+            // Check which job the player has - show attention only for their current job's computer
+            switch (gameManager.SelectedJob)
+            {
+                case GameManager.JobType.Cashier:
+                    needsCashierAttention = true;
+                    break;
+                case GameManager.JobType.Office:
+                    needsOfficeAttention = true;
+                    break;
+                case GameManager.JobType.Taxi:
+                    needsTaxiAttention = true;
+                    break;
+            }
+        }
         SetActiveSafe(computerAttentionIcon, needsComputerAttention);
         SetActiveSafe(phoneAttentionIcon, needsPhoneAttention);
+        SetActiveSafe(cashierAttentionIcon, needsCashierAttention);
+        SetActiveSafe(officeAttentionIcon, needsOfficeAttention);
+        SetActiveSafe(taxiAttentionIcon, needsTaxiAttention);
     }
 
-        private bool ApplyChoice(ScenarioDefinition scenario, int choiceIndex)
+    private bool ApplyChoice(ScenarioDefinition scenario, int choiceIndex)
         {
             if (scenario == null) return false;
             if (scenario.choices == null) return false;
