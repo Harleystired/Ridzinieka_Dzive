@@ -9153,35 +9153,47 @@ MonoBehaviour:
   skipButton: {fileID: 160679534}
   steps:
   - id: ChooseJob
-    text: "Izv\u0113lies sev piem\u0113rot\u0101ko darba vietu"
+    text: "Laipni l\u016Bgts! Tavs pirmais r\u012Bts pils\u0113t\u0101.Izv\u0113lies
+      sev piem\u0113rot\u0101ko darba vietu."
     position: {x: 238, y: 321}
   - id: Stats
-    text: Apskaties savus stats
+    text: "\u0160is ir tavs dz\u012Bvoklis. Tev ir iesp\u0113ja mijiedarboties ar
+      da\u017E\u0101diem objektiem, atver telefonu un apskati savu statistiku"
     position: {x: 238, y: 321}
   - id: ClosePhone
-    text: "Apskaties uzdevumus dator\u0101"
-    position: {x: 238, y: 321}
+    text: "Sp\u0113les gait\u0101 tev b\u016Bs da\u017E\u0101di notikumi, un tavi
+      l\u0113mumi ietekm\u0113s tavus statistikas r\u0101d\u012Bt\u0101jus. Noklik\u0161\u0137ini
+      uz datora."
+    position: {x: 700, y: 321}
   - id: Bulta
-    text: "Dodies uz virtuvi, kas atrodas labaj\u0101 pus\u0113 aiz durv\u012Bm"
+    text: "Tev ir lieliska iesp\u0113ja samazin\u0101t savu izsalkumu dodoties uz
+      virtuvi, kas atrodas labaj\u0101 pus\u0113 aiz durv\u012Bm"
     position: {x: 238, y: 321}
   - id: Durvis1
-    text: Atver ledusskapi un apskati produktus
+    text: "Atver ledusskapi un apskati produktus. Bet vispirms, lai tas neb\u016Btu
+      tuk\u0161s, tev j\u0101dod\u0101s uz veikalu nopirkt produktus."
     position: {x: 238, y: 321}
   - id: Fridge
     text: "Tev ir j\u0101ieg\u0101d\u0101j\u0101s produkti veikal\u0101, lai b\u016Btu
-      pa\u0113dis un nesaslimtu"
+      pa\u0113dis un nesaslimtu, bet neaizmirsti sekot l\u012Bdzi naudas atlikumam
+      telefon\u0101."
     position: {x: 238, y: 321}
   - id: Back
-    text: dodies pa otram durvim ara uz veikalu ar kajam
+    text: "Dodies pa otr\u0101m durv\u012Bm \u0101r\u0101 un tur tu saskarsies ar
+      da\u017E\u0101d\u0101m trnasporta iesp\u0113j\u0101m."
     position: {x: 238, y: 321}
   - id: ClosePoga
-    text: dodies majas un paed, ja esi izsalcis, izdair parejos uzdevumus
+    text: "P\u0113c sava pirkuma vari doties m\u0101jup. Produktus atrad\u012Bsi
+      virtuv\u0113."
     position: {x: 238, y: 321}
   - id: Buy
-    text: no majam ej uz darbu
+    text: "Dodoties uz darbu saskarsies ar da\u017Eneda\u017E\u0101d\u0101m dz\u012Bves
+      situ\u0101cij\u0101m."
     position: {x: 238, y: 321}
   - id: BuyPoga
-    text: sis ir darbs/dodies majas gulet
+    text: "Kad darba diena beigusies un vairs nav man\u0101mi uzdevumi, tad laiks
+      doties m\u0101jas un atg\u016Bt sp\u0113kus n\u0101ko\u0161ajai dienai dodoties
+      gul\u0113t."
     position: {x: 238, y: 321}
 --- !u!4 &480352994
 Transform:
@@ -9192,7 +9204,7 @@ Transform:
   m_GameObject: {fileID: 480352992}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 238, y: 321, z: 0}
+  m_LocalPosition: {x: 700, y: 321, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17766,8 +17778,8 @@ RectTransform:
   m_GameObject: {fileID: 1054535039}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0000132, y: 1.0000132, z: 1.0000132}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1075055774}
   m_Father: {fileID: 1729493201}
@@ -39462,7 +39474,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -191.60323, y: -102.85617, z: -36.866776, w: -173.09862}
+  m_margin: {x: -191.60323, y: -66.09781, z: -36.866776, w: -173.09862}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
