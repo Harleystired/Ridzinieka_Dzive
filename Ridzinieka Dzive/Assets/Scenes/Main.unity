@@ -33744,27 +33744,27 @@ MonoBehaviour:
     description: "Darbs pie kases lielveikal\u0101.  "
     salary: "\u20AC5.5/h"
     hours: "9:00 \u2013 17:00"
-    hungerChange: -5
-    energyChange: -10
-    stressChange: -15
+    hungerChange: 0
+    energyChange: 0
+    stressChange: 0
     healthChange: 0
     moneyEarned: 0
   - title: "Taxi \u0161oferis"
     description: "P\u0101rvad\u0101 pasa\u017Eierus pa R\u012Bgu."
     salary: "\u20AC6.7/h"
     hours: "18:00\u201302:00"
-    hungerChange: -10
-    energyChange: -10
-    stressChange: -10
+    hungerChange: 0
+    energyChange: 0
+    stressChange: 0
     healthChange: 0
     moneyEarned: 0
   - title: Ofisa darbinieks
     description: "Vienk\u0101r\u0161i biroja pien\u0101kumi. "
     salary: "\u20AC5/h"
     hours: "  8:00\u201316:00"
-    hungerChange: -5
+    hungerChange: 0
     energyChange: 0
-    stressChange: -5
+    stressChange: 0
     healthChange: 0
     moneyEarned: 0
   jobTitle: {fileID: 779485972}
