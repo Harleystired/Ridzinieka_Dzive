@@ -8,6 +8,20 @@ public class ScenarioManager : MonoBehaviour
 
     [Header("Jobs")]
     [SerializeField] private JobManager jobManager;
+    
+    [Header("Work Computers")]
+    [SerializeField] private Dictionary<GameManager.JobType, BaseWorkComputer> workComputers = new();
+    [SerializeField] private BaseWorkComputer cashierComputer;
+    [SerializeField] private BaseWorkComputer officeComputer;
+    [SerializeField] private BaseWorkComputer taxiComputer;
+    
+    [Header("Work Scenario Panels")]
+    [SerializeField] private WorkScenarioPanel cashierWorkPanel;
+    [SerializeField] private WorkScenarioPanel officeWorkPanel;
+    [SerializeField] private WorkScenarioPanel taxiWorkPanel;
+    
+    private GameManager.JobType? _openWorkComputerJob;
+    private IWorkScenarioPanel _activeWorkPanel;
 
     [Header("Panels (assign in Inspector)")]
     [SerializeField] private MonoBehaviour computerPanelBehaviour; // must implement IScenarioPanel
@@ -154,12 +168,21 @@ public class ScenarioManager : MonoBehaviour
         if (cameraMovement == null)
             cameraMovement = FindFirstObjectByType<CameraMovement>();
 
-    if (statChangeTooltipUI == null)
-        statChangeTooltipUI = FindFirstObjectByType<StatChangeTooltipUI>();
+        if (statChangeTooltipUI == null)
+            statChangeTooltipUI = FindFirstObjectByType<StatChangeTooltipUI>();
 
-            if (tooltip == null)
+        if (tooltip == null)
                 tooltip = FindFirstObjectByType<SimpleTooltip>();
-        }
+        
+        if (cashierComputer != null)
+                workComputers[GameManager.JobType.Cashier] = cashierComputer;
+            
+        if (officeComputer != null)
+                workComputers[GameManager.JobType.Office] = officeComputer;
+            
+        if (taxiComputer != null)
+                workComputers[GameManager.JobType.Taxi] = taxiComputer;
+    }
     
     private void OnEnable()
     {
@@ -255,6 +278,43 @@ public class ScenarioManager : MonoBehaviour
     private void NotifyPhoneClosed()
     {
         _isPhoneOpen = false;
+        UpdateAttentionIcons();
+    }
+    
+    public void NotifyWorkComputerOpened(GameManager.JobType jobType)
+    {
+        _openWorkComputerJob = jobType;
+    
+        // Set the appropriate work panel
+        switch (jobType)
+        {
+            case GameManager.JobType.Cashier:
+                _activeWorkPanel = cashierWorkPanel;
+                break;
+            case GameManager.JobType.Office:
+                _activeWorkPanel = officeWorkPanel;
+                break;
+            case GameManager.JobType.Taxi:
+                _activeWorkPanel = taxiWorkPanel;
+                break;
+        }
+    
+        if (_activeWorkPanel != null)
+            _activeWorkPanel.SetJobContext(jobType);
+    
+        UpdateAttentionIcons();
+    
+        // Show next scenario at work location
+        if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Work)
+            ShowNext();
+    }
+    
+    public void NotifyWorkComputerClosed(GameManager.JobType jobType)
+    {
+        if (_openWorkComputerJob == jobType)
+            _openWorkComputerJob = null;
+    
+        _activeWorkPanel = null;
         UpdateAttentionIcons();
     }
 
@@ -521,7 +581,7 @@ public class ScenarioManager : MonoBehaviour
     {
         if (TryShowForcedScenario())
             return;
-
+    
         if (_isShowing) return;
         if (_queue.Count == 0)
         {
@@ -531,20 +591,31 @@ public class ScenarioManager : MonoBehaviour
         }
         if (gameManager == null) return;
 
+        if (gameManager == null) return;
+    
         // Home gating: only show when computer is open
         if (gameManager.CurrentLocation == GameManager.Location.Home && !_isComputerOpen)
         {
             UpdateAttentionIcons();
             return;
         }
-
-        // Phone gating: only show when phone is fully open
-        if (gameManager.CurrentLocation != GameManager.Location.Home && !_isPhoneOpen)
+        
+        // Work gating: only show when work computer is open
+        if (gameManager.CurrentLocation == GameManager.Location.Work && _openWorkComputerJob == null)
         {
             UpdateAttentionIcons();
             return;
         }
 
+        // Phone gating: only show when phone is fully open
+        if (gameManager.CurrentLocation != GameManager.Location.Home && 
+            gameManager.CurrentLocation != GameManager.Location.Work && 
+            !_isPhoneOpen)
+        {
+            UpdateAttentionIcons();
+            return;
+        }
+    
         var panel = ResolvePanelForCurrentContext();
         if (panel == null)
         {
@@ -862,10 +933,28 @@ public class ScenarioManager : MonoBehaviour
 
     private IScenarioPanel ResolvePanelForCurrentContext()
     {
-        if (gameManager != null && gameManager.CurrentLocation == GameManager.Location.Home)
-            return ComputerPanel;
-
-        return PhonePanel;
+        if (gameManager == null) return null;
+    
+        switch (gameManager.CurrentLocation)
+        {
+            case GameManager.Location.Home:
+                return ComputerPanel;
+            case GameManager.Location.Work:
+                // Return the active work panel based on which computer is open
+                if (_activeWorkPanel != null)
+                    return _activeWorkPanel;
+                // Fallback: try to get panel for current job
+                var currentJob = gameManager.SelectedJob;
+                return currentJob switch
+                {
+                    GameManager.JobType.Cashier => cashierWorkPanel,
+                    GameManager.JobType.Office => officeWorkPanel,
+                    GameManager.JobType.Taxi => taxiWorkPanel,
+                    _ => null
+                };
+            default:
+                return PhonePanel;
+        }
     }
 
     private static void SetActiveSafe(GameObject go, bool active)
