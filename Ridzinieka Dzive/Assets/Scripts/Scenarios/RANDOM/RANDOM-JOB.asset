@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
   m_Name: RANDOM-JOB
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: 
+  scenarioId: RANDOM_JOB
   weight: 1
   minDaysBetweenShows: 8
   isMandatory: 1

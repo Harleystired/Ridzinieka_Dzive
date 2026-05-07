@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
   m_Name: RANDOM-HOME-SCAM
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: 
+  scenarioId: RANDOM_HOME_SCAM
   weight: 1
   minDaysBetweenShows: 10
   isMandatory: 1
   prompt: "Tu sa\u0146em zi\u0146ojumu at saiti, kas sola atl\u012Bdz\u012Bbu."
-  allowedLocations: 
+  allowedLocations: 00000000
   allowedTimes: 
   requiresFreshWakeUpMorning: 0
   requiresWorkDay: 0

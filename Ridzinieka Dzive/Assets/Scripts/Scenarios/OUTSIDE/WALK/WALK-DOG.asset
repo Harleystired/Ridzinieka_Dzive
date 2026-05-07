@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
   m_Name: WALK-DOG
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: 
+  scenarioId: WALK_DOG
   weight: 2
-  minDaysBetweenShows: 10
+  minDaysBetweenShows: 14
   isMandatory: 1
   prompt: "Mier\u012Bgi ejot tev uzbr\u016Bk un ieko\u017E suns."
   allowedLocations: 01000000

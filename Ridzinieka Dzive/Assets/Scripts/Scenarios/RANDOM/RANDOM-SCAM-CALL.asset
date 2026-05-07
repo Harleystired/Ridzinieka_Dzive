@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
   m_Name: RANDOM-SCAM-CALL
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: 
+  scenarioId: RANDOM_SCAM_CALL
   weight: 1
   minDaysBetweenShows: 5
   isMandatory: 1

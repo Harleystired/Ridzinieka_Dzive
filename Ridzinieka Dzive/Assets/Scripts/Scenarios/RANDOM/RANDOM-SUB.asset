@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
   m_Name: RANDOM-SUB
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: 
+  scenarioId: RANDOM_SUB
   weight: 1
   minDaysBetweenShows: 30
   isMandatory: 1
   prompt: "Tu sav\u0101 kont\u0101 pamani maksu par abonomentu, kuru biji aizmirsis."
-  allowedLocations: 
+  allowedLocations: 00000000
   allowedTimes: 
   requiresFreshWakeUpMorning: 0
   requiresWorkDay: 0

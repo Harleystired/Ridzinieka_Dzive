@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
   m_Name: RANDOM-BIG-FEE
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: 
+  scenarioId: RANDOM_BIG_FEE
   weight: 1
   minDaysBetweenShows: 15
   isMandatory: 1
   prompt: "Tev uzr\u0101d\u0101s negaid\u012Bts r\u0113\u0137ins."
   allowedLocations: 
-  allowedTimes: 
+  allowedTimes: 02000000
   requiresFreshWakeUpMorning: 0
   requiresWorkDay: 0
   requiresFever: 0

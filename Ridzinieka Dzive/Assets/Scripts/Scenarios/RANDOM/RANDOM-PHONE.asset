@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57ce9cfe047b86547aafa330e8523995, type: 3}
   m_Name: RANDOM-PHONE
   m_EditorClassIdentifier: Assembly-CSharp::ScenarioDefinition
-  scenarioId: 
+  scenarioId: RANDOM_PHONE
   weight: 2
   minDaysBetweenShows: 20
   isMandatory: 1
   prompt: "Tev nokr\u012Bt telefons un ekr\u0101ns ir sasities."
   allowedLocations: 
-  allowedTimes: 
+  allowedTimes: 01000000
   requiresFreshWakeUpMorning: 0
   requiresWorkDay: 0
   requiresFever: 0
