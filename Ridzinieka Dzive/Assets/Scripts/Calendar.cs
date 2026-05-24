@@ -212,7 +212,7 @@ public class Calendar : MonoBehaviour, IClickable2D
             sb.AppendLine("Darba diena");
 
         if (isRentDay)
-            sb.AppendLine("Īres diena");
+            sb.AppendLine("Īres diena 100€");
 
         if (isSickLeaveDay)
             sb.AppendLine("Slimības lapa");

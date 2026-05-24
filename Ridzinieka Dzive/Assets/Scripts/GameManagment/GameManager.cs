@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     public bool oldCar = false;
     public bool newCar = false;
 
-    // NEW: prices + break chances
+    // prices + break chances
     [Header("Transport Shop Settings")]
     [SerializeField] private int oldBikePrice = 50;
     [SerializeField] private int newBikePrice = 200;
@@ -281,7 +281,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // NEW: purchase methods
+    // purchase methods
     public bool TryBuyOldBike()
     {
         if (oldBike) return true;
@@ -367,6 +367,7 @@ public class GameManager : MonoBehaviour
     public TimeOfDay CurrentTime => currentTimeOfDay;
 
     public event Action<TimeOfDay> OnTimeOfDayChanged;
+    public event Action OnGameCompleted;
 
    public void SetTimeOfDay(TimeOfDay value)
    {
@@ -574,6 +575,13 @@ public class GameManager : MonoBehaviour
 
     public void AdvanceDay()
     {
+        if (currentDayIndex >= 30)
+        {
+            Debug.Log("Game completed! Player survived all 31 days!");
+            OnGameCompleted?.Invoke();
+            return;
+        }
+
         if (calendarDay == null || calendarDay.Length == 0) return;
 
         int maxIndex = Mathf.Min(30, calendarDay.Length - 1);
@@ -585,7 +593,6 @@ public class GameManager : MonoBehaviour
 
         OnDayChanged?.Invoke(currentDayIndex);
 
-        
         if (TutorialManager.Instance != null && currentDayIndex == 1)
         {
             TutorialManager.Instance.CompleteTutorial();
