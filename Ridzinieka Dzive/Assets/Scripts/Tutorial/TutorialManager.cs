@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class TutorialManager : MonoBehaviour
 {
@@ -62,12 +63,36 @@ public class TutorialManager : MonoBehaviour
         tooltipPanel.SetActive(true);
         tooltipPanel.transform.position = steps[index].position;
         tooltipText.text = steps[index].text;
+        FadeInTooltip();
 
         // Skip poga vienmēr redzama, kamēr tutorials aktīvs
         if (skipButton != null)
             skipButton.SetActive(true);
     }
 
+    private void FadeInTooltip()
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeInScale());
+    }
+
+    private IEnumerator FadeInScale()
+    {
+        tooltipPanel.transform.localScale = Vector3.zero;
+
+        float t = 0f;
+        float duration = 0.15f; // ← maini šo, lai pagarinātu animāciju
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float s = Mathf.Lerp(0f, 1f, t / duration);
+            tooltipPanel.transform.localScale = new Vector3(s, s, 1f);
+            yield return null;
+        }
+
+        tooltipPanel.transform.localScale = Vector3.one;
+    }
     // -----------------------------
     // TRIGGER (ja izmanto ID)
     // -----------------------------
@@ -106,7 +131,7 @@ public class TutorialManager : MonoBehaviour
         if (skipButton != null)
             skipButton.SetActive(false);
     }
-
+    
     // -----------------------------
     // COMPLETE
     // -----------------------------

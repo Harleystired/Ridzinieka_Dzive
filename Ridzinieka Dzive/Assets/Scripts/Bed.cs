@@ -105,8 +105,8 @@ public class Bed : MonoBehaviour, IClickable2D
             });
         }
 
-        // Stress vienmēr uz 0
-        gameManager.stress = 0;
+        // Stress vienmēr -7
+        gameManager.RemoveStress(7);
 
         int stressChange = gameManager.stress - stressBefore;
         if (stressChange != 0)
@@ -219,7 +219,7 @@ public class Bed : MonoBehaviour, IClickable2D
         }
 
         gameManager.AddHunger(20);
-        gameManager.RemoveStress(20);
+        gameManager.RemoveStress(5);
         gameManager.AddEnergy(20);
 
         int hungerChange = gameManager.hunger - hungerBefore;
