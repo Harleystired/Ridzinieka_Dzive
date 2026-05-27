@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TimeOfDayUI : MonoBehaviour
 {
@@ -11,7 +12,9 @@ public class TimeOfDayUI : MonoBehaviour
     [SerializeField] private Sprite eveningSprite;
     [SerializeField] private Sprite nightSprite;
     [SerializeField] private TMP_Text dayText;
-
+    
+    // Date configuration
+    private readonly DateTime _startDate = new DateTime(2026, 3, 31); // March 31, 2026
 
     private void Start()
     {
@@ -24,7 +27,19 @@ public class TimeOfDayUI : MonoBehaviour
 
     private void UpdateDayText(int dayIndex)
     {
-        dayText.text = "Day " + (dayIndex + 1);
+        // Calculate the actual date based on day index
+        DateTime currentDate = _startDate.AddDays(dayIndex);
+        
+        // Format the date as "dd/MM/yyyy" (e.g., "31/03/2026")
+        // You can change the format if needed
+        string formattedDate = currentDate.ToString("dd/MM/yyyy");
+        
+        // Alternative formats you might prefer:
+        // "dd MMM yyyy" -> "31 Mar 2026"
+        // "MMMM dd, yyyy" -> "March 31, 2026"
+        // "dd/MM" -> "31/03" (just day/month, no year)
+        
+        dayText.text = formattedDate;
     }
 
     private void UpdateIcon(GameManager.TimeOfDay time)
