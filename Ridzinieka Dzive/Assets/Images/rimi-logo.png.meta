@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: fd581cd0dc263ea48847036db10cf8f3
+guid: 03fd22da257013a4aaf9a0db1817ac0b
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3930013287750866379
-    second: l-intro-1695846520_0
+      213: -4296870549596414495
+    second: rimi-logo_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,13 +113,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: l-intro-1695846520_0
+      name: rimi-logo_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 1600
-        height: 901
+        y: 192
+        width: 600
+        height: 217
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +128,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bc594fa53463a8630800000000000000
-      internalID: 3930013287750866379
+      spriteID: 1edd77d30037e54c0800000000000000
+      internalID: -4296870549596414495
       vertices: []
       indices: 
       edges: []
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      l-intro-1695846520_0: 3930013287750866379
+      rimi-logo_0: -4296870549596414495
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
