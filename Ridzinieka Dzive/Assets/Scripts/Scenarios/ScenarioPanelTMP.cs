@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
 {
@@ -30,6 +31,9 @@ public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
 
     public void Show(string prompt, string choice1, string choice2, string choice3, Action<int> onChoicePicked)
     {
+        // Clear any lingering selection before showing new scenario
+        ClearButtonSelection();
+        
         _onChoicePicked = onChoicePicked;
 
         if (promptText != null) promptText.text = prompt ?? "";
@@ -54,12 +58,20 @@ public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
         if (showThird && button3 != null)
             button3.onClick.AddListener(() => Pick(2));
 
+        // Reset button colors by forcing them to refresh their visual state
+        ResetButtonVisualState(button1);
+        ResetButtonVisualState(button2);
+        if (button3 != null) ResetButtonVisualState(button3);
+        
         root.SetActive(true);
     }
 
     public void Hide()
     {
         _onChoicePicked = null;
+        
+        // Clear selection when hiding
+        ClearButtonSelection();
 
         if (root != null) root.SetActive(false);
     }
@@ -67,5 +79,33 @@ public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
     private void Pick(int index)
     {
         _onChoicePicked?.Invoke(index);
+        
+        // Clear selection immediately after picking to prevent it from persisting
+        ClearButtonSelection();
     }
+    
+    private void ClearButtonSelection()
+    {
+        // Tell the EventSystem to clear the current selection
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+    }
+    
+    private void ResetButtonVisualState(Button button)
+    {
+        if (button == null) return;
+        
+        // Force the button to refresh its transition state
+        button.OnDeselect(null);
+        
+        // If using color tint, force it back to normal color
+        var colors = button.colors;
+        var targetColor = colors.normalColor;
+        
+        // Hack to force transition refresh
+        button.targetGraphic.canvasRenderer.SetColor(targetColor);
+    }
+    
 }

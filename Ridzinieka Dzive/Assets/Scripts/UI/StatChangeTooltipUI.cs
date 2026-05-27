@@ -70,7 +70,7 @@ public class StatChangeTooltipUI : MonoBehaviour
             if (change.amount == 0)
                 continue;
 
-            string color = change.amount > 0 ? "#37D667" : "#E64B4B";
+            string color = GetColorForStat(change.stat, change.amount);
             string sign = change.amount > 0 ? "+" : "";
 
             sb.Append("<color=");
@@ -87,6 +87,42 @@ public class StatChangeTooltipUI : MonoBehaviour
         }
 
         return sb.ToString();
+    }
+
+    private string GetColorForStat(StatType stat, int amount)
+    {
+        bool isPositiveStat = IsPositiveStat(stat);
+
+        if (amount > 0)
+        {
+            // Positive change (+)
+            return isPositiveStat ? "#37D667" : "#E64B4B";
+        }
+        else
+        {
+            // Negative change (-)
+            return isPositiveStat ? "#E64B4B" : "#37D667";
+        }
+    }
+
+    private bool IsPositiveStat(StatType stat)
+    {
+        // Returns true if higher value is GOOD for this stat
+        // Returns false if higher value is BAD for this stat
+        switch (stat)
+        {
+            case StatType.Money: // More money = good
+            case StatType.Health: // More health = good
+            case StatType.Energy: // More energy = good
+                return true;
+
+            case StatType.Hunger: // More hunger = bad
+            case StatType.Stress: // More stress = bad
+                return false;
+
+            default:
+                return true; // Default to positive stat
+        }
     }
 
     private string GetDisplayName(StatType stat)

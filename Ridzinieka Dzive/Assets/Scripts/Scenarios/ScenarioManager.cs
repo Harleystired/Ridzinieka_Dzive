@@ -275,17 +275,43 @@ public class ScenarioManager : MonoBehaviour
         _isComputerOpen = false;
         UpdateAttentionIcons();
     }
+    
+    // Phone auto open
+    private void AutoControlPhoneUI(bool shouldBeOpen)
+    {
+        if (phoneUI == null) return;
+    
+        if (shouldBeOpen && !phoneUI.IsOpen)
+        {
+            phoneUI.Open();
+        }
+        else if (!shouldBeOpen && phoneUI.IsOpen)
+        {
+            // Only auto-close if the phone was opened automatically for scenarios
+            // We need to track if it was auto-opened vs manually opened by player
+            if (_phoneAutoOpenedForScenario)
+            {
+                phoneUI.Close();
+                _phoneAutoOpenedForScenario = false;
+            }
+        }
+    }
+
+// Add this field to track auto-opened state
+    private bool _phoneAutoOpenedForScenario;
 
     private void NotifyPhoneOpened()
     {
         _isPhoneOpen = true;
+    
+        // If player manually opens phone, we should NOT auto-close it later
+        // Reset the flag so we don't accidentally close their manually opened phone
+        _phoneAutoOpenedForScenario = false;
 
         UpdateAttentionIcons();
 
-        // NEW: if we were waiting to show a forced phone scenario, do it now
         TryShowForcedScenario();
 
-        // If we're not at home, phone scenarios are allowed once phone is fully open.
         if (gameManager != null && gameManager.CurrentLocation != GameManager.Location.Home)
             ShowNext();
     }
@@ -293,6 +319,7 @@ public class ScenarioManager : MonoBehaviour
     private void NotifyPhoneClosed()
     {
         _isPhoneOpen = false;
+        _phoneAutoOpenedForScenario = false; // Reset flag
         UpdateAttentionIcons();
     }
     
@@ -525,6 +552,20 @@ public class ScenarioManager : MonoBehaviour
         if (_forcedScenario == null) return false;
         if (gameManager == null) return false;
 
+        bool isOutdoorLocation = gameManager.CurrentLocation != GameManager.Location.Home && 
+                                 gameManager.CurrentLocation != GameManager.Location.Work;
+
+        // Auto-open phone for outdoor forced scenarios
+        if (isOutdoorLocation && !_isPhoneOpen)
+        {
+            if (phoneUI != null)
+            {
+                phoneUI.Open();
+                _phoneAutoOpenedForScenario = true;
+                return true; // Wait for phone to open
+            }
+        }
+        
         if (!_isPhoneOpen)
         {
             UpdateAttentionIcons();
@@ -584,10 +625,13 @@ public class ScenarioManager : MonoBehaviour
 
                 UpdateAttentionIcons();
 
-                // Continue draining queue (if any)
-                ShowNext();
+                // Close phone if no more scenarios and it was auto-opened
+                if (_queue.Count == 0 && _forcedScenario == null)
+                {
+                    AutoControlPhoneUI(false);
+                }
 
-                // NEW: only now (when everything is finished) allow the travel callback to run
+                ShowNext();
                 MaybeInvokeAfterDrain();
             });
 
@@ -598,25 +642,28 @@ public class ScenarioManager : MonoBehaviour
     {
         if (TryShowForcedScenario())
             return;
-    
+
         if (_isShowing) return;
         if (_queue.Count == 0)
         {
             UpdateAttentionIcons();
             MaybeInvokeAfterDrain();
+            // Auto-close phone if it was auto-opened and no more scenarios
+            AutoControlPhoneUI(false);
             return;
         }
+
         if (gameManager == null) return;
 
         if (gameManager == null) return;
-    
+
         // Home gating: only show when computer is open
         if (gameManager.CurrentLocation == GameManager.Location.Home && !_isComputerOpen)
         {
             UpdateAttentionIcons();
             return;
         }
-        
+
         // Work gating: only show when work computer is open
         if (gameManager.CurrentLocation == GameManager.Location.Work && _openWorkComputerJob == null)
         {
@@ -624,15 +671,29 @@ public class ScenarioManager : MonoBehaviour
             return;
         }
 
+        // For Outside/Shop locations: auto-open phone UI if needed
+        bool isOutdoorLocation = gameManager.CurrentLocation != GameManager.Location.Home &&
+                                 gameManager.CurrentLocation != GameManager.Location.Work;
+
+        if (isOutdoorLocation && !_isPhoneOpen)
+        {
+            // Auto-open the phone for scenarios
+            if (phoneUI != null)
+            {
+                phoneUI.Open();
+                _phoneAutoOpenedForScenario = true;
+                // Wait for phone to open - the phone's Opened event will trigger showing the scenario
+                return;
+            }
+        }
+
         // Phone gating: only show when phone is fully open
-        if (gameManager.CurrentLocation != GameManager.Location.Home && 
-            gameManager.CurrentLocation != GameManager.Location.Work && 
-            !_isPhoneOpen)
+        if (isOutdoorLocation && !_isPhoneOpen)
         {
             UpdateAttentionIcons();
             return;
         }
-    
+
         var panel = ResolvePanelForCurrentContext();
         if (panel == null)
         {
@@ -641,7 +702,12 @@ public class ScenarioManager : MonoBehaviour
         }
 
         var scenario = _queue.Dequeue();
-        if (scenario == null) { UpdateAttentionIcons(); ShowNext(); return; }
+        if (scenario == null)
+        {
+            UpdateAttentionIcons();
+            ShowNext();
+            return;
+        }
 
         if (!scenario.CanRun(gameManager, gameManager.CurrentTime) || IsOnCooldown(scenario))
         {
@@ -680,9 +746,15 @@ public class ScenarioManager : MonoBehaviour
 
                 UpdateAttentionIcons();
 
+                // Check if there are more scenarios
+                if (_queue.Count == 0 && _forcedScenario == null)
+                {
+                    // No more scenarios - auto-close phone if it was auto-opened
+                    AutoControlPhoneUI(false);
+                }
+
                 ShowNext();
 
-                // NEW: in case this was the last one
                 MaybeInvokeAfterDrain();
             });
     }
