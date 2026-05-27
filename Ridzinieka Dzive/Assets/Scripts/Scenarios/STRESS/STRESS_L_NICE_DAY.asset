@@ -19,6 +19,9 @@ MonoBehaviour:
   prompt: "Tev ir mier\u012Bga diena un esi atsl\u0101bis."
   allowedLocations: 00000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements:
   - stat: 3
     minInclusive: 0
@@ -27,18 +30,30 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "Dodies pastaig\u0101"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5
     - stat: 4
       amount: 10
   - buttonText: "Dari nelielu vingrin\u0101jumu m\u0101j\u0101s"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 4
       amount: 5
     - stat: 2
       amount: -2
   - buttonText: "Paliec m\u0101j\u0101s un neko nedari"
+    blocksWorkToday: 1
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -2
