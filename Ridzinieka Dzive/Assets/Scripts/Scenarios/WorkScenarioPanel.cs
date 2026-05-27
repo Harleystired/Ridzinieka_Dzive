@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro; // if using TextMeshPro
 
 public class WorkScenarioPanel : MonoBehaviour, IWorkScenarioPanel
@@ -44,6 +45,9 @@ public class WorkScenarioPanel : MonoBehaviour, IWorkScenarioPanel
     public void ShowForJob(string prompt, string choice1, string choice2, string choice3, 
                           System.Action<int> onChoiceMade, GameManager.JobType jobType)
     {
+        // Clear any lingering selection before showing new scenario
+        ClearButtonSelection();
+        
         this.onChoiceMade = onChoiceMade;
         this.currentJob = jobType;
         
@@ -62,16 +66,26 @@ public class WorkScenarioPanel : MonoBehaviour, IWorkScenarioPanel
                 choice3Text.text = choice3;
         }
         
+        // Reset button colors by forcing them to refresh their visual state
+        ResetButtonVisualState(choice1Button);
+        ResetButtonVisualState(choice2Button);
+        if (choice3Button != null) ResetButtonVisualState(choice3Button);
+        
         ApplyJobStyling(jobType);
         panelRoot?.SetActive(true);
     }
     
     public void Hide()
     {
+        onChoiceMade = null;
+        
+        // Clear selection when hiding
+        ClearButtonSelection();
+        
         panelRoot?.SetActive(false);
     }
 
-    public bool IsVisible { get; }
+    public bool IsVisible => panelRoot != null && panelRoot.activeSelf;
 
     public void SetJobContext(GameManager.JobType jobType)
     {
@@ -108,5 +122,38 @@ public class WorkScenarioPanel : MonoBehaviour, IWorkScenarioPanel
     private void OnChoiceSelected(int index)
     {
         onChoiceMade?.Invoke(index);
+        
+        // Clear selection immediately after picking to prevent it from persisting
+        ClearButtonSelection();
+    }
+    
+    private void ClearButtonSelection()
+    {
+        // Tell the EventSystem to clear the current selection
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+        }
+    }
+    
+    private void ResetButtonVisualState(Button button)
+    {
+        if (button == null) return;
+        
+        // Force navigation to null temporarily to break selection chain
+        var originalNavigation = button.navigation;
+        button.navigation = new Navigation { mode = Navigation.Mode.None };
+        
+        // Deselect and force visual update
+        button.OnDeselect(null);
+        
+        // Restore original navigation
+        button.navigation = originalNavigation;
+        
+        // Force a canvas refresh
+        if (button.targetGraphic != null)
+        {
+            button.targetGraphic.SetAllDirty();
+        }
     }
 }

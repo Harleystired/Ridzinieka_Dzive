@@ -96,16 +96,22 @@ public class ScenarioPanelTMP : MonoBehaviour, IScenarioPanel
     private void ResetButtonVisualState(Button button)
     {
         if (button == null) return;
-        
-        // Force the button to refresh its transition state
+    
+        // Force navigation to null temporarily to break selection chain
+        var originalNavigation = button.navigation;
+        button.navigation = new Navigation { mode = Navigation.Mode.None };
+    
+        // Deselect and force visual update
         button.OnDeselect(null);
-        
-        // If using color tint, force it back to normal color
-        var colors = button.colors;
-        var targetColor = colors.normalColor;
-        
-        // Hack to force transition refresh
-        button.targetGraphic.canvasRenderer.SetColor(targetColor);
+    
+        // Restore original navigation
+        button.navigation = originalNavigation;
+    
+        // Force a canvas refresh
+        if (button.targetGraphic != null)
+        {
+            button.targetGraphic.SetAllDirty();
+        }
     }
     
 }
