@@ -11,7 +11,7 @@ public class ShopManager : MonoBehaviour
 
     [SerializeField] private GameManager gameManager;
 
-    // ← JAUNS SARAKSTS, kur glabājas visas preces
+    //  JAUNS SARAKSTS, kur glabājas visas preces
     public List<ShopItem> allItems = new List<ShopItem>();
 
     private void Awake()
@@ -26,7 +26,7 @@ public class ShopManager : MonoBehaviour
         UpdateTotal();
     }
 
-    // ← PILNS ClearCart, kas iztīra quantity
+    // PILNS ClearCart, kas iztīra quantity
     public void ClearCart()
     {
         total = 0;
