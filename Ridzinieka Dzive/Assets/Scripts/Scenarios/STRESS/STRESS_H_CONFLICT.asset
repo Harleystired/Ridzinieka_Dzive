@@ -19,6 +19,9 @@ MonoBehaviour:
   prompt: "Stress d\u0113\u013C sabiedrisk\u0101s dz\u012Bves vai konfliktiem."
   allowedLocations: 00000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements:
   - stat: 3
     minInclusive: 80
@@ -28,17 +31,23 @@ MonoBehaviour:
   choices:
   - buttonText: "Paliec m\u0101j\u0101s"
     blocksWorkToday: 1
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
-      amount: -10
+      amount: -20
     - stat: 2
       amount: 10
   - buttonText: "Risin\u0101t visu uzreiz"
     blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -10
     - stat: 3
       amount: 10
     - stat: 4
-      amount: -2
+      amount: -5

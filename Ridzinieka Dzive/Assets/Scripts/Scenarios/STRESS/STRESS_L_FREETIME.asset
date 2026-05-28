@@ -19,6 +19,9 @@ MonoBehaviour:
   prompt: "Tev ir br\u012Bvs laiks un mier\u012Bgs noska\u0146ojums."
   allowedLocations: 00000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements:
   - stat: 3
     minInclusive: 0
@@ -27,16 +30,30 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: "Lasi gr\u0101matu vai m\u0101cies"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5
     - stat: 4
       amount: 5
   - buttonText: "SkatiesTV vai sp\u0113l\u0113 sp\u0113les"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5
+    - stat: 3
+      amount: -15
   - buttonText: Neko nedari
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -1

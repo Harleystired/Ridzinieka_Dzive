@@ -19,8 +19,8 @@ MonoBehaviour:
   prompt: "Tev ir darbs r\u012Bt\u0101 un tu j\u016Bties \u013Coti noguris."
   allowedLocations: 00000000
   allowedTimes: 0300000002000000
-  requiresFreshWakeUpMorning: 0
-  requiresWorkDay: 0
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 1
   requiresFever: 0
   statRequirements:
   - stat: 2

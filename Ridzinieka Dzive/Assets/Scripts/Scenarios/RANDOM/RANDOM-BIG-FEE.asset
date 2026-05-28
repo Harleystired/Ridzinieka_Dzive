@@ -33,7 +33,7 @@ MonoBehaviour:
     goesToWorkWhileSick: 0
     effects:
     - stat: 0
-      amount: -100
+      amount: -60
   - buttonText: "Samaks\u0101 pusi"
     blocksWorkToday: 0
     consumesFridgeFood: 0
@@ -41,4 +41,4 @@ MonoBehaviour:
     goesToWorkWhileSick: 0
     effects:
     - stat: 0
-      amount: -50
+      amount: -30

@@ -19,11 +19,18 @@ MonoBehaviour:
   prompt: "Veikal\u0101 ir atlaide produktiem, ko tu bie\u017Ei p\u0113rc."
   allowedLocations: 03000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
   allowedJobs: 
   allowedTransportModes: 
   choices:
   - buttonText: Izmanto atlaidi
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -2
@@ -32,14 +39,22 @@ MonoBehaviour:
     - stat: 1
       amount: -5
   - buttonText: "P\u0113rc tikai nepiecie\u0161amo"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 0
       amount: -5
     - stat: 1
-      amount: -3
+      amount: -5
     - stat: 4
       amount: 5
   - buttonText: "Nep\u0113rc neko"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 1
       amount: 5

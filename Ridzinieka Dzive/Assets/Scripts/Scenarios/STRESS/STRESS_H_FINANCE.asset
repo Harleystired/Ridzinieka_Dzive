@@ -19,6 +19,9 @@ MonoBehaviour:
   prompt: "Stress d\u0113\u013C finans\u0113m vai izdevumiem."
   allowedLocations: 00000000
   allowedTimes: 
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements:
   - stat: 3
     minInclusive: 80
@@ -27,12 +30,18 @@ MonoBehaviour:
   allowedTransportModes: 
   choices:
   - buttonText: Samazini izdevumus
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
-    - stat: 0
-      amount: -5
     - stat: 3
-      amount: -10
+      amount: -15
   - buttonText: "Ignor\u0113 situ\u0101ciju"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 3
       amount: 15

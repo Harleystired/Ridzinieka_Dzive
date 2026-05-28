@@ -20,7 +20,7 @@ MonoBehaviour:
   allowedLocations: 00000000
   allowedTimes: 02000000
   requiresFreshWakeUpMorning: 0
-  requiresWorkDay: 1
+  requiresWorkDay: 0
   requiresFever: 0
   statRequirements: []
   allowedJobs: 

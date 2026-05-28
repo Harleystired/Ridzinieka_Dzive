@@ -19,18 +19,29 @@ MonoBehaviour:
   prompt: "Tu j\u016Bti nelielas s\u0101pes vai diskomfortu."
   allowedLocations: 00000000
   allowedTimes: 03000000
+  requiresFreshWakeUpMorning: 0
+  requiresWorkDay: 0
+  requiresFever: 0
   statRequirements: []
+  allowedJobs: 
+  allowedTransportModes: 
   choices:
   - buttonText: "Ignor\u0113 un ej gul\u0113t"
+    blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 4
       amount: -20
     - stat: 3
       amount: 5
   - buttonText: "Lieto medikamentu vai t\u0113ju"
+    blocksWorkToday: 0
+    consumesFridgeFood: 1
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
-    - stat: 0
-      amount: -15
     - stat: 3
       amount: -5
     - stat: 4

@@ -32,8 +32,6 @@ MonoBehaviour:
     startsSickLeave: 0
     goesToWorkWhileSick: 0
     effects:
-    - stat: 0
-      amount: -5
     - stat: 1
       amount: -10
     - stat: 3

@@ -34,6 +34,8 @@ MonoBehaviour:
     effects:
     - stat: 0
       amount: -10
+    - stat: 3
+      amount: -10
   - buttonText: "Ignor\u0113 to"
     blocksWorkToday: 0
     consumesFridgeFood: 0
@@ -42,3 +44,5 @@ MonoBehaviour:
     effects:
     - stat: 0
       amount: -10
+    - stat: 3
+      amount: 10

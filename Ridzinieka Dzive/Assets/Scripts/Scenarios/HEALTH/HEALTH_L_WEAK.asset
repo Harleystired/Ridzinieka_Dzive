@@ -19,6 +19,9 @@ MonoBehaviour:
   prompt: "Tu j\u016Bties \u013Coti v\u0101j\u0161 vai slims."
   allowedLocations: 00000000
   allowedTimes: 00000000
+  requiresFreshWakeUpMorning: 1
+  requiresWorkDay: 1
+  requiresFever: 0
   statRequirements:
   - stat: 4
     minInclusive: 0
@@ -28,6 +31,9 @@ MonoBehaviour:
   choices:
   - buttonText: "Paliec m\u0101j\u0101s"
     blocksWorkToday: 1
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 2
       amount: -5
@@ -37,6 +43,9 @@ MonoBehaviour:
       amount: 5
   - buttonText: "Esi akt\u012Bvs (darbs, hobijs)"
     blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 4
       amount: -5
@@ -46,6 +55,9 @@ MonoBehaviour:
       amount: 10
   - buttonText: "Dodies \u0101r\u0101"
     blocksWorkToday: 0
+    consumesFridgeFood: 0
+    startsSickLeave: 0
+    goesToWorkWhileSick: 0
     effects:
     - stat: 4
       amount: -10
